@@ -12,6 +12,7 @@ $('#mobileMenu').onclick=toggleSidebar;$('#backdrop').onclick=closeSidebar;$('#s
 function openModal(id){$('#'+id).classList.add('open')}function closeModal(id){$('#'+id).classList.remove('open')}function toast(m){let t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
 const localDateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const todayStr=()=>localDateKey(new Date());function addDaysISO(n){let d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return localDateKey(d)}
+function renderGreeting(){const hour=new Date().getHours();const greeting=hour<12?'Bom dia':hour<18?'Boa tarde':'Boa noite';$('#timeGreeting').innerHTML=`${greeting}, <em>Julia</em>.`}
 function setLocalItem(key,value){localStorage.setItem(key,value);window.dispatchEvent(new CustomEvent('journal:data-change',{detail:{key,value}}))}
 
 function initSubjects(){
@@ -220,5 +221,5 @@ document.addEventListener('keydown',e=>{
 });
 
 window.addEventListener('journal:cloud-updated',()=>{loadAvatar();renderSubjects();renderCalendar();renderFlashcards();renderErrors();renderHome()});
-initSubjects();loadAvatar();renderCalendar();renderFlashcards();renderErrors();renderHome();
+renderGreeting();initSubjects();loadAvatar();renderCalendar();renderFlashcards();renderErrors();renderHome();
 
