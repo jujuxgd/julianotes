@@ -11,6 +11,15 @@ const SUBJECT_THEMES={
   ajt:{name:'coral pastel',primary:'#D6725F',accent:'#F6C9BE',soft:'#FDEEEA',ink:'#7A3A2E'},
   petss:{name:'ciano turquesa',primary:'#2896A8',accent:'#A6E1EA',soft:'#E6F8FA',ink:'#1B5D68'}
 };
+const RESUMO_THEMES={
+  dpt:{name:'pink bebê',primary:'#D37A9A',accent:'#F3C8D8',soft:'#FCEDF3',ink:'#AB3C64'},
+  tgot:{name:'lilás rosado',primary:'#8A6EA7',accent:'#D7C7E7',soft:'#F0EAF7',ink:'#57446B'},
+  dec:{name:'azul bebê',primary:'#90BEE0',accent:'#C6E1F5',soft:'#EDF6FD',ink:'#438FC7'},
+  dss:{name:'verde turquesa',primary:'#2A9D8F',accent:'#76EADC',soft:'#9FF4EA',ink:'#174F49'},
+  rebi:{name:'pink choque',primary:'#FF1493',accent:'#FFADD9',soft:'#FFE0F1',ink:'#AB025D'},
+  di:{name:'verde menta',primary:'#81C784',accent:'#CCF0CE',soft:'#EFFBEF',ink:'#489A4B'},
+  ajt:{name:'coral pastel',primary:'#D97A3E',accent:'#F8D1B8',soft:'#FEEFE5',ink:'#924B1F'}
+};
 const SUMMARY_HIGHLIGHTS={
   pink:{label:'Rosa',bg:'#FFD9E1',text:'#7A2E44'},
   purple:{label:'Lilás',bg:'#E6D6FF',text:'#4E3480'},
@@ -107,7 +116,7 @@ function openSummaryPrintDialog(){let html=localStorage.getItem(sumKey());if(!ht
 function downloadSummaryPdf(){if(!localStorage.getItem(sumKey()))return toast('Ainda não existe resumo para baixar');toast('Na próxima tela, escolha “Salvar como PDF”.');openSummaryPrintDialog()}
 function clearSummary(){if(!localStorage.getItem(sumKey()))return toast('Já não há resumo salvo nesta etapa');if(!confirm('Apagar o resumo salvo desta etapa? Isso não apaga os flashcards, mas na próxima geração o Claude vai começar do zero em vez de atualizar o antigo.'))return;localStorage.removeItem(sumKey());$('#materialResponse').value='';renderSubject({resetReader:false});renderSubjects();renderHome();toast('Resumo apagado')}
 
-function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],theme=SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
+function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],theme=RESUMO_THEMES[currentSubject]||SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
 $('#summaryMeta').textContent=`${s.name} · ${currentStage==='1'?'primeira':'segunda'} etapa`;
 $('#materialResponse').value='';
 $('#summaryPrompt').value=`FONTE PRINCIPAL DAS ANOTAÇÕES
