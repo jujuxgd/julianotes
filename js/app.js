@@ -1,16 +1,17 @@
 const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}, {"key": "ajt", "name": "Prática Extensionista: Acesso à Justiça do Trabalho", "short": "AJT", "docs": {"1": "14RpF84SEwBWnxvj8Fw6iFh-ZsVAc66AjY69BYIkC1uM", "2": "1pCpHc78qnpJPCYQ1NxcN2f0s7flkH2BrZonV7wdQUq0"}}, {"key": "petss", "name": "Prática Extensionista: Temas de Seguridade", "short": "PETSS", "docs": {"1": "1CIhNd-F_dmT4IICLfPBtvCFvnIW77YXJH7I7btJtDqE", "2": "1WdmLP6wBirGastfD7omY33_H1G9Obvfvky69DSFoIiQ"}}];
-let currentSubject=SUBJECTS[0].key,currentStage='1',calDate=new Date(),savedSummaryRange=null,studyQueue=[],studyIndex=0,studyRetries=new Set(),docMode='a4';
+let currentSubject=SUBJECTS[0].key,currentStage='1',calDate=new Date(),savedSummaryRange=null,studyQueue=[],studyIndex=0,studyRetries=new Set();
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],subj=k=>SUBJECTS.find(x=>x.key===k);
-const sumKey=()=>`msj7-summary::${currentSubject}::${currentStage}`,promptKey=()=>`msj7-prompt::${currentSubject}::${currentStage}`,evKey='msj7-events',fcKey='msj7-flashcards',fcFilterKey='msj7-flashcard-filters',errKey='msj7-errors';
+const sumKey=()=>`msj7-summary::${currentSubject}::${currentStage}`,evKey='msj7-events',fcKey='msj7-flashcards',fcFilterKey='msj7-flashcard-filters',errKey='msj7-errors';
 const titles={home:['Study Journal · 8º semestre','Um lugar bonito para <em>lembrar.</em>'],calendar:['Planner acadêmico','Calendário do <em>semestre</em>'],subjects:['Estudo · Biblioteca','Suas <em>matérias</em>'],flashcards:['Memória ativa','Seus <em>flashcards</em>'],errors:['Questões · Caderno de erros','Seus <em>erros</em>'],subjectDetail:['Estudo · Matéria','']};
 
 const themeKey='msj7-theme';
-function applyTheme(theme,{persist=false}={}){const dark=theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#171316':'#F8F3ED');const toggle=$('#themeToggle');if(toggle){toggle.setAttribute('aria-pressed',String(dark));toggle.setAttribute('title',dark?'Ativar modo claro':'Ativar modo escuro');toggle.querySelector('.theme-icon').textContent=dark?'☀':'☾';toggle.querySelector('.theme-label').textContent=dark?'Modo claro':'Modo escuro'}if(persist)localStorage.setItem(themeKey,dark?'dark':'light')}
+function applyTheme(theme,{persist=false}={}){const dark=theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#1A1714':'#FAF8F5');const toggle=$('#themeToggle');if(toggle){toggle.setAttribute('aria-pressed',String(dark));toggle.setAttribute('title',dark?'Ativar modo claro':'Ativar modo escuro');toggle.querySelector('.theme-icon').textContent=dark?'☀':'☾';toggle.querySelector('.theme-label').textContent=dark?'Modo claro':'Modo escuro'}if(persist)localStorage.setItem(themeKey,dark?'dark':'light')}
 function toggleTheme(){applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark',{persist:true})}
 applyTheme(document.documentElement.dataset.theme||'light');
 $('#themeToggle').onclick=toggleTheme;
 const themePreference=window.matchMedia('(prefers-color-scheme: dark)');
 themePreference.addEventListener?.('change',event=>{if(!localStorage.getItem(themeKey))applyTheme(event.matches?'dark':'light')});
+Array.from({length:localStorage.length},(_,i)=>localStorage.key(i)).filter(key=>key?.startsWith('msj7-prompt::')).forEach(key=>localStorage.removeItem(key));
 
 function showView(v){$$('.view').forEach(x=>x.classList.toggle('active',x.id===v));$$('.nav-link').forEach(x=>x.classList.toggle('active',x.dataset.view===v));$('.topbar').classList.toggle('home-topbar',v==='home');$('#crumb').textContent=titles[v][0];$('#title').innerHTML=v==='subjectDetail'?subj(currentSubject).name:titles[v][1];if(innerWidth<=768)closeSidebar();if(v==='subjects')renderSubjects();if(v==='calendar')renderCalendar();if(v==='flashcards')renderFlashcards();if(v==='errors')renderErrors();renderHome();}
 $$('.nav-link[data-view]').forEach(b=>b.onclick=()=>showView(b.dataset.view));
@@ -37,8 +38,8 @@ function renderSubjects(){
     return `<article class="mat-card" id="mc-${s.key}"><div class="mat-header" onclick="this.parentElement.classList.toggle('open')"><div class="mat-badge">${s.short}</div><div class="mat-info"><div class="mat-name">${s.name}</div><div class="mat-sub">2 cadernos no Drive · ${[h1,h2].filter(Boolean).length}/2 resumos · ${fc} flashcards</div></div><span class="chev">›</span></div><div class="mat-body"><div class="doc-row"><div class="stage">Primeira etapa</div><div class="doc-main"><b>Anotações ${s.short}</b><small>Google Docs da matéria</small></div><span class="summary-status ${h1?'done':''}">${h1?'resumo salvo':'sem resumo'}</span><button class="btn" onclick="openSubject('${s.key}','1')">Abrir</button></div><div class="doc-row"><div class="stage">Segunda etapa</div><div class="doc-main"><b>Anotações ${s.short}</b><small>Google Docs da matéria</small></div><span class="summary-status ${h2?'done':''}">${h2?'resumo salvo':'sem resumo'}</span><button class="btn" onclick="openSubject('${s.key}','2')">Abrir</button></div></div></article>`}).join('');
 }
 function openSubject(k,st){currentSubject=k;currentStage=st;$$('.period').forEach(x=>x.classList.toggle('active',x.dataset.stage===st));showView('subjectDetail');renderSubject();}
-$$('.period').forEach(b=>b.onclick=()=>{currentStage=b.dataset.stage;$$('.period').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderSubject()});
-function renderSubject(){
+$$('.period').forEach(b=>b.onclick=()=>{currentStage=b.dataset.stage;$$('.period').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#materialResponse').value='';renderSubject()});
+function renderSubject({resetReader=true}={}){
   let s=subj(currentSubject),id=s.docs[currentStage];
   $('#detailShort').textContent=s.short+' · '+(currentStage==='1'?'primeira etapa':'segunda etapa');
   $('#openDrive').href=`https://docs.google.com/document/d/${id}/edit`;
@@ -49,45 +50,23 @@ function renderSubject(){
   $('#summaryFrame').srcdoc=h||'';
   $('#title').innerHTML=s.name;
   $('#summaryFrame').onload=bindSummarySelection;
-  setReader('notes');
+  if(resetReader)setReader('notes');
 }
 function updateDriveFrame(){
   let id=subj(currentSubject).docs[currentStage];
   const frame=$('#driveFrame');
-  if(docMode==='docs'){
-    frame.style.transform='none';
-    frame.style.width='100%';
-    frame.style.height='100%';
-    frame.src=`https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
-  }else{
-    frame.src=`https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
-    setTimeout(fitDriveA4,120);
-  }
-  $('#pageModeBtn')?.classList.toggle('active',docMode!=='docs');
-  $('#docsModeBtn')?.classList.toggle('active',docMode==='docs');
+  frame.style.transform='none';
+  frame.style.width='100%';
+  frame.style.height='100%';
+  frame.src=`https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
 }
-function fitDriveA4(){
-  if(docMode==='docs')return;
-  const wrap=$('#a4Viewport'),frame=$('#driveFrame');
-  if(!wrap||!frame)return;
-  const a4Width=794;
-  const scale=Math.min(1,wrap.clientWidth/a4Width);
-  frame.style.width=a4Width+'px';
-  frame.style.height=Math.max(900,wrap.clientHeight/scale)+'px';
-  frame.style.transform=`scale(${scale})`;
-}
-function setDocMode(mode){
-  docMode=mode==='docs'?'docs':'a4';
-  updateDriveFrame();
-  toast(docMode==='a4'?'Visualização A4 ajustada':'Visualização do Docs');
-}
-function setReader(which){let w=$('#studyWorkspace');if(!w)return;w.classList.remove('reader-notes','reader-summary');w.classList.add('reader-'+which);$$('.reader-tab').forEach(b=>b.classList.toggle('active',b.dataset.reader===which));}
+function setReader(which){let w=$('#studyWorkspace');if(!w)return;w.classList.remove('reader-notes','reader-summary','reader-prompt');w.classList.add('reader-'+which);$$('.reader-tab').forEach(b=>b.classList.toggle('active',b.dataset.reader===which));}
 function toggleNotesFocus(){let w=$('#studyWorkspace');w.classList.toggle('notes-focus');let btn=$('.reader-expand');if(btn)btn.textContent=w.classList.contains('notes-focus')?'Dividir tela':'Expandir';}
 
-function bindSummarySelection(){try{let doc=$('#summaryFrame').contentDocument;let save=()=>{let sel=doc.getSelection();if(sel&&sel.rangeCount&&!sel.isCollapsed)savedSummaryRange=sel.getRangeAt(0).cloneRange()};doc.addEventListener('mouseup',save);doc.addEventListener('touchend',()=>setTimeout(save,50));}catch(e){}}
+function bindSummarySelection(){try{let doc=$('#summaryFrame').contentDocument;let save=()=>{let sel=doc.getSelection();if(sel&&sel.rangeCount&&!sel.isCollapsed)savedSummaryRange=sel.getRangeAt(0).cloneRange()};doc.addEventListener('mouseup',save);doc.addEventListener('keyup',save);doc.addEventListener('touchend',()=>setTimeout(save,80));}catch(e){}}
 function persistSummaryIframe(){try{let doc=$('#summaryFrame').contentDocument;setLocalItem(sumKey(),'<!DOCTYPE html>'+doc.documentElement.outerHTML);}catch(e){}}
-function applyHighlight(color){try{let frame=$('#summaryFrame'),doc=frame.contentDocument,sel=doc.getSelection();if(savedSummaryRange){sel.removeAllRanges();sel.addRange(savedSummaryRange)}doc.execCommand('hiliteColor',false,color);persistSummaryIframe();toast('Grifo salvo')}catch(e){toast('Selecione um trecho do resumo primeiro')}}
-function clearHighlight(){try{let frame=$('#summaryFrame'),doc=frame.contentDocument,sel=doc.getSelection();if(savedSummaryRange){sel.removeAllRanges();sel.addRange(savedSummaryRange)}doc.execCommand('removeFormat',false,null);persistSummaryIframe();toast('Formatação removida')}catch(e){toast('Selecione um trecho primeiro')}}
+function applyHighlight(color='#F8BBD0'){try{if(!savedSummaryRange||savedSummaryRange.collapsed)throw new Error('empty');let doc=$('#summaryFrame').contentDocument,mark=doc.createElement('mark');mark.dataset.journalHighlight='true';mark.style.backgroundColor=color;mark.style.color='inherit';mark.style.borderRadius='.18em';mark.style.padding='0 .08em';let fragment=savedSummaryRange.extractContents();mark.appendChild(fragment);savedSummaryRange.insertNode(mark);savedSummaryRange=null;persistSummaryIframe();toast('Grifo salvo')}catch(e){toast('Selecione um trecho do resumo primeiro')}}
+function clearHighlight(){try{if(!savedSummaryRange||savedSummaryRange.collapsed)throw new Error('empty');let doc=$('#summaryFrame').contentDocument,marks=[...doc.querySelectorAll('mark[data-journal-highlight]')].filter(mark=>{try{return savedSummaryRange.intersectsNode(mark)}catch{return false}});if(!marks.length){let node=savedSummaryRange.commonAncestorContainer;let mark=(node.nodeType===1?node:node.parentElement)?.closest?.('mark[data-journal-highlight]');if(mark)marks=[mark]}if(!marks.length)throw new Error('none');marks.forEach(mark=>{let parent=mark.parentNode;while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);mark.remove();parent.normalize()});savedSummaryRange=null;persistSummaryIframe();toast('Grifo removido')}catch(e){toast('Selecione o trecho grifado primeiro')}}
 
 function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
 $('#summaryMeta').textContent=`${s.name} · ${currentStage==='1'?'primeira':'segunda'} etapa`;
@@ -150,10 +129,9 @@ ${old||'[Ainda não existe resumo anterior.]'}
 
 FLASHCARDS JÁ EXISTENTES — preserve os IDs quando a informação continuar sendo a mesma:
 ${existing.length?JSON.stringify(existing):'[Nenhum flashcard existente.]'}`;
-setLocalItem(promptKey(),$('#summaryPrompt').value);
-openModal('summaryModal')}
+setReader('prompt')}
 async function copyPrompt(){try{await navigator.clipboard.writeText($('#summaryPrompt').value);toast('Prompt copiado')}catch{toast('Selecione e copie o prompt')}}
-function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do ChatGPT');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sm[1].trim(),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};setLocalItem(sumKey(),html);let stats=syncFlashcards(Array.isArray(data)?data:(data.flashcards||[]),currentSubject,currentStage);renderSubject();renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos`) }
+function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do ChatGPT');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sm[1].trim(),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};setLocalItem(sumKey(),html);let stats=syncFlashcards(Array.isArray(data)?data:(data.flashcards||[]),currentSubject,currentStage);renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos`) }
 
 function readArray(key){try{let value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch{return []}}
 function getEvents(){return readArray(evKey)}function setEvents(v){setLocalItem(evKey,JSON.stringify(v))}
@@ -214,9 +192,8 @@ function loadAvatar(){
   else if(btn){btn.classList.remove('has-photo')}
 }
 
-window.addEventListener('resize',()=>{if(docMode==='a4')fitDriveA4()});
 const _driveFrame=document.getElementById('driveFrame');
-if(_driveFrame)_driveFrame.addEventListener('load',()=>{if(docMode==='a4')setTimeout(fitDriveA4,80)});
+if(_driveFrame)_driveFrame.addEventListener('load',()=>_driveFrame.classList.add('loaded'));
 
 function toggleViewerFullscreen(kind){
   const pane=kind==='notes'?($('#notesPane')||$('.notes-pane')):($('#summaryPane')||$('.summary-pane'));
@@ -225,13 +202,11 @@ function toggleViewerFullscreen(kind){
   $$('.viewer-fullscreen').forEach(x=>x.classList.remove('viewer-fullscreen'));
   pane.classList.toggle('viewer-fullscreen',opening);
   document.body.classList.toggle('viewer-open',opening);
-  if(kind==='notes'&&typeof fitDriveA4==='function')setTimeout(fitDriveA4,100);
 }
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     $$('.viewer-fullscreen').forEach(x=>x.classList.remove('viewer-fullscreen'));
     document.body.classList.remove('viewer-open');
-    if(typeof fitDriveA4==='function')setTimeout(fitDriveA4,100);
   }
 });
 
