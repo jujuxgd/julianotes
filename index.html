@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAF8F5"><title>Study Journal · Mackenzie</title>
 <script>try{const savedTheme=localStorage.getItem('msj7-theme');document.documentElement.dataset.theme=savedTheme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..650;1,9..144,300..650&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=9"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css?v=10"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 </head><body>
 <button class="mobile-menu" id="mobileMenu">☰</button><div class="backdrop" id="backdrop"></div>
 <div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>study <em>journal</em></h1><div class="subtitle">Mackenzie · Direito · 2026</div></div>
@@ -41,11 +41,12 @@
 </section>
 
 <section id="calendar" class="view">
-  <div class="card"><div class="card-head"><div><div class="eyebrow">Planner acadêmico</div><div class="card-title">Calendário do <em>semestre</em></div></div><div class="grow"></div><button class="btn" id="calendarSyncBtn" type="button">Sincronizar Google Agenda</button><button class="btn primary" onclick="openEventModal()">+ compromisso</button></div>
-    <div class="calendar-wrap"><div class="cal-head"><button class="btn" onclick="moveMonth(-1)">‹</button><div class="cal-title" id="calTitle"></div><button class="btn" onclick="moveMonth(1)">›</button></div><div class="cal-grid" id="calGrid"></div></div>
+  <div class="planner-layout">
+  <div class="card planner-calendar-card"><div class="card-head"><div><div class="eyebrow">Planner acadêmico</div><div class="card-title">Seu mês, sem <em>bagunça</em></div></div><div class="grow"></div><div class="planner-head-actions"><button class="btn" id="calendarSyncBtn" type="button">Sincronizar agenda</button><button class="btn primary" onclick="openEventModal()">+ compromisso</button></div></div>
+    <div class="calendar-wrap"><div class="cal-head"><button class="cal-nav" onclick="moveMonth(-1)" aria-label="Mês anterior">‹</button><div class="cal-month"><div class="cal-title" id="calTitle"></div><button class="cal-today" onclick="goToCurrentMonth()">voltar para hoje</button></div><button class="cal-nav" onclick="moveMonth(1)" aria-label="Próximo mês">›</button></div><div class="cal-grid" id="calGrid"></div></div>
   </div>
-  <div style="height:1rem"></div>
-  <div class="card"><div class="card-head"><div class="card-title">Próximos <em>itens</em></div></div><div id="agendaList"></div></div>
+  <div class="card planner-agenda-card"><div class="card-head"><div><div class="eyebrow">Linha do tempo</div><div class="card-title">Próximos <em>compromissos</em></div></div><span class="agenda-count" id="agendaCount">0</span></div><div id="agendaList" class="planner-list"></div></div>
+  </div>
 </section>
 
 <section id="subjects" class="view"><div class="section-label">Biblioteca acadêmica</div><div class="mat-grid" id="matGrid"></div></section>
@@ -56,14 +57,14 @@
   <div class="workspace" id="studyWorkspace">
     <div class="card frame-card notes-pane" id="notesPane">
       <div class="fullscreen-bar"><div><div class="eyebrow">Modo foco</div><div class="focus-title">Anotações</div></div><div class="grow"></div><button class="btn" onclick="toggleViewerFullscreen('notes')">Fechar</button></div>
-      <div class="card-head"><div><div class="eyebrow">Google Drive · visual de impressão</div><div class="card-title">Anotações <em id="detailShort"></em></div></div><div class="grow"></div><a class="btn drive-open" id="openDrive" target="_blank">Editar no Docs ↗</a><button class="btn reader-mode-btn" onclick="toggleViewerFullscreen('notes')" aria-label="Abrir anotações em modo foco">Modo foco</button></div>
+      <div class="card-head"><div><div class="eyebrow">Google Drive</div><div class="card-title">Anotações <em id="detailShort"></em></div></div><div class="grow"></div><a class="btn drive-open" id="openDrive" target="_blank">Editar no Docs ↗</a><button class="btn reader-mode-btn" onclick="toggleViewerFullscreen('notes')" aria-label="Abrir anotações em modo foco">Modo foco</button></div>
       <div class="doc-viewport" id="a4Viewport"><iframe id="driveFrame" loading="lazy"></iframe></div>
     </div>
     <div class="card frame-card summary-pane" id="summaryPane">
       <div class="fullscreen-bar"><div><div class="eyebrow">Modo foco</div><div class="focus-title">Resumo</div></div><div class="grow"></div><button class="btn" onclick="toggleViewerFullscreen('summary')">Fechar</button></div>
-      <div class="card-head"><div><div class="eyebrow">Resumo cumulativo · A4</div><div class="card-title">Resumo de <em>revisão</em></div></div><div class="grow"></div><button class="btn download-summary" id="downloadSummaryBtn" onclick="downloadSummaryPdf()">Baixar PDF</button><button class="btn" onclick="toggleViewerFullscreen('summary')">Modo foco</button><button class="btn primary" onclick="openSummaryModal()">Atualizar</button></div>
+      <div class="card-head"><div><div class="eyebrow">Resumo cumulativo · PDF em A4</div><div class="card-title">Resumo de <em>revisão</em></div></div><div class="grow"></div><button class="btn download-summary" id="downloadSummaryBtn" onclick="downloadSummaryPdf()">Baixar PDF</button><button class="btn" onclick="toggleViewerFullscreen('summary')">Modo foco</button><button class="btn primary" onclick="openSummaryModal()">Atualizar</button></div>
       <div class="summary-toolsbar"><span class="highlight-hint">Selecione o texto e marque como:</span><div class="semantic-highlights" role="toolbar" aria-label="Destaques semânticos do resumo"><button class="semantic-highlight conceito" onclick="applySemanticHighlight('conceito')" title="Conceito principal"><i></i>Conceito</button><button class="semantic-highlight lei" onclick="applySemanticHighlight('lei')" title="Artigo ou norma"><i></i>Lei</button><button class="semantic-highlight excecao" onclick="applySemanticHighlight('excecao')" title="Exceção"><i></i>Exceção</button><button class="semantic-highlight pegadinha" onclick="applySemanticHighlight('pegadinha')" title="Pegadinha de prova"><i></i>Pegadinha</button><button class="semantic-highlight jurisprudencia" onclick="applySemanticHighlight('jurisprudencia')" title="Jurisprudência"><i></i>Julgado</button><button class="semantic-highlight prazo" onclick="applySemanticHighlight('prazo')" title="Prazo"><i></i>Prazo</button><button class="semantic-highlight palavrachave" onclick="applySemanticHighlight('palavrachave')" title="Palavra-chave"><i></i>Palavra-chave</button><button class="semantic-highlight clear-highlight" onclick="clearHighlight()" title="Remover destaque">× Limpar</button></div></div>
-      <div class="summary-viewport"><div id="summaryEmpty" class="summary-empty"><div><span style="font:500 1.7rem Caveat;color:var(--subject-primary)">remember</span><strong>Ainda não tem resumo salvo.</strong><span>O resumo desta etapa cresce semanalmente sem apagar conteúdo importante.</span></div></div><iframe id="summaryFrame" class="summary-frame" style="display:none"></iframe></div>
+      <div class="summary-viewport"><div id="summaryEmpty" class="summary-empty"><div><span style="font:500 1.7rem Caveat;color:var(--rose-deep)">remember</span><strong>Ainda não tem resumo salvo.</strong><span>O resumo desta etapa cresce semanalmente sem apagar conteúdo importante.</span></div></div><iframe id="summaryFrame" class="summary-frame" style="display:none"></iframe></div>
     </div>
     <div class="card prompt-pane" id="promptPane">
       <div class="prompt-head"><div><div class="eyebrow">Atualização cumulativa</div><h2>Prompt sempre <em>disponível.</em></h2><p id="summaryMeta"></p></div><button class="btn primary" onclick="copyPrompt()">Copiar prompt</button></div>
@@ -105,5 +106,5 @@ Revisar erros"></textarea><div class="row"><button class="btn primary" onclick="
 <div class="row"><button class="btn primary" onclick="saveError()">Salvar erro</button><button class="btn danger" id="deleteErrorBtn" style="display:none" onclick="deleteError()">Excluir</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
-<script type="module" src="js/cloud-sync.js"></script><script src="js/app.js?v=9"></script></body></html>
+<script type="module" src="js/cloud-sync.js"></script><script src="js/app.js?v=10"></script></body></html>
 
