@@ -285,20 +285,37 @@ $('.reader-tabs')?.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRig
 window.addEventListener('resize',hideSummaryHighlightPopover);
 document.addEventListener('pointerdown',event=>{if(!event.target.closest?.('#summaryHighlightPopover')&&event.target!==$('#summaryFrame'))hideSummaryHighlightPopover()});
 
+let _viewerScroll={x:0,y:0,frameTop:0};
+function getViewerBackdrop(){
+  let bd=$('#viewerBackdrop');
+  if(!bd){bd=document.createElement('div');bd.id='viewerBackdrop';bd.className='viewer-backdrop';bd.setAttribute('aria-hidden','true');bd.addEventListener('click',()=>{const open=$('.viewer-fullscreen');if(open){const kind=open.id==='summaryPane'?'summary':'notes';toggleViewerFullscreen(kind)}});document.body.appendChild(bd)}
+  return bd;
+}
 function toggleViewerFullscreen(kind){
   const pane=kind==='notes'?($('#notesPane')||$('.notes-pane')):($('#summaryPane')||$('.summary-pane'));
   if(!pane)return;
   const opening=!pane.classList.contains('viewer-fullscreen');
-  $$('.viewer-fullscreen').forEach(x=>x.classList.remove('viewer-fullscreen'));
-  pane.classList.toggle('viewer-fullscreen',opening);
-  document.body.classList.toggle('viewer-open',opening);
+  const bd=getViewerBackdrop();
+  if(opening){
+    _viewerScroll={x:window.scrollX,y:window.scrollY,frameTop:pane.querySelector('iframe')?.scrollTop||0};
+    $$('.viewer-fullscreen').forEach(x=>x.classList.remove('viewer-fullscreen'));
+    pane.classList.add('viewer-fullscreen');
+    document.body.classList.add('viewer-open');
+    bd.classList.add('show');
+  }else{
+    pane.classList.remove('viewer-fullscreen');
+    document.body.classList.remove('viewer-open');
+    bd.classList.remove('show');
+    const savedX=_viewerScroll.x,savedY=_viewerScroll.y,savedFrameTop=_viewerScroll.frameTop,frame=pane.querySelector('iframe');
+    requestAnimationFrame(()=>{window.scrollTo(savedX,savedY);if(frame)frame.scrollTop=savedFrameTop});
+  }
 }
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&activeModal){closeModal(activeModal.id);return}
   if(e.key==='Tab'&&activeModal){let focusable=[...activeModal.querySelectorAll('button:not([disabled]),input:not([disabled]):not([type="hidden"]),select:not([disabled]),textarea:not([disabled]),a[href]')].filter(el=>el.offsetParent!==null);if(focusable.length){let first=focusable[0],last=focusable.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}}
   if(e.key==='Escape'){
-    $$('.viewer-fullscreen').forEach(x=>x.classList.remove('viewer-fullscreen'));
-    document.body.classList.remove('viewer-open');
+    const open=$('.viewer-fullscreen');
+    if(open){const kind=open.id==='summaryPane'?'summary':'notes';toggleViewerFullscreen(kind)}
   }
 });
 
