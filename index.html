@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Study Journal · Mackenzie</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#F8F3ED"><title>Study Journal · Mackenzie</title>
+<script>try{const savedTheme=localStorage.getItem('msj7-theme');document.documentElement.dataset.theme=savedTheme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..650;1,9..144,300..650&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 </head><body>
@@ -11,6 +12,7 @@
 <button class="nav-link" data-view="subjects"><span class="ico">▤</span><span>Matérias</span></button>
 <button class="nav-link" data-view="flashcards"><span class="ico">◫</span><span>Flashcards</span></button>
 <button class="nav-link" data-view="errors"><span class="ico">✎</span><span>Erros</span></button>
+<button class="nav-link theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="ico theme-icon" aria-hidden="true">☾</span><span class="theme-label">Modo escuro</span></button>
 <div class="sidebar-footer">
       <div class="profile">
         <button class="avatar avatar-btn" id="avatarBtn" onclick="document.getElementById('avatarInput').click()" title="Trocar foto">
