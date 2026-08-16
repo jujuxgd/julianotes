@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#F8F3ED"><title>Study Journal · Mackenzie</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAF8F5"><title>Study Journal · Mackenzie</title>
 <script>try{const savedTheme=localStorage.getItem('msj7-theme');document.documentElement.dataset.theme=savedTheme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..650;1,9..144,300..650&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -51,31 +51,23 @@
 <section id="subjects" class="view"><div class="section-label">Biblioteca acadêmica</div><div class="mat-grid" id="matGrid"></div></section>
 
 <section id="subjectDetail" class="view">
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap"><button class="btn" onclick="showView('subjects')">← Todas as matérias</button><div class="period-tabs"><button class="period active" data-stage="1">Primeira etapa</button><button class="period" data-stage="2">Segunda etapa</button></div></div>
-  <div class="reader-tabs"><button class="reader-tab active" data-reader="notes" onclick="setReader('notes')">Anotações</button><button class="reader-tab" data-reader="summary" onclick="setReader('summary')">Resumo</button></div>
+  <div class="subject-nav"><button class="btn btn-ghost" onclick="showView('subjects')">← Matérias</button><div class="period-tabs"><button class="period active" data-stage="1">1ª etapa</button><button class="period" data-stage="2">2ª etapa</button></div></div>
+  <div class="reader-tabs"><button class="reader-tab active" data-reader="notes" onclick="setReader('notes')">Anotações</button><button class="reader-tab" data-reader="summary" onclick="setReader('summary')">Resumo</button><button class="reader-tab" data-reader="prompt" onclick="openSummaryModal()">Atualizar resumo</button></div>
   <div class="workspace" id="studyWorkspace">
     <div class="card frame-card notes-pane" id="notesPane">
-<div class="fullscreen-bar macbar">
-      <div class="mac-dots" aria-hidden="true"><span class="mac-dot red"></span><span class="mac-dot amber"></span><span class="mac-dot green"></span></div>
-      <div class="mac-title">Anotações</div>
-      <div class="grow"></div>
-      <button class="btn mac-close" onclick="toggleViewerFullscreen('notes')">Sair da tela cheia</button>
-    </div><div class="card-head"><div><div class="eyebrow">Google Drive</div><div class="card-title">Anotações <em id="detailShort"></em></div></div><div class="grow"></div><button class="btn reader-mode-btn" onclick="toggleViewerFullscreen('notes')" title="Tela cheia" aria-label="Anotações em tela cheia"><span class="reader-mode-icon">⛶</span><span>Modo leitura</span></button>
-<div class="doc-mode">
-  <button class="docmode active" id="pageModeBtn" onclick="setDocMode('a4')">A4</button>
-  <button class="docmode" id="docsModeBtn" onclick="setDocMode('docs')">Docs</button>
-</div>
-<a class="btn drive-open" id="openDrive" target="_blank">Abrir</a></div><div class="a4-viewport" id="a4Viewport"><iframe id="driveFrame" loading="lazy"></iframe></div></div>
-    <div class="card frame-card summary-pane" id="summaryPane">
-<div class="fullscreen-bar macbar">
-      <div class="mac-dots" aria-hidden="true"><span class="mac-dot red"></span><span class="mac-dot amber"></span><span class="mac-dot green"></span></div>
-      <div class="mac-title">Resumo</div>
-      <div class="grow"></div>
-      <button class="btn mac-close" onclick="toggleViewerFullscreen('summary')">Sair da tela cheia</button>
+      <div class="fullscreen-bar"><div><div class="eyebrow">Modo foco</div><div class="focus-title">Anotações</div></div><div class="grow"></div><button class="btn" onclick="toggleViewerFullscreen('notes')">Fechar</button></div>
+      <div class="card-head"><div><div class="eyebrow">Google Drive</div><div class="card-title">Anotações <em id="detailShort"></em></div></div><div class="grow"></div><a class="btn drive-open" id="openDrive" target="_blank">Abrir no Docs ↗</a><button class="btn reader-mode-btn" onclick="toggleViewerFullscreen('notes')" aria-label="Abrir anotações em modo foco">Modo foco</button></div>
+      <div class="doc-viewport" id="a4Viewport"><iframe id="driveFrame" loading="lazy"></iframe></div>
     </div>
-      <div class="card-head"><div><div class="eyebrow">Resumo cumulativo</div><div class="card-title">Resumo de <em>revisão</em></div></div><div class="grow"></div><button class="btn reader-mode-btn" onclick="toggleViewerFullscreen('summary')" title="Tela cheia" aria-label="Resumo em tela cheia"><span class="reader-mode-icon">⛶</span><span>Modo leitura</span></button><button class="btn primary" onclick="openSummaryModal()">Atualizar material</button></div>
-      <div class="summary-toolsbar"><span class="eyebrow">Marca-texto</span><button class="swatch" data-c="#FFE59A" onclick="applyHighlight(this.dataset.c)" title="amarelo"></button><button class="swatch" data-c="#F8BBD0" onclick="applyHighlight(this.dataset.c)" title="rosa"></button><button class="swatch" data-c="#CDECCF" onclick="applyHighlight(this.dataset.c)" title="verde"></button><button class="swatch" data-c="#DED3FF" onclick="applyHighlight(this.dataset.c)" title="lilás"></button><button class="btn" onclick="clearHighlight()">Limpar grifo</button></div>
+    <div class="card frame-card summary-pane" id="summaryPane">
+      <div class="fullscreen-bar"><div><div class="eyebrow">Modo foco</div><div class="focus-title">Resumo</div></div><div class="grow"></div><button class="btn" onclick="toggleViewerFullscreen('summary')">Fechar</button></div>
+      <div class="card-head"><div><div class="eyebrow">Resumo cumulativo</div><div class="card-title">Resumo de <em>revisão</em></div></div><div class="grow"></div><button class="btn" onclick="toggleViewerFullscreen('summary')">Modo foco</button><button class="btn primary" onclick="openSummaryModal()">Atualizar</button></div>
+      <div class="summary-toolsbar"><span>Selecione um trecho no resumo</span><div class="grow"></div><button class="btn highlight-btn" onclick="applyHighlight('#F8BBD0')">Grifar seleção</button><button class="btn" onclick="clearHighlight()">Remover grifo</button></div>
       <div id="summaryEmpty" class="summary-empty"><div><span style="font:500 1.7rem Caveat;color:var(--rose-deep)">remember</span><strong>Ainda não tem resumo salvo.</strong><span>O resumo desta etapa cresce semanalmente sem apagar conteúdo importante.</span></div></div><iframe id="summaryFrame" class="summary-frame" style="display:none"></iframe>
+    </div>
+    <div class="card prompt-pane" id="promptPane">
+      <div class="prompt-head"><div><div class="eyebrow">Atualização cumulativa</div><h2>Prompt sempre <em>disponível.</em></h2><p id="summaryMeta"></p></div><button class="btn primary" onclick="copyPrompt()">Copiar prompt</button></div>
+      <div class="prompt-grid"><div class="prompt-block"><label for="summaryPrompt">Prompt pronto para o ChatGPT</label><textarea id="summaryPrompt" readonly></textarea><a class="btn" href="https://chatgpt.com/" target="_blank">Abrir ChatGPT ↗</a></div><div class="prompt-block"><label for="materialResponse">Resposta completa do ChatGPT</label><textarea id="materialResponse" class="import-box" placeholder="Cole aqui a resposta com SUMMARY_HTML e FLASHCARDS_JSON..."></textarea><button class="btn primary" onclick="importMaterialResponse()">Salvar resumo e flashcards</button></div></div>
     </div>
   </div>
 </section>
@@ -104,13 +96,6 @@
 <div class="modal" id="eventModal"><div class="modal-bg" onclick="closeModal('eventModal')"></div><div class="modal-panel"><button class="close" onclick="closeModal('eventModal')">×</button><h3 id="eventModalTitle">Novo compromisso</h3><p>Cadastre prova, trabalho, entrega ou qualquer compromisso e quebre a preparação em checklist.</p><input type="hidden" id="evId"><label>Tipo</label><select id="evType"><option>Prova</option><option>Trabalho</option><option>Entrega</option><option>Outro</option></select><label>Data</label><input type="date" id="evDate"><label>Título</label><input id="evTitle"><label>Matéria</label><select id="evSubject"></select><label>Checklist · uma linha por item</label><textarea id="evChecklist" placeholder="Revisar aulas 1 a 4
 Fazer 20 questões
 Revisar erros"></textarea><div class="row"><button class="btn primary" onclick="saveEvent()">Salvar compromisso</button><button class="btn danger" id="deleteEventBtn" style="display:none" onclick="deleteEvent()">Excluir</button></div></div></div>
-<div class="modal" id="summaryModal"><div class="modal-bg" onclick="closeModal('summaryModal')"></div><div class="modal-panel"><button class="close" onclick="closeModal('summaryModal')">×</button><h3>Atualizar material da matéria</h3><p id="summaryMeta"></p>
-<label>Prompt pronto para o ChatGPT</label><textarea id="summaryPrompt" readonly style="min-height:250px"></textarea>
-<div class="row"><button class="btn primary" onclick="copyPrompt()">Copiar prompt</button><a class="btn" href="https://chatgpt.com/" target="_blank">Abrir ChatGPT</a></div>
-<label>Resposta completa do ChatGPT</label><textarea id="materialResponse" class="import-box" placeholder="Cole aqui a resposta com <SUMMARY_HTML> e <FLASHCARDS_JSON>..."></textarea>
-<div class="row"><button class="btn primary" onclick="importMaterialResponse()">Atualizar resumo + sincronizar flashcards</button></div>
-</div></div>
-
 <div class="modal" id="errorModal"><div class="modal-bg" onclick="closeModal('errorModal')"></div><div class="modal-panel"><button class="close" onclick="closeModal('errorModal')">×</button><h3 id="errorModalTitle">Nova questão errada</h3><p>Salve só o essencial da questão para conseguir voltar ao ponto que te confundiu.</p>
 <input type="hidden" id="errId">
 <label>Matéria</label><select id="errSubject"></select>
