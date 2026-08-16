@@ -135,7 +135,7 @@ REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO.
 - Não omita requisitos, elementos, classificações, exceções, hipóteses, prazos, artigos, competências, efeitos, distinções, jurisprudência ou observações de aula cobradas em prova.
 - Não invente professor, período de prova, jurisprudência, artigo ou dado ausente. Se uma informação de capa não estiver nas anotações, simplesmente omita.
 - Parágrafos corridos devem ter 3–5 linhas e apenas costurar o raciocínio. Fatos memorizáveis, definições, regras, dados e distinções vão para recursos estruturados.
-- Abra o conteúdo com “EM 1 MINUTO” e encerre com “ANTES DA PROVA, LEMBRE”; nenhum deles substitui o desenvolvimento completo.
+- Abra o conteúdo com “EM 1 MINUTO” e encerre com “ANTES DA PROVA, LEMBRE”; nenhum deles substitui o desenvolvimento completo. Esses dois blocos usam padding vertical contido (16–24px no topo, não mais que isso) entre a borda do card e o título — nada de espaço vazio grande acima do título "EM 1 MINUTO" ou "ANTES DA PROVA, LEMBRE".
 
 2 — ESTRUTURA EDITORIAL OBRIGATÓRIA (padrão "caderno editorial premium")
 - Entregue um único HTML5 autocontido, com CSS dentro de <style>, sem JavaScript, imagens, iframes, links externos, @import ou dependências de rede.
@@ -144,7 +144,7 @@ REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO.
 - SEÇÕES: cada seção grande numerada começa com faixa sólida --primary (padding generoso, mínimo 14px 18px), círculo numerado branco com texto na cor --primary, e título da seção em Kathen (script/manuscrita) — não em Inter — tamanho grande o bastante para ler bem (clamp(1.3rem,3vw,1.8rem)), com fallback cursive automático. Seções se sucedem no fluxo normal da página, separadas por espaçamento generoso (mínimo 34px entre seções) — não force quebra de página.
 - SUBTÍTULOS (h3/h4 dentro da seção): hierarquia inequívoca, sans-serif, negrito e cor --subject-ink. Use no máximo três níveis de título.
 - TEXTO: Inter/Arial, tamanho confortável para leitura em tela (equivalente a 15–17px), line-height 1.55–1.7. Use listas somente quando forem mais claras que prosa.
-- CARTÕES E CAIXAS: aplique cantos arredondados (border-radius 8–12px) e sombra leve (box-shadow: 0 2px 8px rgba(0,0,0,.06) ou similar) em boxes semânticas, banners e blocos de destaque — evite retângulos totalmente chapados sem profundidade.
+- CARTÕES E CAIXAS: aplique cantos arredondados (border-radius 8–12px) e sombra leve (box-shadow: 0 2px 8px rgba(0,0,0,.06) ou similar) em boxes semânticas, banners e blocos de destaque — evite retângulos totalmente chapados sem profundidade. Padding interno contido (16–24px) em todos os lados, incluindo o topo — nunca deixe espaço vazio grande entre a borda de um card/box e seu título ou primeira linha de texto.
 - TABELAS: apenas para comparação com múltiplos atributos; envolva toda tabela num wrapper com overflow-x:auto SEMPRE (não só em telas estreitas — isso evita que a tabela vaze/estoure a largura do card do site em qualquer tamanho de tela); a table interna tem width:100% e table-layout:auto; header --primary com texto branco, linhas zebradas, cantos levemente arredondados no wrapper.
 - NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida.
 
