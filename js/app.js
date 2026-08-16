@@ -32,7 +32,10 @@ const themePreference=window.matchMedia('(prefers-color-scheme: dark)');
 themePreference.addEventListener?.('change',event=>{if(!localStorage.getItem(themeKey))applyTheme(event.matches?'dark':'light')});
 Array.from({length:localStorage.length},(_,i)=>localStorage.key(i)).filter(key=>key?.startsWith('msj7-prompt::')).forEach(key=>localStorage.removeItem(key));
 
-function showView(v){hideSummaryHighlightPopover();$$('.view').forEach(x=>{let active=x.id===v;x.classList.toggle('active',active);x.setAttribute('aria-hidden',String(!active))});$$('.nav-link[data-view]').forEach(x=>{let active=x.dataset.view===v;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});$('.topbar').classList.toggle('home-topbar',v==='home');$('#crumb').textContent=titles[v][0];$('#title').innerHTML=v==='subjectDetail'?subj(currentSubject).name:titles[v][1];if(innerWidth<=768)closeSidebar();if(v==='subjects')renderSubjects();if(v==='calendar')renderCalendar();if(v==='flashcards')renderFlashcards();if(v==='errors')renderErrors();renderHome();}
+function showView(v){hideSummaryHighlightPopover();$$('.view').forEach(x=>{let active=x.id===v;x.classList.toggle('active',active);x.setAttribute('aria-hidden',String(!active))});$$('.nav-link[data-view]').forEach(x=>{let active=x.dataset.view===v;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});$('.topbar').classList.toggle('home-topbar',v==='home');$('#crumb').textContent=titles[v][0];$('#title').innerHTML=v==='subjectDetail'?subj(currentSubject).name:titles[v][1];if(innerWidth<=768)closeSidebar();if(v==='subjects')renderSubjects();if(v==='calendar')renderCalendar();if(v==='flashcards')renderFlashcards();if(v==='errors')renderErrors();renderHome();saveLastRoute(v)}
+const lastRouteKey='msj7-last-route';
+function saveLastRoute(v){try{let route={view:v};if(v==='subjectDetail'){route.subject=currentSubject;route.stage=currentStage}localStorage.setItem(lastRouteKey,JSON.stringify(route))}catch(e){}}
+function restoreLastRoute(){try{let raw=localStorage.getItem(lastRouteKey);if(!raw)return showView('home');let route=JSON.parse(raw);if(route.view==='subjectDetail'&&route.subject&&subj(route.subject)){openSubject(route.subject,route.stage==='2'?'2':'1');return}if(route.view&&titles[route.view]){showView(route.view);return}showView('home')}catch(e){showView('home')}}
 $$('.nav-link[data-view]').forEach(b=>b.onclick=()=>showView(b.dataset.view));
 function toggleSidebar(){if(innerWidth<=768){let open=$('#sidebar').classList.toggle('open');$('#backdrop').classList.toggle('show',open);$('#mobileMenu').setAttribute('aria-expanded',String(open))}else{$('#app').classList.toggle('collapsed');$('#sideToggle').textContent=$('#app').classList.contains('collapsed')?'›':'‹'}}
 function closeSidebar(){$('#sidebar').classList.remove('open');$('#backdrop').classList.remove('show');$('#mobileMenu').setAttribute('aria-expanded','false')}
@@ -107,8 +110,10 @@ $('#materialResponse').value='';
 $('#summaryPrompt').value=`FONTE PRINCIPAL DAS ANOTAÇÕES
 Leia integralmente minhas anotações diretamente neste Google Docs:
 ${`https://docs.google.com/document/d/${id}/edit`}
-O Google Docs é a fonte original e cumulativa da matéria e será atualizado semanalmente com novas aulas. Sempre consulte o documento inteiro antes de gerar a nova versão.
-Se você não conseguir acessar ou ler integralmente o Google Docs, não gere o resumo com base apenas no RESUMO ANTERIOR. Avise-me que não conseguiu acessar a fonte original e peça que eu forneça o conteúdo por outro meio.
+Este Google Docs é a fonte original e cumulativa da matéria e será atualizado semanalmente com novas aulas. Sempre consulte o documento inteiro antes de gerar a nova versão.
+
+COMO LER O GOOGLE DOCS: primeiro verifique se você tem um conector/ferramenta do Google Drive ou Google Docs disponível nesta conversa (procure por ferramentas como "Google Drive: read_file_content" ou equivalente) e use-o para ler o arquivo pelo ID do documento (a parte entre /d/ e /edit na URL acima). NÃO tente abrir o link direto no navegador nem usar apenas busca/fetch de página como primeira tentativa — a página do Google Docs exige JavaScript e o fetch comum só traz um preview truncado, não o conteúdo integral. Só se você não tiver nenhum conector do Google Drive/Docs disponível, ou se ele falhar mesmo depois de tentado, é que você deve recorrer a outra forma de leitura.
+Se mesmo assim você não conseguir acessar ou ler integralmente o Google Docs, não gere o resumo com base apenas no RESUMO ANTERIOR. Avise-me que não conseguiu acessar a fonte original e peça que eu forneça o conteúdo por outro meio.
 
 MATÉRIA: ${s.name}
 ETAPA: ${currentStage==='1'?'Primeira':'Segunda'} etapa do semestre
@@ -323,5 +328,5 @@ document.addEventListener('keydown',e=>{
 });
 
 window.addEventListener('journal:cloud-updated',()=>{loadAvatar();renderSubjects();renderCalendar();renderFlashcards();renderErrors();renderHome()});
-renderGreeting();initSubjects();loadAvatar();renderCalendar();renderFlashcards();renderErrors();showView('home');
+renderGreeting();initSubjects();loadAvatar();renderCalendar();renderFlashcards();renderErrors();restoreLastRoute();
 
