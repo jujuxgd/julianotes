@@ -34,6 +34,7 @@ const setStatus = message => {
 function isJournalKey(key) {
   return key.startsWith(DATA_PREFIX) &&
     key !== PENDING_KEY &&
+    !key.startsWith("msj7-prompt::") &&
     !key.startsWith(BACKUP_PREFIX);
 }
 
@@ -202,7 +203,7 @@ async function bootstrapUser(user) {
   const remote = new Map();
   remoteSnapshot.forEach(item => {
     const data = item.data();
-    if (typeof data.key === "string" && typeof data.value === "string") remote.set(data.key, data.value);
+    if (typeof data.key === "string" && typeof data.value === "string" && isJournalKey(data.key)) remote.set(data.key, data.value);
   });
 
   const local = new Map(journalEntries());
@@ -269,6 +270,7 @@ async function bootstrapUser(user) {
       if (change.type === "removed") return;
       const data = change.doc.data();
       if (typeof data.key !== "string" || typeof data.value !== "string") return;
+      if (!isJournalKey(data.key)) return;
       if (localStorage.getItem(data.key) === data.value) return;
       applyingRemote = true;
       localStorage.setItem(data.key, data.value);
