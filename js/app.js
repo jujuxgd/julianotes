@@ -186,12 +186,12 @@ ul,ol{padding-left:22px;margin-bottom:12px}
 li{margin-bottom:5px}
 .box{border-left:5px solid;padding:14px 18px;border-radius:0 8px 8px 0;margin:18px 0}
 .label{display:block;font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.tw{overflow-x:auto;margin:18px 0;border-radius:6px;border:1px solid var(--border-color)}
+.tw{overflow-x:auto;overflow:hidden;margin:18px 0;border-radius:6px;border:1px solid var(--border-color)}
 table{width:100%;border-collapse:collapse;font-size:.875rem}
-thead th{background:var(--primary);color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:.82rem}
+thead th{background:var(--primary);color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:.82rem;white-space:nowrap}
 tbody tr:nth-child(even){background:var(--soft)}
 tbody tr:nth-child(odd){background:var(--paper)}
-tbody td{padding:12px 14px;border-bottom:1px solid var(--border-color);vertical-align:top}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--border-color);vertical-align:top;color:var(--ink)}
 tbody tr{transition:filter .12s}
 tbody tr:hover{filter:brightness(.97)}
 .minute{background:var(--soft);border-top:5px solid var(--primary);padding:16px 25px 22px;border-radius:8px;margin-bottom:36px}
@@ -208,7 +208,7 @@ Sobre o HTML que usa esse CSS:
 - Círculo de cada seção (.num) tem só o número inteiro (1, 2, 3...) igual ao índice — NUNCA "1.0". h3 e h4 NUNCA levam número na frente (nada de "1.1", "3.1.2" etc.) — só o texto do título.
 - .box leva uma segunda classe com a cor semântica (ex. class="box def"), com border-color e background definidos por essa segunda classe — ver seção 4 abaixo pros 6 tipos fixos.
 - Kathen fica reservado só pra um detalhe pequeno opcional, nunca em título de seção nem em h3/h4.
-- TABELAS — reserve tabela SOMENTE para comparar 2+ itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo. É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize") — isso é lista dentro de um parágrafo, nunca tabela.
+- TABELAS — reserve tabela SOMENTE para comparar 2+ itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo. É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize") — isso é lista dentro de um parágrafo, nunca tabela. NUNCA aplique color, style="color:..." ou classe colorida em <td> — as células herdam var(--ink) do body e devem ficar pretas. Só o <thead th> tem cor (branca no fundo primário).
 - NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida, dentro de um <p> normal.
 
 3 — IDENTIDADE VISUAL POR MATÉRIA
