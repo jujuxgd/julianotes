@@ -104,8 +104,7 @@ function downloadSummaryPdf(){if(!localStorage.getItem(sumKey()))return toast('A
 function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],theme=SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
 $('#summaryMeta').textContent=`${s.name} · ${currentStage==='1'?'primeira':'segunda'} etapa`;
 $('#materialResponse').value='';
-$('#summaryPrompt').value=`Leia integralmente minhas anotações neste Google Docs:
-https://docs.google.com/document/d/${id}/edit
+$('#summaryPrompt').value=`Vou colar abaixo, nesta mesma mensagem, o conteúdo completo das minhas anotações de aula desta matéria (fonte original: ${`https://docs.google.com/document/d/${id}/edit`}). Se eu esquecer de colar o texto das anotações, não gere o resumo — me avise que falta o conteúdo.
 
 MATÉRIA: ${s.name}
 ETAPA: ${currentStage==='1'?'Primeira':'Segunda'} etapa do semestre
@@ -114,12 +113,12 @@ IDENTIDADE FIXA DESTA MATÉRIA: ${theme.name}
 CORES OBRIGATÓRIAS: --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink};
 
 MISSÃO
-Crie um material de Direito cumulativo, rigoroso e realmente útil para prova. O resultado deve parecer um caderno editorial premium, e não uma apostila cinza nem uma parede de cards. Entenda e aplique toda a lógica abaixo sem pedir validação intermediária.
+Crie um material de Direito cumulativo, rigoroso e realmente útil para prova. O resultado deve parecer um caderno editorial premium, e não uma apostila cinza nem uma parede de cards. Aplique toda a lógica abaixo diretamente, sem me perguntar se pode prosseguir.
 
 REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO.
 
 1 — CONTEÚDO CUMULATIVO
-- Leia o documento inteiro.
+- Leia integralmente o texto das anotações que colei nesta mensagem.
 - Atualize o RESUMO ANTERIOR abaixo; não crie outro documento desconectado.
 - Preserve o que continua correto e encaixe as aulas novas no lugar lógico.
 - Não omita requisitos, elementos, classificações, exceções, hipóteses, prazos, artigos, competências, efeitos, distinções, jurisprudência ou observações de aula cobradas em prova.
@@ -190,7 +189,7 @@ Não converta cada bullet do resumo em cartão. Flashcard é para recuperação 
 - type deve ser um entre: conceito, artigo, prazo, requisito, exceção, comparação, pegadinha, exemplo.
 
 9 — FORMATO FINAL OBRIGATÓRIO
-Não escreva nenhuma explicação fora destes dois blocos.
+Não escreva nenhuma explicação fora destes dois blocos. Não envolva os blocos em \`\`\`html, \`\`\`json ou qualquer cerca de código markdown — o site procura literalmente pelas tags abaixo no texto puro, e uma cerca de código extra quebra a importação.
 
 <SUMMARY_HTML>
 [HTML COMPLETO DO RESUMO]
@@ -207,7 +206,7 @@ FLASHCARDS JÁ EXISTENTES — preserve os IDs quando a informação continuar se
 ${existing.length?JSON.stringify(existing):'[Nenhum flashcard existente.]'}`;
 setReader('prompt')}
 async function copyPrompt(){try{await navigator.clipboard.writeText($('#summaryPrompt').value);toast('Prompt copiado')}catch{toast('Selecione e copie o prompt')}}
-function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do ChatGPT');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sanitizeSummaryHtml(sm[1].trim()),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};if(!/<body[\s>]/i.test(html)||!/<style[\s>]/i.test(html))return toast('O bloco do resumo precisa conter HTML completo e CSS');let source=Array.isArray(data)?data:data.flashcards;if(!Array.isArray(source))return toast('O JSON precisa conter uma lista de flashcards');let cards=source.slice(0,16),ignored=Math.max(0,source.length-cards.length);if(!setLocalItem(sumKey(),html))return;let stats=syncFlashcards(cards,currentSubject,currentStage);renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos${ignored?` · ${ignored} extras ignorados`:''}`) }
+function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do Claude');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sanitizeSummaryHtml(sm[1].trim()),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};if(!/<body[\s>]/i.test(html)||!/<style[\s>]/i.test(html))return toast('O bloco do resumo precisa conter HTML completo e CSS');let source=Array.isArray(data)?data:data.flashcards;if(!Array.isArray(source))return toast('O JSON precisa conter uma lista de flashcards');let cards=source.slice(0,16),ignored=Math.max(0,source.length-cards.length);if(!setLocalItem(sumKey(),html))return;let stats=syncFlashcards(cards,currentSubject,currentStage);renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos${ignored?` · ${ignored} extras ignorados`:''}`) }
 
 function readArray(key){try{let value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch{return []}}
 function getEvents(){return readArray(evKey)}function setEvents(v){setLocalItem(evKey,JSON.stringify(v))}
