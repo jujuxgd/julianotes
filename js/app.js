@@ -140,20 +140,69 @@ REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO — E NUNCA A LINGUAGE
 - Fatos memorizáveis, definições, regras, dados e distinções pontuais vão para recursos estruturados (caixas semânticas, listas curtas dentro do texto), mas SEMPRE ancorados a um parágrafo de prosa que os introduz — nunca soltos um atrás do outro sem transição.
 - Abra o conteúdo com “EM 1 MINUTO” e encerre com “ANTES DA PROVA, LEMBRE”; nenhum deles substitui o desenvolvimento completo. Esses dois blocos usam padding vertical contido (16–24px no topo, não mais que isso) entre a borda do card e o título — nada de espaço vazio grande acima do título "EM 1 MINUTO" ou "ANTES DA PROVA, LEMBRE".
 
-2 — ESTRUTURA EDITORIAL OBRIGATÓRIA (padrão "hero + cards de seção", igual ao modelo de referência abaixo)
-- Entregue um único HTML5 autocontido, com CSS dentro de <style>, sem JavaScript, imagens, iframes, links externos, @import ou dependências de rede.
-- OBRIGATÓRIO E SEM EXCEÇÃO: a primeiríssima regra dentro do seu <style> tem que ser um bloco :root{} declarando de fato, como custom properties, TODAS as cores de CORES OBRIGATÓRIAS acima usando os valores hexadecimais exatos informados, mais --ink:#211C19; --paper:#FFFFFF; --canvas:#ECE8E3; --border-color:#e5e5e5; — exatamente assim: :root{--primary:${theme.primary};--accent:${theme.accent};--soft:${theme.soft};--subject-ink:${theme.ink};--ink:#211C19;--paper:#FFFFFF;--canvas:#ECE8E3;--border-color:#e5e5e5}. Você vai usar var(--primary), var(--subject-ink) etc. em várias regras deste documento — se esse :root não existir com essas variáveis definidas, TODAS essas declarações (fundo do hero, borda do índice, cabeçalho das seções, tudo) ficam inválidas e o resumo inteiro sai sem cor nenhuma, quebrado. Nunca esqueça esse bloco, nunca declare só parte das variáveis.
-- HERO: banner de topo (NÃO página de rosto em tela cheia — nada de min-height:100svh nem centralização vertical de viewport inteira). O container do hero usa EXATAMENTE background:linear-gradient(135deg, var(--primary) 0%, var(--subject-ink) 100%) — as duas cores concretas já fornecidas em CORES OBRIGATÓRIAS, nunca "um tom mais escuro" inventado nem outra variável — e color:#FFFFFF declarado no próprio container do hero, herdado por rótulo, h1, subtítulo e tags (nunca use --ink ou qualquer cor escura dentro do hero: todo texto ali é branco, com opacity reduzida — ~0.85 no rótulo e ~0.9 no subtítulo — para hierarquia, nunca com outra cor). Padding vertical generoso (clamp(40px,7vw,58px)) e horizontal (28px), texto centralizado. Ordem: rótulo pequeno em caixa alta espaçada (instituição · semestre); nome da matéria como h1 — ESTA é a ÚNICA linha do documento inteiro em font-family:'Muthiara',cursive, tamanho clamp(1.8rem,4.5vw,2.8rem), font-weight:400 (SEM negrito — Muthiara é manuscrita e fica pesada/ilegível em bold; nunca use font-weight 600+ nela), com text-shadow:0 2px 12px rgba(0,0,0,.15); logo abaixo "Resumo Completo"/"Resumo Avançado" e professor (se constar nas anotações) em Inter normal; por fim 3–4 tags/pills centralizadas (fundo rgba(255,255,255,.18), borda 1.5px rgba(255,255,255,.4), texto branco, border-radius 20px) com os temas centrais da etapa.
-- ÍNDICE: logo abaixo do hero, um card branco com borda de 2px na cor --primary, max-width confortável (~820px) centralizado, título pequeno em caixa alta centralizado, e uma lista numerada em DUAS COLUNAS (CSS columns:2 em telas largas, 1 coluna em mobile) com link funcional (âncora #id) para cada seção — sem círculos grandes nem sombras decorativas, só a lista compacta.
-- SEÇÕES: cada seção é um "card" independente (fundo --paper, border-radius ~10px, sombra leve, borda 1px --border-color) com um cabeçalho colorido (fundo --primary sólido, texto branco, padding ~14px 24px) contendo um círculo numerado pequeno (34px, fundo translúcido branco) + título da seção em Inter negrito (não use fonte manuscrita nos títulos de seção — Kathen fica reservado só para um detalhe pequeno opcional, nunca em título de seção). O corpo da seção fica num bloco de padding ~28px 30px. Espaçamento generoso entre cards (mín. 32px) — sem forçar quebra de página.
-- SUBSEÇÕES (h3/h4 dentro da seção): h3 com borda inferior fina na cor --primary, cor --subject-ink, negrito; h4 menor, mesma cor, sem borda. Máximo três níveis de título.
-- TEXTO: Inter/Arial, tamanho confortável (15–17px), line-height 1.55–1.7, parágrafos com text-align:left — NUNCA text-align:justify em lugar nenhum do documento (nem no <p> geral, nem dentro de caixas/boxes): justificar texto numa coluna estreita sem hifenização cria espaçamentos irregulares entre palavras, ilegível e feio. Use listas só quando forem mais claras que prosa.
-- CAIXAS/CALLOUTS: borda lateral esquerda de 5px na cor semântica, fundo pastel da mesma família, cantos arredondados só do lado direito (0 8px 8px 0), padding 14px 18px, rótulo em caixa alta pequeno e negrito no topo da caixa na cor semântica, texto normal abaixo. Sem sombra pesada — são discretas, não protagonistas.
-- TABELAS: reserve tabela SOMENTE para comparar 2 ou mais itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo — ex.: comparar regimes de bens através de "Regime / Comunicação / Direito Real de Habitação / Concorrência". É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize", "Termo / Significado", "Conceito / Definição") — isso é sempre lista dentro de um parágrafo introdutório, nunca tabela. Envolva toda tabela num wrapper com overflow-x:auto SEMPRE; header sólido --primary com texto branco, linhas zebradas (par/ímpar), cantos levemente arredondados no wrapper.
-- NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida.
-- TEXTURA DO HERO: dentro de .hero, adicione position:relative;overflow:hidden e um ::before absoluto (inset:0, pointer-events:none) com este padrão de pontinhos sutis, sem alterar a cor: background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"). O conteúdo do hero (label, h1, tags etc.) precisa de position:relative pra ficar acima dessa textura.
-- FLUIDEZ SEM JAVASCRIPT: o documento é exibido num iframe que bloqueia execução de <script> por segurança — então NUNCA use onclick, addEventListener, scrollIntoView ou qualquer JS pra interatividade; tudo isso é ignorado/quebrado. Em vez disso: (1) declare html{scroll-behavior:smooth} no <style> — isso já deixa qualquer clique em link de âncora (#id) suave nativamente, sem JS nenhum; (2) marque o topo do documento com um id (ex. <header class="hero" id="topo">); (3) inclua um botão "voltar ao topo" como um simples link <a href="#topo" class="to-top" aria-label="Voltar ao topo">↑</a> fixo no canto inferior direito — position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:1.15rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:transform .15s,box-shadow .15s; com :hover leve (transform:scale(1.07)). Esse botão fica sempre visível (não tem como esconder/mostrar por scroll sem JS, e tudo bem — é assim mesmo).
-- MICRO-DETALHES DE ACABAMENTO (pra não parecer estático/cru): índice (.toc-card a) tem transition:color .15s e muda pra var(--primary) no :hover; linhas de tabela (tbody tr) têm transition:background .12s e um leve destaque no :hover (ex. background da linha par/ímpar um pouco mais escura); tags do hero (.tag) têm transition:transform .15s e um leve transform:translateY(-1px) no :hover. São detalhes pequenos, não exagere.
+2 — ESTRUTURA EDITORIAL OBRIGATÓRIA — CSS REAL DO MODELO DE REFERÊNCIA, COPIE QUASE LITERALMENTE
+Entregue um único HTML5 autocontido, com CSS dentro de <style>, sem JavaScript, imagens, iframes, links externos, @import ou dependências de rede.
+NADA DE PARÁFRASE: abaixo está o CSS de verdade, testado, do modelo de referência (mackenzie-study-journal), já com os nomes de classe e variáveis que você deve usar. Isso não é uma sugestão de estilo pra você reinterpretar — é o CSS que você copia para dentro do seu <style>, célula por célula, exatamente como está, só preenchendo os valores de :root com CORES OBRIGATÓRIAS (linha 1) e escrevendo o HTML do conteúdo (hero, índice, seções) usando essas mesmas classes. NÃO troque nomes de classe, NÃO invente um layout diferente, NÃO "resuma" as regras, NÃO copie a estrutura de um RESUMO ANTERIOR que tenha ficado diferente disto — se sobrar espaço vazio de um lado, se a numeração não bater, se o texto sair justificado, é sinal de que você se afastou deste CSS; volte e copie de novo:
+
+:root{--primary:${theme.primary};--accent:${theme.accent};--soft:${theme.soft};--subject-ink:${theme.ink};--ink:#211C19;--paper:#FFFFFF;--canvas:#ECE8E3;--border-color:#e5e5e5}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',Arial,sans-serif;background:var(--canvas);color:var(--ink);line-height:1.65;font-size:15px;overflow-wrap:anywhere}
+.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--subject-ink) 100%);color:#FFFFFF;text-align:center;padding:clamp(40px,7vw,58px) 28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero>*{position:relative}
+.hero .top{font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.85;margin-bottom:14px}
+.hero h1{font-family:'Muthiara',cursive;font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:400;line-height:1.2;margin-bottom:14px;text-shadow:0 2px 12px rgba(0,0,0,.15)}
+.hero .subtitle,.hero .prof{font-size:.95rem;opacity:.9;font-weight:400;margin-bottom:4px}
+.hero .tags{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero .tag{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.4);border-radius:20px;padding:4px 14px;font-size:.78rem;font-weight:600;transition:transform .15s}
+.hero .tag:hover{transform:translateY(-1px)}
+.toc-card{background:var(--paper);border:2px solid var(--primary);max-width:820px;margin:32px auto 0 auto;padding:24px 32px;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.toc-card .toc-title{color:var(--subject-ink);font-size:.88rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:1.5px;text-align:center;font-weight:800}
+.toc-card ol{list-style:none;columns:2;column-gap:32px}
+.toc-card li{margin:5px 0;break-inside:avoid;font-weight:600;border-bottom:0}
+.toc-card a{color:var(--ink);text-decoration:none;font-size:.875rem;transition:color .2s;display:flex;gap:8px;align-items:baseline}
+.toc-card a:hover{color:var(--primary);text-decoration:underline}
+.toc-card a .tn{color:var(--primary);font-weight:800;flex-shrink:0}
+@media(max-width:600px){.toc-card ol{columns:1}.toc-card{margin:20px 14px 0 14px;padding:18px}}
+.content{max-width:1080px;margin:0 auto;padding:32px 40px 60px 40px}
+.section{background:var(--paper);border-radius:10px;box-shadow:0 2px 14px rgba(0,0,0,.06);margin-bottom:36px;overflow:hidden;border:1px solid var(--border-color)}
+.sec-head{background:var(--primary);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:14px}
+.sec-head .num{background:rgba(255,255,255,.25);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0}
+.sec-head h2{font-size:1.15rem;font-weight:700;letter-spacing:.3px;margin:0}
+.section-body{padding:28px 30px}
+h3{color:var(--subject-ink);font-size:1rem;font-weight:700;margin:0 0 12px;padding-bottom:4px;border-bottom:2px solid var(--soft)}
+h4{color:var(--subject-ink);font-size:.92rem;font-weight:700;margin:18px 0 8px}
+p{margin-bottom:12px;text-align:left}
+p:last-child{margin-bottom:0}
+ul,ol{padding-left:22px;margin-bottom:12px}
+li{margin-bottom:5px}
+.box{border-left:5px solid;padding:14px 18px;border-radius:0 8px 8px 0;margin:18px 0}
+.label{display:block;font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.tw{overflow-x:auto;margin:18px 0;border-radius:6px;border:1px solid var(--border-color)}
+table{width:100%;border-collapse:collapse;font-size:.875rem}
+thead th{background:var(--primary);color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:.82rem}
+tbody tr:nth-child(even){background:var(--soft)}
+tbody tr:nth-child(odd){background:var(--paper)}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--border-color);vertical-align:top}
+tbody tr{transition:filter .12s}
+tbody tr:hover{filter:brightness(.97)}
+.minute{background:var(--soft);border-top:5px solid var(--primary);padding:16px 25px 22px;border-radius:8px;margin-bottom:36px}
+.minute h2{margin:0 0 10px;font-size:1.05rem;letter-spacing:.04em;color:var(--subject-ink)}
+.remember{background:var(--subject-ink);color:#fff;padding:16px 25px 22px;border-radius:10px;margin-top:36px}
+.remember h2{margin:0 0 10px;font-size:1.05rem;letter-spacing:.04em}
+.to-top{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:1.15rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s}
+.to-top:hover{transform:scale(1.07)}
+@media screen and (max-width:760px){.content{padding:18px 16px 40px}.toc-card{margin:20px 14px 0 14px;padding:18px}.hero{padding:28px 18px}.section-body{padding:18px 16px}}
+@media print{@page{size:auto;margin:12mm}}
+
+Sobre o HTML que usa esse CSS:
+- <body> contém direto: <header class="hero" id="topo">...</header>, depois <nav class="toc-card">...</nav> (FORA de qualquer wrapper com max-width — o toc-card já centraliza sozinho), depois <main class="content"> com o .minute, cada .section, e o .remember dentro dele, e por fim <a href="#topo" class="to-top">↑</a> solto no fim do body (fora do .content). É o link de âncora inteiro que faz o "voltar ao topo" funcionar — sem JavaScript nenhum (o iframe onde o resumo aparece bloqueia <script>, então onclick/addEventListener/scrollIntoView simplesmente não rodam; scroll-behavior:smooth + href="#topo" é a única forma que funciona aqui).
+- Círculo de cada seção (.num) tem só o número inteiro (1, 2, 3...) igual ao índice — NUNCA "1.0". h3 e h4 NUNCA levam número na frente (nada de "1.1", "3.1.2" etc.) — só o texto do título.
+- .box leva uma segunda classe com a cor semântica (ex. class="box def"), com border-color e background definidos por essa segunda classe — ver seção 4 abaixo pros 6 tipos fixos.
+- Kathen fica reservado só pra um detalhe pequeno opcional, nunca em título de seção nem em h3/h4.
+- TABELAS — reserve tabela SOMENTE para comparar 2+ itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo. É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize") — isso é lista dentro de um parágrafo, nunca tabela.
+- NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida, dentro de um <p> normal.
 
 3 — IDENTIDADE VISUAL POR MATÉRIA
 - Esta matéria usa SEMPRE a paleta ${theme.name}: --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink}; --ink:#211C19; --paper:#FFFFFF; --canvas:#ECE8E3; --border-color:#e5e5e5.
