@@ -12,11 +12,12 @@ const SUBJECT_THEMES={
   petss:{name:'ciano turquesa',primary:'#2896A8',accent:'#A6E1EA',soft:'#E6F8FA',ink:'#1B5D68'}
 };
 const SUMMARY_HIGHLIGHTS={
-  yellow:{label:'Amarelo',bg:'#FEF9C3',text:'#5F5213'},
-  green:{label:'Verde',bg:'#DCFCE7',text:'#27633A'},
-  blue:{label:'Azul',bg:'#DBEAFE',text:'#285B92'},
-  pink:{label:'Rosa',bg:'#FCE7F3',text:'#9B3567'},
-  purple:{label:'Lilás',bg:'#EDE9FE',text:'#604A91'}
+  pink:{label:'Rosa',bg:'#FFD9E1',text:'#7A2E44'},
+  purple:{label:'Lilás',bg:'#E6D6FF',text:'#4E3480'},
+  blue:{label:'Azul',bg:'#CDEBFB',text:'#245776'},
+  mint:{label:'Verde Menta',bg:'#C7F6DC',text:'#215F41'},
+  yellow:{label:'Amarelo',bg:'#FFF6B0',text:'#5F5213'},
+  peach:{label:'Pêssego',bg:'#FFDEC2',text:'#7A4416'}
 };
 let currentSubject=SUBJECTS[0].key,currentStage='1',calDate=new Date(),savedSummaryRange=null,studyQueue=[],studyIndex=0,studyRetries=new Set(),toastTimer=null,activeModal=null,modalReturnFocus=null;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],subj=k=>SUBJECTS.find(x=>x.key===k);
@@ -138,40 +139,39 @@ REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO — E NUNCA A LINGUAGE
 - Fatos memorizáveis, definições, regras, dados e distinções pontuais vão para recursos estruturados (caixas semânticas, listas curtas dentro do texto), mas SEMPRE ancorados a um parágrafo de prosa que os introduz — nunca soltos um atrás do outro sem transição.
 - Abra o conteúdo com “EM 1 MINUTO” e encerre com “ANTES DA PROVA, LEMBRE”; nenhum deles substitui o desenvolvimento completo. Esses dois blocos usam padding vertical contido (16–24px no topo, não mais que isso) entre a borda do card e o título — nada de espaço vazio grande acima do título "EM 1 MINUTO" ou "ANTES DA PROVA, LEMBRE".
 
-2 — ESTRUTURA EDITORIAL OBRIGATÓRIA (padrão "caderno editorial premium")
+2 — ESTRUTURA EDITORIAL OBRIGATÓRIA (padrão "hero + cards de seção", igual ao modelo de referência abaixo)
 - Entregue um único HTML5 autocontido, com CSS dentro de <style>, sem JavaScript, imagens, iframes, links externos, @import ou dependências de rede.
-- CAPA: página de rosto cheia e centralizada, como a capa de um caderno — não um bloco de topo curto. min-height:100svh (nunca height/mm fixos — ver regra 6), display:flex com justify-content:center e align-items:center, todo o conteúdo centralizado tanto vertical quanto horizontalmente (text-align:center), gradiente diagonal em 3 tons da paleta da matéria (--ink escuro → --primary → --accent claro), padding generoso (clamp(28px,7vw,64px)). Ordem, com espaçamento generoso entre os blocos: instituição e semestre no topo em caixa alta espaçada; nome da matéria em Muthiara branca — CONTIDA, no máximo uma ou duas palavras curtas por linha, tamanho clamp(2.2rem,6vw,3.8rem) (nunca maior — o objetivo é elegância, não ocupar a tela); "Resumo Completo" ou "Resumo Avançado" logo abaixo; professor em itálico somente se constar nas anotações; 3–4 tags com temas centrais como pills centralizadas com borda translúcida (border:1px solid #ffffff55, border-radius:999px, padding:6px 14px), dispostas em linha(s) centralizadas com flex-wrap; contexto da etapa por último, com boa distância do resto.
-- SUMÁRIO: lista numerada com separador fino entre itens, cada item com âncora funcional para a seção correspondente; círculo numerado GRANDE (mínimo 30px, tipografia negrito) com leve sombra (box-shadow: 0 2px 6px rgba(0,0,0,.15) ou similar) à esquerda do texto do link, mesma cor --primary de fundo.
-- SEÇÕES: cada seção grande numerada começa com faixa sólida --primary (padding generoso, mínimo 14px 18px), círculo numerado branco com texto na cor --primary, e título da seção em Kathen (script/manuscrita) — não em Inter — tamanho grande o bastante para ler bem (clamp(1.3rem,3vw,1.8rem)), com fallback cursive automático. Seções se sucedem no fluxo normal da página, separadas por espaçamento generoso (mínimo 34px entre seções) — não force quebra de página.
-- SUBTÍTULOS (h3/h4 dentro da seção): hierarquia inequívoca, sans-serif, negrito e cor --subject-ink. Use no máximo três níveis de título.
-- TEXTO: Inter/Arial, tamanho confortável para leitura em tela (equivalente a 15–17px), line-height 1.55–1.7. Use listas somente quando forem mais claras que prosa.
-- CARTÕES E CAIXAS: aplique cantos arredondados (border-radius 8–12px) e sombra leve (box-shadow: 0 2px 8px rgba(0,0,0,.06) ou similar) em boxes semânticas, banners e blocos de destaque — evite retângulos totalmente chapados sem profundidade. Padding interno contido (16–24px) em todos os lados, incluindo o topo — nunca deixe espaço vazio grande entre a borda de um card/box e seu título ou primeira linha de texto.
-- TABELAS: reserve tabela SOMENTE para comparar 2 ou mais itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo — ex.: comparar regimes de bens através de "Regime / Comunicação / Direito Real de Habitação / Concorrência". É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize", "Termo / Significado", "Conceito / Definição") — isso é sempre lista dentro de um parágrafo introdutório, nunca tabela. Se você só tem UM item com várias características (não vários itens comparáveis), isso é uma caixa semântica ou uma lista com frase de abertura, não tabela. Envolva toda tabela num wrapper com overflow-x:auto SEMPRE (não só em telas estreitas — isso evita que a tabela vaze/estoure a largura do card do site em qualquer tamanho de tela); a table interna tem width:100% e table-layout:auto; header --primary com texto branco, linhas zebradas, cantos levemente arredondados no wrapper.
+- HERO: banner de topo (NÃO página de rosto em tela cheia — nada de min-height:100svh nem centralização vertical de viewport inteira). Fundo com gradiente diagonal 2 tons (--primary → tom mais escuro da mesma matéria), padding vertical generoso (clamp(40px,7vw,58px)) e horizontal (28px), texto centralizado. Ordem: rótulo pequeno em caixa alta espaçada (instituição · semestre); nome da matéria como h1 — ESTA é a ÚNICA linha do documento inteiro em font-family:'Muthiara',cursive, tamanho clamp(1.8rem,4.5vw,2.8rem), peso forte, com leve text-shadow; logo abaixo "Resumo Completo"/"Resumo Avançado" e professor (se constar nas anotações) em Inter normal; por fim 3–4 tags/pills centralizadas (fundo translúcido branco, borda 1.5px, border-radius 20px) com os temas centrais da etapa.
+- ÍNDICE: logo abaixo do hero, um card branco com borda de 2px na cor --primary, max-width confortável (~820px) centralizado, título pequeno em caixa alta centralizado, e uma lista numerada em DUAS COLUNAS (CSS columns:2 em telas largas, 1 coluna em mobile) com link funcional (âncora #id) para cada seção — sem círculos grandes nem sombras decorativas, só a lista compacta.
+- SEÇÕES: cada seção é um "card" independente (fundo --paper, border-radius ~10px, sombra leve, borda 1px --border-color) com um cabeçalho colorido (fundo --primary sólido, texto branco, padding ~14px 24px) contendo um círculo numerado pequeno (34px, fundo translúcido branco) + título da seção em Inter negrito (não use fonte manuscrita nos títulos de seção — Kathen fica reservado só para um detalhe pequeno opcional, nunca em título de seção). O corpo da seção fica num bloco de padding ~28px 30px. Espaçamento generoso entre cards (mín. 32px) — sem forçar quebra de página.
+- SUBSEÇÕES (h3/h4 dentro da seção): h3 com borda inferior fina na cor --primary, cor --subject-ink, negrito; h4 menor, mesma cor, sem borda. Máximo três níveis de título.
+- TEXTO: Inter/Arial, tamanho confortável (15–17px), line-height 1.55–1.7, parágrafos justificados. Use listas só quando forem mais claras que prosa.
+- CAIXAS/CALLOUTS: borda lateral esquerda de 5px na cor semântica, fundo pastel da mesma família, cantos arredondados só do lado direito (0 8px 8px 0), padding 14px 18px, rótulo em caixa alta pequeno e negrito no topo da caixa na cor semântica, texto normal abaixo. Sem sombra pesada — são discretas, não protagonistas.
+- TABELAS: reserve tabela SOMENTE para comparar 2 ou mais itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo — ex.: comparar regimes de bens através de "Regime / Comunicação / Direito Real de Habitação / Concorrência". É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize", "Termo / Significado", "Conceito / Definição") — isso é sempre lista dentro de um parágrafo introdutório, nunca tabela. Envolva toda tabela num wrapper com overflow-x:auto SEMPRE; header sólido --primary com texto branco, linhas zebradas (par/ímpar), cantos levemente arredondados no wrapper.
 - NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida.
 
 3 — IDENTIDADE VISUAL POR MATÉRIA
-- Esta matéria usa SEMPRE a paleta ${theme.name}: --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink}; --ink:#211C19; --paper:#FFFFFF; --canvas:#ECE8E3.
+- Esta matéria usa SEMPRE a paleta ${theme.name}: --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink}; --ink:#211C19; --paper:#FFFFFF; --canvas:#ECE8E3; --border-color:#e5e5e5.
 - Não mude essa paleta em atualizações futuras. Ela identifica a matéria antes mesmo da leitura.
-- A cor da matéria é estrutural: gradiente da capa (diagonal, 3 tons: --ink escuro → --primary → --accent claro — não use um único tom sólido), círculos do sumário, faixas/títulos de seção e cabeçalhos de tabela. Não use a cor da matéria nas caixas semânticas.
-- Não use cores aleatórias nem vários gradientes diferentes na mesma página — apenas o gradiente de capa definido acima. Não use emoji como decoração; os ícones abaixo são rótulos semânticos e são a única exceção.
-- Objetivo geral de acabamento: o resultado deve parecer um caderno editorial encadernado — com peso visual, sombra leve, cantos arredondados e boa respiração — nunca uma tabela ou apostila chapada sem profundidade.
+- A cor da matéria é estrutural: gradiente do hero, borda do card de índice, cabeçalho de cada card de seção, bordas de h3 e cabeçalhos de tabela. Não use a cor da matéria nas caixas semânticas (elas têm cor própria fixa, ver item 4).
+- Não use cores aleatórias nem vários gradientes diferentes na mesma página — apenas o gradiente do hero definido acima. Não use emoji como decoração; os ícones abaixo são rótulos semânticos e são a única exceção.
+- Objetivo geral de acabamento: denso, editorial, fácil de escanear — cards de seção bem definidos, callouts discretos, tabelas limpas. Nada de espaço vazio decorativo grande; a página deve parecer um caderno de aula bem organizado, não um cartaz.
 
 4 — CAIXAS SEMÂNTICAS FIXAS EM TODAS AS MATÉRIAS (use com moderação)
-Cada caixa tem borda lateral de 5px, fundo pastel, ícone + rótulo em caixa alta e texto escuro. Use apenas quando a função semântica existir — e não em todo parágrafo:
+Cada caixa segue o padrão callout: borda lateral esquerda de 5px, fundo pastel, cantos arredondados só à direita, rótulo em caixa alta pequeno e negrito no topo, ícone + rótulo semântico, texto normal abaixo, sem sombra pesada. Use apenas quando a função semântica existir — e não em todo parágrafo:
 - .box-definicao — 📘 DEFINIÇÃO DOUTRINÁRIA — fundo #EAF4FB, borda #5B93B8.
 - .box-atencao — ⚠️ DADO / ATENÇÃO — fundo #DFEEF8, borda #397DA8.
 - .box-critico — ⚡ PONTO CRÍTICO — fundo #F1E9FA, borda #8B68B4.
 - .box-regra — 🚫 REGRA ABSOLUTA — fundo #FBE8EC, borda #C95B77.
 - .box-jurisprudencia — ⚖️ JURISPRUDÊNCIA / CASO — fundo #F0F0F2, borda #73747A; comece pelo nome do caso em negrito.
 - .box-distincao — 🔍 DISTINÇÃO CRÍTICA — fundo #E7F4F0, borda #3D8A78; coloque Termo A e Termo B no mesmo quadro.
-- LIMITE: no máximo 1 caixa a cada 2–3 parágrafos de uma seção. Se uma seção tem só fatos memorizáveis (ex.: uma lista de artigos), prefira UMA tabela em vez de várias caixas em sequência — várias caixas empilhadas lado a lado ou uma embaixo da outra pesam a leitura e parecem uma parede de quadrados coloridos, o oposto do efeito "caderno editorial" pretendido.
+- LIMITE: no máximo 1 caixa a cada 2–3 parágrafos de uma seção. Se uma seção tem só fatos memorizáveis (ex.: uma lista de artigos), prefira UMA tabela em vez de várias caixas em sequência — várias caixas empilhadas pesam a leitura e parecem uma parede de quadrados coloridos.
 - A cor de cada caixa significa sempre a mesma coisa, independentemente da matéria.
 
 5 — FONTES: REFERENCIE OS NOMES, NÃO DECLARE @font-face
-As fontes Muthiara, Kathen e Inter são injetadas automaticamente pelo site no documento do resumo (o site cuida disso via script próprio, incluindo dentro do iframe isolado onde o resumo é exibido). Por isso, dentro do seu <style>: NÃO declare @font-face, NÃO inclua src:url(...) de fonte nenhuma — apenas referencie os nomes diretamente nas declarações font-family, exatamente como abaixo:
-font-family:'Muthiara',cursive; → título grande da capa.
-font-family:'Kathen',cursive; → título de cada seção grande numerada (dentro da faixa --primary) e, opcionalmente, em um detalhe manuscrito pequeno adicional (ex.: rótulo de abertura tipo "caderno de [matéria]"). Não use Kathen em corpo de texto, tabelas ou boxes semânticas — apenas em títulos de destaque.
-font-family:'Inter',Arial,sans-serif; → todo o restante (corpo, subtítulos, tabelas, boxes).
+As fontes Muthiara e Inter são injetadas automaticamente pelo site no documento do resumo (o site cuida disso via script próprio, incluindo dentro do iframe isolado onde o resumo é exibido). Por isso, dentro do seu <style>: NÃO declare @font-face, NÃO inclua src:url(...) de fonte nenhuma — apenas referencie os nomes diretamente nas declarações font-family, exatamente como abaixo:
+font-family:'Muthiara',cursive; → EXCLUSIVAMENTE o h1 do hero (nome da matéria). Não use Muthiara em mais nenhum outro lugar do documento — nem títulos de seção, nem subtítulos, nem detalhes decorativos.
+font-family:'Inter',Arial,sans-serif; → todo o restante do documento (hero label/subtítulo, títulos de seção, corpo, subtítulos, tabelas, boxes, índice).
 Se por qualquer motivo a fonte de destaque não carregar no dispositivo do usuário, o navegador cai automaticamente no fallback cursive declarado acima — você não precisa e não deve tratar isso.
 
 6 — WEB-FIRST: ESTE RESUMO É UMA PÁGINA, NÃO UM PDF
@@ -180,7 +180,7 @@ Este HTML é exibido dentro de um iframe no site e cresce naturalmente com o con
 - width:210mm, height:297mm, ou qualquer unidade mm/pt para dimensionar contêineres;
 - height fixo (não min-height) em vh/vw pensado para caber "uma tela" ou "uma página" — height corta conteúdo se ele for maior que a tela, o que é sempre errado aqui;
 - qualquer classe ou wrapper que simule uma folha impressa (.page, .sheet, .paper como página A4 inteira).
-EXCEÇÃO EXPLÍCITA — a capa: min-height:100svh (nunca height:100svh) é permitido especificamente na capa, para dar a ela a sensação de página de rosto cheia e centralizada (ver regra 2). A diferença crucial: min-height cresce automaticamente se o conteúdo da capa precisar de mais espaço que uma tela (nome de matéria muito longo, muitas tags) — nunca corta ou trunca nada. height fixo continua proibido em qualquer elemento, capa incluída.
+Sem exceção para o hero: ele é um banner de altura natural (auto), nunca tela cheia — height/min-height fixos em vh/svh continuam proibidos em todo o documento, hero incluído.
 Cada seção grande simplesmente segue a anterior no fluxo normal da página, sem forçar quebra. Use margem/espaçamento (não break-before) para separar seções visualmente.
 body e contêineres (incluindo o wrapper central, ex. .doc) têm width:100%, max-width:100%, min-width:0 — NÃO limite a largura do documento inteiro a um valor fixo tipo 860px; o resumo é exibido dentro de um card do site que já controla a largura da coluna, então um max-width interno cria uma faixa estreita centralizada com espaço vazio nas laterais, o que lembra visualmente uma folha A4 — exatamente o que esta regra proíbe. O resumo deve ocupar 100% da largura disponível do card sempre, em qualquer tamanho de tela.
 Para conforto de leitura em telas muito largas, limite apenas os elementos de texto corrido (parágrafos de prosa dentro de .box, notas de aula, texto solto) a um max-width confortável (ex. 70–75ch) via CSS no próprio parágrafo — nunca no contêiner geral. Títulos, faixas de seção, capa, tabelas e boxes semânticas continuam ocupando 100% da largura do documento.
