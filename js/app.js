@@ -131,10 +131,10 @@ REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO.
 - Entregue um único HTML5 autocontido, com CSS dentro de <style>, sem JavaScript, imagens, iframes, links externos, @import ou dependências de rede.
 - CAPA: instituição e semestre no topo em caixa alta espaçada; nome da matéria em Muthiara grande e branca; “Resumo Completo” ou “Resumo Avançado”; professor em itálico somente se constar nas anotações; 3–4 tags com temas centrais; contexto da etapa no rodapé.
 - SUMÁRIO: lista numerada, cada item com âncora funcional para a seção correspondente, círculo numerado e separador fino.
-- SEÇÕES: cada seção grande numerada começa com faixa sólida --primary, número em círculo e título branco. Cada seção, exceto a primeira, inicia em nova página na impressão.
+- SEÇÕES: cada seção grande numerada começa com faixa sólida --primary, número em círculo e título branco. Seções se sucedem no fluxo normal da página, separadas por espaçamento generoso — não force quebra de página.
 - SUBTÍTULOS: hierarquia inequívoca, sans-serif, negrito e cor --subject-ink. Use no máximo três níveis de título.
-- TEXTO: Inter/Arial, 10.5–11.5pt na impressão, line-height 1.55–1.7. Use listas somente quando forem mais claras que prosa.
-- TABELAS: apenas para comparação com múltiplos atributos; header --primary com texto branco, linhas zebradas e cabeçalho repetido se a tabela continuar em outra página.
+- TEXTO: Inter/Arial, tamanho confortável para leitura em tela (equivalente a 15–17px), line-height 1.55–1.7. Use listas somente quando forem mais claras que prosa.
+- TABELAS: apenas para comparação com múltiplos atributos; header --primary com texto branco, linhas zebradas; em telas estreitas, a tabela ganha scroll horizontal próprio (nunca a página inteira).
 - NOTA DE AULA: itálico, com rótulo “Análise de Aula —” ou “Regra de Ouro Didática —”, sem caixa colorida.
 
 3 — IDENTIDADE VISUAL POR MATÉRIA
@@ -153,29 +153,27 @@ Cada caixa tem borda lateral de 5px, fundo pastel, ícone + rótulo em caixa alt
 - .box-distincao — 🔍 DISTINÇÃO CRÍTICA — fundo #E7F4F0, borda #3D8A78; coloque Termo A e Termo B no mesmo quadro.
 - Não transforme cada parágrafo em caixa. A cor de cada caixa significa sempre a mesma coisa, independentemente da matéria.
 
-5 — FONTES LOCAIS OBRIGATÓRIAS
-Declare exatamente:
-@font-face { font-family:'Muthiara'; src:url('fonts/Muthiara%20demo%20version.otf') format('opentype'); font-display:swap; }
-@font-face { font-family:'Kathen'; src:url('fonts/Kathen%20Font%20by%20Situjuh%20(7NTypes).otf') format('opentype'); font-display:swap; }
-Use Muthiara somente no grande título da capa. Use Kathen somente em um detalhe manuscrito pequeno. Todo o restante é Inter, Arial, sans-serif.
+5 — FONTES: NÃO EMBUTA, USE AS DO SITE
+As fontes Muthiara, Kathen e Inter já estão carregadas pela página que exibe este resumo. NÃO declare @font-face, NÃO inclua src:url(...) de fonte nenhuma dentro do seu <style>. Apenas referencie os nomes diretamente:
+font-family:'Muthiara',cursive; → somente no grande título da capa.
+font-family:'Kathen',cursive; → somente em um detalhe manuscrito pequeno.
+font-family:'Inter',Arial,sans-serif; → todo o restante.
+Se as fontes não carregarem por qualquer motivo, o navegador já cai automaticamente no fallback (cursive/sans-serif) declarado acima — você não precisa e não deve tratar isso.
 
-6 — TELA E MOBILE, SEM ZOOM
-- Na tela, body e contêineres têm width:100%, max-width:100%, min-width:0 e nunca width:210mm.
-- O documento central pode ter max-width:900px no desktop, mas no celular ocupa 100% sem escala, zoom ou transform.
-- Em @media screen and (max-width:760px), use padding de 18–24px, reduza títulos com clamp(), remova sombras/raios exagerados e deixe overflow-x:auto somente no wrapper da tabela.
-- Nunca produza rolagem horizontal na página. Textos longos usam overflow-wrap:anywhere.
+6 — WEB-FIRST: ESTE RESUMO É UMA PÁGINA, NÃO UM PDF
+Este HTML é exibido dentro de um iframe no site e cresce naturalmente com o conteúdo — ele NUNCA é uma simulação de folha A4 impressa. É proibido usar, em qualquer lugar do CSS:
+- @page, page:cover, break-before:page, break-after:page, break-inside:avoid ou orphans/widows;
+- width:210mm, height:297mm, ou qualquer unidade mm/pt para dimensionar contêineres;
+- alturas fixas em vh/vw pensadas para caber "uma tela" ou "uma página";
+- qualquer classe ou wrapper que simule uma folha (.page, .sheet, .paper, .cover como página inteira).
+A capa é apenas a primeira seção do fluxo normal do documento — um bloco com gradiente/cor de fundo e padding generoso, do tamanho do seu próprio conteúdo, e não uma div de 297mm de altura.
+Cada seção grande simplesmente segue a anterior no fluxo normal da página, sem forçar quebra. Use margem/espaçamento (não break-before) para separar seções visualmente.
+body e contêineres têm width:100%, max-width:100%, min-width:0. O documento central pode ter max-width:860px no desktop, centralizado, para conforto de leitura — mas no celular ocupa 100% da largura sem zoom, escala ou transform.
+Em @media screen and (max-width:760px): reduza padding para 18–24px, títulos com clamp(), remova sombras/raios exagerados, e deixe overflow-x:auto somente no wrapper de cada tabela — nunca na página inteira.
+Nunca produza rolagem horizontal na página. Textos longos usam overflow-wrap:anywhere.
 
-7 — IMPRESSÃO A4 CRÍTICA
-Use esta estratégia, sem substituir por canvas ou imagem:
-- @page { size:A4; margin:20mm; } e uma página nomeada @page cover { size:A4; margin:0; }.
-- A capa usa page:cover; width:210mm; height:297mm; box-sizing:border-box; break-after:page. Na impressão, o gradiente vira cor sólida --primary.
-- Use @bottom-center { content:counter(page); } dentro de @page e suprima o rodapé em @page cover.
-- Em @media print, aplique -webkit-print-color-adjust:exact e print-color-adjust:exact; remova box-shadow, filtros e backgrounds decorativos.
-- Cada .major-section, exceto a primeira, usa break-before:page.
-- .box-definicao, .box-atencao, .box-critico, .box-regra, .box-jurisprudencia, .box-distincao, títulos, figuras e cada linha de tabela usam break-inside:avoid/page-break-inside:avoid.
-- Tabelas longas podem continuar em outra página: thead { display:table-header-group; } e tr { break-inside:avoid; }. Não force uma tabela maior que a página a ficar inteira.
-- Use orphans:3 e widows:3; nenhuma largura, padding ou tabela pode ultrapassar a área útil de 170mm.
-- A impressão deve manter texto preto/cinza-escuro nas caixas claras e começar cada seção grande em página nova.
+7 — IMPRESSÃO (SECUNDÁRIA, NÃO PODE ALTERAR A TELA)
+O site tem seu próprio botão de "Salvar PDF" que abre uma janela separada só para imprimir — você não precisa e não deve otimizar o HTML principal para impressão. Se quiser, pode incluir um bloco @media print bem simples e opcional (ex.: esconder um botão, ajustar cor de fundo para não gastar tinta), mas ele nunca deve mudar largura, altura, quebra de página ou remover conteúdo da versão de tela. A versão de tela é a única que importa: não construa o HTML pensando em como ele vai imprimir.
 
 8 — FLASHCARDS SELETIVOS
 Não converta cada bullet do resumo em cartão. Flashcard é para recuperação ativa de alto valor, não para duplicar o texto inteiro.
