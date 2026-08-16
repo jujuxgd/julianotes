@@ -157,9 +157,7 @@ NADA DE PARÁFRASE: abaixo está o CSS de verdade, testado, do modelo de referê
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',Arial,sans-serif;background:var(--canvas);color:var(--ink);line-height:1.65;font-size:15px;overflow-wrap:anywhere}
-.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--subject-ink) 100%);color:#FFFFFF;text-align:center;padding:clamp(40px,7vw,58px) 28px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
-.hero>*{position:relative}
+.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--subject-ink) 100%);color:#FFFFFF;text-align:center;padding:clamp(40px,7vw,58px) 28px}
 .hero .top{font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.85;margin-bottom:14px}
 .hero h1{font-family:'Muthiara',cursive;font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:400;line-height:1.2;margin-bottom:14px;text-shadow:0 2px 12px rgba(0,0,0,.15)}
 .hero .subtitle,.hero .prof{font-size:.95rem;opacity:.9;font-weight:400;margin-bottom:4px}
