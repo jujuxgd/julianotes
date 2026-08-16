@@ -130,21 +130,23 @@ REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO.
 - Parágrafos corridos devem ter 3–5 linhas e apenas costurar o raciocínio. Fatos memorizáveis, definições, regras, dados e distinções vão para recursos estruturados.
 - Abra o conteúdo com “EM 1 MINUTO” e encerre com “ANTES DA PROVA, LEMBRE”; nenhum deles substitui o desenvolvimento completo.
 
-2 — ESTRUTURA EDITORIAL OBRIGATÓRIA
+2 — ESTRUTURA EDITORIAL OBRIGATÓRIA (padrão "caderno editorial premium")
 - Entregue um único HTML5 autocontido, com CSS dentro de <style>, sem JavaScript, imagens, iframes, links externos, @import ou dependências de rede.
-- CAPA: instituição e semestre no topo em caixa alta espaçada; nome da matéria em Muthiara grande e branca; “Resumo Completo” ou “Resumo Avançado”; professor em itálico somente se constar nas anotações; 3–4 tags com temas centrais; contexto da etapa no rodapé.
-- SUMÁRIO: lista numerada, cada item com âncora funcional para a seção correspondente, círculo numerado e separador fino.
-- SEÇÕES: cada seção grande numerada começa com faixa sólida --primary, número em círculo e título branco. Seções se sucedem no fluxo normal da página, separadas por espaçamento generoso — não force quebra de página.
-- SUBTÍTULOS: hierarquia inequívoca, sans-serif, negrito e cor --subject-ink. Use no máximo três níveis de título.
+- CAPA: bloco cheio com gradiente diagonal em 3 tons da paleta da matéria (--ink escuro → --primary → --accent claro), padding generoso (mínimo 56px desktop / clamp(28px,7vw,42px) mobile) e boa distância vertical entre os blocos internos (topo / título / rodapé), não apenas texto colado no topo. Ordem: instituição e semestre no topo em caixa alta espaçada; nome da matéria em Muthiara grande e branca ocupando bem o espaço (clamp(2.8rem,8vw,5.5rem)); "Resumo Completo" ou "Resumo Avançado" logo abaixo; professor em itálico somente se constar nas anotações; 3–4 tags com temas centrais como pills com borda translúcida (border:1px solid #ffffff55, border-radius:999px, padding:6px 14px); contexto da etapa no rodapé, separado por espaço generoso do resto.
+- SUMÁRIO: lista numerada com separador fino entre itens, cada item com âncora funcional para a seção correspondente; círculo numerado GRANDE (mínimo 30px, tipografia negrito) à esquerda do texto do link, mesma cor --primary de fundo.
+- SEÇÕES: cada seção grande numerada começa com faixa sólida --primary (padding generoso, mínimo 14px 18px), círculo numerado branco com texto na cor --primary, e título da seção em Kathen (script/manuscrita) — não em Inter — tamanho grande o bastante para ler bem (clamp(1.3rem,3vw,1.8rem)), com fallback cursive automático. Seções se sucedem no fluxo normal da página, separadas por espaçamento generoso (mínimo 34px entre seções) — não force quebra de página.
+- SUBTÍTULOS (h3/h4 dentro da seção): hierarquia inequívoca, sans-serif, negrito e cor --subject-ink. Use no máximo três níveis de título.
 - TEXTO: Inter/Arial, tamanho confortável para leitura em tela (equivalente a 15–17px), line-height 1.55–1.7. Use listas somente quando forem mais claras que prosa.
-- TABELAS: apenas para comparação com múltiplos atributos; header --primary com texto branco, linhas zebradas; em telas estreitas, a tabela ganha scroll horizontal próprio (nunca a página inteira).
-- NOTA DE AULA: itálico, com rótulo “Análise de Aula —” ou “Regra de Ouro Didática —”, sem caixa colorida.
+- CARTÕES E CAIXAS: aplique cantos arredondados (border-radius 8–12px) e sombra leve (box-shadow: 0 2px 8px rgba(0,0,0,.06) ou similar) em boxes semânticas, banners e blocos de destaque — evite retângulos totalmente chapados sem profundidade.
+- TABELAS: apenas para comparação com múltiplos atributos; header --primary com texto branco, linhas zebradas, cantos levemente arredondados no wrapper; em telas estreitas, a tabela ganha scroll horizontal próprio (nunca a página inteira).
+- NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida.
 
 3 — IDENTIDADE VISUAL POR MATÉRIA
 - Esta matéria usa SEMPRE a paleta ${theme.name}: --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink}; --ink:#211C19; --paper:#FFFFFF; --canvas:#ECE8E3.
 - Não mude essa paleta em atualizações futuras. Ela identifica a matéria antes mesmo da leitura.
-- A cor da matéria é estrutural: gradiente da capa, círculos do sumário, faixas/títulos de seção e cabeçalhos de tabela. Não use a cor da matéria nas caixas semânticas.
-- Não use cores aleatórias nem vários gradientes. Não use emoji como decoração; os ícones abaixo são rótulos semânticos e são a única exceção.
+- A cor da matéria é estrutural: gradiente da capa (diagonal, 3 tons: --ink escuro → --primary → --accent claro — não use um único tom sólido), círculos do sumário, faixas/títulos de seção e cabeçalhos de tabela. Não use a cor da matéria nas caixas semânticas.
+- Não use cores aleatórias nem vários gradientes diferentes na mesma página — apenas o gradiente de capa definido acima. Não use emoji como decoração; os ícones abaixo são rótulos semânticos e são a única exceção.
+- Objetivo geral de acabamento: o resultado deve parecer um caderno editorial encadernado — com peso visual, sombra leve, cantos arredondados e boa respiração — nunca uma tabela ou apostila chapada sem profundidade.
 
 4 — CAIXAS SEMÂNTICAS FIXAS EM TODAS AS MATÉRIAS
 Cada caixa tem borda lateral de 5px, fundo pastel, ícone + rótulo em caixa alta e texto escuro. Use apenas quando a função semântica existir:
@@ -158,9 +160,9 @@ Cada caixa tem borda lateral de 5px, fundo pastel, ícone + rótulo em caixa alt
 
 5 — FONTES: NÃO EMBUTA, USE AS DO SITE
 As fontes Muthiara, Kathen e Inter já estão carregadas pela página que exibe este resumo. NÃO declare @font-face, NÃO inclua src:url(...) de fonte nenhuma dentro do seu <style>. Apenas referencie os nomes diretamente:
-font-family:'Muthiara',cursive; → somente no grande título da capa.
-font-family:'Kathen',cursive; → somente em um detalhe manuscrito pequeno.
-font-family:'Inter',Arial,sans-serif; → todo o restante.
+font-family:'Muthiara',cursive; → título grande da capa.
+font-family:'Kathen',cursive; → título de cada seção grande numerada (dentro da faixa --primary) e, opcionalmente, em um detalhe manuscrito pequeno adicional (ex.: rótulo de abertura tipo "caderno de [matéria]"). Não use Kathen em corpo de texto, tabelas ou boxes semânticas — apenas em títulos de destaque.
+font-family:'Inter',Arial,sans-serif; → todo o restante (corpo, subtítulos, tabelas, boxes).
 Se as fontes não carregarem por qualquer motivo, o navegador já cai automaticamente no fallback (cursive/sans-serif) declarado acima — você não precisa e não deve tratar isso.
 
 6 — WEB-FIRST: ESTE RESUMO É UMA PÁGINA, NÃO UM PDF
