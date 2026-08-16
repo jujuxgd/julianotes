@@ -284,7 +284,7 @@ html[data-theme="dark"] .semantic-highlight{background:var(--bg-soft)}
 @media(max-width:480px){.frame-card .card-head{align-items:flex-start}.download-summary{order:4}.semantic-highlight{width:29px;height:29px;padding:0;justify-content:center;font-size:0}.semantic-highlight i{width:15px;height:9px}.semantic-highlight.clear-highlight{width:auto;padding:0 .45rem;font-size:.58rem}.summary-empty>div>span:first-child{font-size:2rem!important}}
 
 /* ══ V10 · PLANNER LIMPO E LEITURA MOBILE ════════════════════════ */
-.planner-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(310px,.75fr);gap:1rem;align-items:stretch}
+.planner-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(310px,.75fr);gap:1rem;align-items:start}
 .planner-calendar-card,.planner-agenda-card{overflow:hidden}
 .planner-head-actions{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .calendar-wrap{padding:1.15rem 1.25rem 1.3rem;overflow:hidden}
@@ -303,12 +303,12 @@ html[data-theme="dark"] .semantic-highlight{background:var(--bg-soft)}
 .day-events{display:flex;flex-direction:column;gap:3px;margin-top:.36rem;min-width:0}
 .evchip{appearance:none;width:100%;min-width:0;margin:0;padding:.24rem .38rem;border:0;border-radius:5px;background:var(--paper);color:var(--rose-deep);font-size:.55rem;font-weight:650;text-align:left;overflow:hidden;box-shadow:inset 2px 0 0 var(--rose)}
 .evchip span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.more-events{font-size:.52rem;color:var(--faded);padding-left:.2rem}
-.planner-agenda-card{position:sticky;top:1rem;height:100%;max-height:calc(100dvh - 2rem);display:flex;flex-direction:column}
+.planner-agenda-card{position:sticky;top:1rem;max-height:calc(100dvh - 2rem);display:flex;flex-direction:column}
 .planner-agenda-card .card-head{flex:none}.agenda-count{min-width:27px;height:27px;padding:0 .4rem;display:grid;place-items:center;margin-left:auto;border-radius:999px;background:var(--rose-soft);color:var(--rose-deep);font:700 .68rem Inter}
 .planner-list{overflow:auto;overscroll-behavior:contain}
 .planner-item{display:grid;grid-template-columns:38px 1fr;gap:.65rem;padding:.7rem .9rem;border-bottom:1px solid var(--line)}
 .planner-item:last-child{border-bottom:0}.planner-date{width:36px;height:40px;border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);display:flex;flex-direction:column;align-items:center;justify-content:center}.planner-date strong{font:500 .98rem 'Playfair Display';line-height:1;color:var(--ink)}.planner-date span{font-size:.44rem;font-weight:800;letter-spacing:.1em;color:var(--rose-deep);margin-top:.15rem}
-.planner-item-body{min-width:0}.planner-item-top{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}.planner-when{font-size:.53rem;font-weight:800;color:var(--rose-deep);text-transform:uppercase;letter-spacing:.05em}.planner-type,.planner-subject{font-size:.46rem;font-weight:600;padding:.12rem .32rem;border-radius:999px;background:var(--bg-soft);color:var(--faded);border:1px solid var(--line);line-height:1.4}
+.planner-item-body{min-width:0}.planner-item-top{display:flex;align-items:center;gap:.22rem;flex-wrap:wrap}.planner-when{font-size:.5rem;font-weight:800;color:var(--rose-deep);text-transform:uppercase;letter-spacing:.04em}.planner-type,.planner-subject{font-size:.42rem;font-weight:600;padding:.1rem .3rem;border-radius:999px;background:var(--bg-soft);color:var(--faded);border:1px solid var(--line);line-height:1.4}
 .planner-item h3{font:500 .82rem 'Playfair Display';line-height:1.25;margin:.28rem 0 .4rem;color:var(--ink)}
 .planner-progress{display:grid;grid-template-columns:auto 1fr;gap:.45rem;align-items:center;margin:.2rem 0 .55rem}.planner-progress span{font-size:.53rem;color:var(--faded);white-space:nowrap}.planner-progress i{display:block;height:4px;border-radius:99px;background:var(--bg-soft);overflow:hidden}.planner-progress b{display:block;height:100%;border-radius:inherit;background:var(--rose)}
 .planner-check{display:flex;align-items:flex-start;gap:.42rem;margin:.3rem 0;color:var(--ink-soft);font-size:.64rem;line-height:1.4;text-transform:none;letter-spacing:0;font-weight:500}.planner-check input{width:14px;height:14px;margin:.08rem 0 0;accent-color:var(--rose-deep);flex:none}.planner-check input:checked+span{text-decoration:line-through;color:var(--faded)}.planner-more{font-size:.55rem;color:var(--faded);margin-top:.35rem}
