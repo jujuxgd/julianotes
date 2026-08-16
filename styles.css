@@ -9,6 +9,7 @@ html[data-theme="dark"]{--bg:#171316;--bg-soft:#211A1E;--paper:#261F23;--ink:#F7
 
 /* ══ V7 · FLASHCARDS, ERROS & STUDY TOOLS ═════════════════════════ */
 .fc-toolbar,.error-toolbar,.highlight-tools{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
+.active-filters{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.65rem 1rem;border-top:1px solid var(--line);color:var(--faded);font-size:.65rem}.filter-note{margin-left:auto;font-size:.6rem;color:var(--faded)}
 .select-sm,.input-sm{width:auto;min-width:130px;padding:.46rem .6rem;font-size:.7rem}
 .flash-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:1rem}
 .flash-list{max-height:68vh;overflow:auto}
