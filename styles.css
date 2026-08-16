@@ -263,7 +263,7 @@ html[data-theme="dark"] .sidebar{background:rgba(33,28,24,.97)}html[data-theme="
 @font-face{font-family:Inter;src:url('fonts/InterVariable.woff2') format('woff2');font-weight:100 900;font-display:swap}
 .doc-viewport,.a4-viewport{height:auto;min-height:calc(100dvh - 300px);max-height:75vh;padding:0!important;overflow:hidden!important;position:relative;background:#fff!important;border-top:1px solid var(--line);display:flex;flex-direction:column}
 .doc-viewport #driveFrame,.a4-viewport #driveFrame{display:block!important;position:static!important;inset:auto!important;width:100%!important;flex:1 1 auto!important;height:auto!important;min-height:0;max-width:none!important;margin:0!important;transform:none!important;background:#fff;border:0!important;border-radius:0;box-shadow:none}
-.summary-viewport{height:auto;min-height:calc(100dvh - 300px);max-height:75vh;padding:0;overflow:hidden;background:#fff;border-top:1px solid var(--line);display:flex;flex-direction:column}
+.summary-viewport{height:auto;min-height:calc(100dvh - 300px);max-height:75vh;padding:0;overflow:auto;background:#fff;border-top:1px solid var(--line);display:flex;flex-direction:column}
 .summary-frame,.summary-empty{display:block;width:100%;flex:1 1 auto;height:auto;min-height:0;margin:0;border:0;border-radius:0;background:#fff;box-shadow:none}
 .summary-empty{place-items:center}.summary-empty>div{max-width:340px}.summary-empty>div>span:first-child{font-family:Muthiara,Kathen,cursive!important;font-size:2.35rem!important}
 .download-summary:before{content:'↓';font-size:.85rem}.download-summary:disabled{opacity:.65;cursor:wait}
