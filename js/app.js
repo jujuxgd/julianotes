@@ -104,7 +104,11 @@ function downloadSummaryPdf(){if(!localStorage.getItem(sumKey()))return toast('A
 function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],theme=SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
 $('#summaryMeta').textContent=`${s.name} · ${currentStage==='1'?'primeira':'segunda'} etapa`;
 $('#materialResponse').value='';
-$('#summaryPrompt').value=`Vou colar abaixo, nesta mesma mensagem, o conteúdo completo das minhas anotações de aula desta matéria (fonte original: ${`https://docs.google.com/document/d/${id}/edit`}). Se eu esquecer de colar o texto das anotações, não gere o resumo — me avise que falta o conteúdo.
+$('#summaryPrompt').value=`FONTE PRINCIPAL DAS ANOTAÇÕES
+Leia integralmente minhas anotações diretamente neste Google Docs:
+${`https://docs.google.com/document/d/${id}/edit`}
+O Google Docs é a fonte original e cumulativa da matéria e será atualizado semanalmente com novas aulas. Sempre consulte o documento inteiro antes de gerar a nova versão.
+Se você não conseguir acessar ou ler integralmente o Google Docs, não gere o resumo com base apenas no RESUMO ANTERIOR. Avise-me que não conseguiu acessar a fonte original e peça que eu forneça o conteúdo por outro meio.
 
 MATÉRIA: ${s.name}
 ETAPA: ${currentStage==='1'?'Primeira':'Segunda'} etapa do semestre
@@ -118,7 +122,7 @@ Crie um material de Direito cumulativo, rigoroso e realmente útil para prova. O
 REGRA CENTRAL: COMPACTE A LINGUAGEM, NUNCA O CONHECIMENTO.
 
 1 — CONTEÚDO CUMULATIVO
-- Leia integralmente o texto das anotações que colei nesta mensagem.
+- Leia integralmente o Google Docs indicado em FONTE PRINCIPAL DAS ANOTAÇÕES. Compare seu conteúdo atual com o RESUMO ANTERIOR e incorpore todo conteúdo novo nos pontos logicamente adequados.
 - Atualize o RESUMO ANTERIOR abaixo; não crie outro documento desconectado.
 - Preserve o que continua correto e encaixe as aulas novas no lugar lógico.
 - Não omita requisitos, elementos, classificações, exceções, hipóteses, prazos, artigos, competências, efeitos, distinções, jurisprudência ou observações de aula cobradas em prova.
