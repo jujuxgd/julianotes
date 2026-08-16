@@ -1,4 +1,25 @@
 const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}, {"key": "ajt", "name": "Prática Extensionista: Acesso à Justiça do Trabalho", "short": "AJT", "docs": {"1": "14RpF84SEwBWnxvj8Fw6iFh-ZsVAc66AjY69BYIkC1uM", "2": "1pCpHc78qnpJPCYQ1NxcN2f0s7flkH2BrZonV7wdQUq0"}}, {"key": "petss", "name": "Prática Extensionista: Temas de Seguridade", "short": "PETSS", "docs": {"1": "1CIhNd-F_dmT4IICLfPBtvCFvnIW77YXJH7I7btJtDqE", "2": "1WdmLP6wBirGastfD7omY33_H1G9Obvfvky69DSFoIiQ"}}];
+const SUBJECT_THEMES={
+  dpt:{name:'rosa antigo',primary:'#B83E70',accent:'#E9A6C0',soft:'#FBE7EF',ink:'#6B2344'},
+  tgot:{name:'lilás',primary:'#7257A8',accent:'#B9A7DF',soft:'#EEE8FA',ink:'#443568'},
+  dec:{name:'azul bebê',primary:'#4A7FA9',accent:'#A9D1F0',soft:'#E6F2FC',ink:'#2D587B'},
+  dss:{name:'verde sálvia',primary:'#4F7D64',accent:'#A8CCB2',soft:'#E7F2EA',ink:'#315340'},
+  rebi:{name:'turquesa',primary:'#317F82',accent:'#91CFCC',soft:'#E0F2F1',ink:'#20585B'},
+  etica:{name:'pêssego',primary:'#A96749',accent:'#E8B99F',soft:'#F8EBE3',ink:'#70442F'},
+  dde:{name:'lavanda',primary:'#685E9B',accent:'#B9B2E3',soft:'#ECEAFA',ink:'#423B6B'},
+  di:{name:'menta',primary:'#3B806E',accent:'#9ED3C4',soft:'#E3F4EF',ink:'#285A4D'},
+  ajt:{name:'rosa queimado',primary:'#A95F75',accent:'#D7A6B5',soft:'#F6E6EB',ink:'#6F3E4E'},
+  petss:{name:'azul turquesa',primary:'#3E7E94',accent:'#9ACAD9',soft:'#E3F2F7',ink:'#285566'}
+};
+const SUMMARY_HIGHLIGHTS={
+  conceito:{label:'Conceito',bg:'#FBE4E1',text:'#B03A2E'},
+  lei:{label:'Lei',bg:'#DCEBF7',text:'#2B5E8C'},
+  excecao:{label:'Exceção',bg:'#E1F0DE',text:'#4A7A45'},
+  pegadinha:{label:'Pegadinha',bg:'#FBF0CC',text:'#8A6814'},
+  jurisprudencia:{label:'Julgado',bg:'#EAE3F5',text:'#6B4FA0'},
+  prazo:{label:'Prazo',bg:'#FBE7D4',text:'#A55F19'},
+  palavrachave:{label:'Palavra-chave',bg:'#E7E0D9',text:'#211C19'}
+};
 let currentSubject=SUBJECTS[0].key,currentStage='1',calDate=new Date(),savedSummaryRange=null,studyQueue=[],studyIndex=0,studyRetries=new Set();
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],subj=k=>SUBJECTS.find(x=>x.key===k);
 const sumKey=()=>`msj7-summary::${currentSubject}::${currentStage}`,evKey='msj7-events',fcKey='msj7-flashcards',fcFilterKey='msj7-flashcard-filters',errKey='msj7-errors';
@@ -34,41 +55,50 @@ function initSubjects(){
 }
 
 function renderSubjects(){
-  $('#matGrid').innerHTML=SUBJECTS.map(s=>{let h1=localStorage.getItem(`msj7-summary::${s.key}::1`),h2=localStorage.getItem(`msj7-summary::${s.key}::2`),fc=getFlashcards().filter(f=>f.subject===s.key).length;
-    return `<article class="mat-card" id="mc-${s.key}"><div class="mat-header" onclick="this.parentElement.classList.toggle('open')"><div class="mat-badge">${s.short}</div><div class="mat-info"><div class="mat-name">${s.name}</div><div class="mat-sub">2 cadernos no Drive · ${[h1,h2].filter(Boolean).length}/2 resumos · ${fc} flashcards</div></div><span class="chev">›</span></div><div class="mat-body"><div class="doc-row"><div class="stage">Primeira etapa</div><div class="doc-main"><b>Anotações ${s.short}</b><small>Google Docs da matéria</small></div><span class="summary-status ${h1?'done':''}">${h1?'resumo salvo':'sem resumo'}</span><button class="btn" onclick="openSubject('${s.key}','1')">Abrir</button></div><div class="doc-row"><div class="stage">Segunda etapa</div><div class="doc-main"><b>Anotações ${s.short}</b><small>Google Docs da matéria</small></div><span class="summary-status ${h2?'done':''}">${h2?'resumo salvo':'sem resumo'}</span><button class="btn" onclick="openSubject('${s.key}','2')">Abrir</button></div></div></article>`}).join('');
+  $('#matGrid').innerHTML=SUBJECTS.map(s=>{let h1=localStorage.getItem(`msj7-summary::${s.key}::1`),h2=localStorage.getItem(`msj7-summary::${s.key}::2`),fc=getFlashcards().filter(f=>f.subject===s.key&&!f.stale).length;
+    let theme=SUBJECT_THEMES[s.key];
+    return `<article class="mat-card" id="mc-${s.key}" style="--subject-primary:${theme.primary};--subject-accent:${theme.accent};--subject-soft:${theme.soft};--subject-ink:${theme.ink}"><div class="mat-header" onclick="this.parentElement.classList.toggle('open')"><div class="mat-badge">${s.short}</div><div class="mat-info"><div class="mat-name">${s.name}</div><div class="mat-sub">2 cadernos no Drive · ${[h1,h2].filter(Boolean).length}/2 resumos · ${fc} flashcards</div></div><span class="chev">›</span></div><div class="mat-body"><div class="doc-row"><div class="stage">Primeira etapa</div><div class="doc-main"><b>Anotações ${s.short}</b><small>Google Docs da matéria</small></div><span class="summary-status ${h1?'done':''}">${h1?'resumo salvo':'sem resumo'}</span><button class="btn" onclick="openSubject('${s.key}','1')">Abrir</button></div><div class="doc-row"><div class="stage">Segunda etapa</div><div class="doc-main"><b>Anotações ${s.short}</b><small>Google Docs da matéria</small></div><span class="summary-status ${h2?'done':''}">${h2?'resumo salvo':'sem resumo'}</span><button class="btn" onclick="openSubject('${s.key}','2')">Abrir</button></div></div></article>`}).join('');
 }
 function openSubject(k,st){currentSubject=k;currentStage=st;$$('.period').forEach(x=>x.classList.toggle('active',x.dataset.stage===st));showView('subjectDetail');renderSubject();}
 $$('.period').forEach(b=>b.onclick=()=>{currentStage=b.dataset.stage;$$('.period').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#materialResponse').value='';renderSubject()});
 function renderSubject({resetReader=true}={}){
   let s=subj(currentSubject),id=s.docs[currentStage];
+  applySubjectTheme();
   $('#detailShort').textContent=s.short+' · '+(currentStage==='1'?'primeira etapa':'segunda etapa');
   $('#openDrive').href=`https://docs.google.com/document/d/${id}/edit`;
   updateDriveFrame();
   let h=localStorage.getItem(sumKey());
+  $('#summaryFrame').onload=bindSummarySelection;
   $('#summaryEmpty').style.display=h?'none':'grid';
   $('#summaryFrame').style.display=h?'block':'none';
   $('#summaryFrame').srcdoc=h||'';
   $('#title').innerHTML=s.name;
-  $('#summaryFrame').onload=bindSummarySelection;
+  if(h)setTimeout(bindSummarySelection,0);
   if(resetReader)setReader('notes');
 }
 function updateDriveFrame(){
   let id=subj(currentSubject).docs[currentStage];
   const frame=$('#driveFrame');
-  frame.style.transform='none';
-  frame.style.width='100%';
-  frame.style.height='100%';
+  frame.removeAttribute('style');
   frame.src=`https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
 }
+function applySubjectTheme(){let theme=SUBJECT_THEMES[currentSubject]||SUBJECT_THEMES.dpt,root=$('#subjectDetail');if(!root)return;root.style.setProperty('--subject-primary',theme.primary);root.style.setProperty('--subject-accent',theme.accent);root.style.setProperty('--subject-soft',theme.soft);root.style.setProperty('--subject-ink',theme.ink)}
 function setReader(which){let w=$('#studyWorkspace');if(!w)return;w.classList.remove('reader-notes','reader-summary','reader-prompt');w.classList.add('reader-'+which);$$('.reader-tab').forEach(b=>b.classList.toggle('active',b.dataset.reader===which));}
 function toggleNotesFocus(){let w=$('#studyWorkspace');w.classList.toggle('notes-focus');let btn=$('.reader-expand');if(btn)btn.textContent=w.classList.contains('notes-focus')?'Dividir tela':'Expandir';}
 
 function bindSummarySelection(){try{let doc=$('#summaryFrame').contentDocument;let save=()=>{let sel=doc.getSelection();if(sel&&sel.rangeCount&&!sel.isCollapsed)savedSummaryRange=sel.getRangeAt(0).cloneRange()};doc.addEventListener('mouseup',save);doc.addEventListener('keyup',save);doc.addEventListener('touchend',()=>setTimeout(save,80));}catch(e){}}
 function persistSummaryIframe(){try{let doc=$('#summaryFrame').contentDocument;setLocalItem(sumKey(),'<!DOCTYPE html>'+doc.documentElement.outerHTML);}catch(e){}}
-function applyHighlight(color='#F8BBD0'){try{if(!savedSummaryRange||savedSummaryRange.collapsed)throw new Error('empty');let doc=$('#summaryFrame').contentDocument,mark=doc.createElement('mark');mark.dataset.journalHighlight='true';mark.style.backgroundColor=color;mark.style.color='inherit';mark.style.borderRadius='.18em';mark.style.padding='0 .08em';let fragment=savedSummaryRange.extractContents();mark.appendChild(fragment);savedSummaryRange.insertNode(mark);savedSummaryRange=null;persistSummaryIframe();toast('Grifo salvo')}catch(e){toast('Selecione um trecho do resumo primeiro')}}
+function selectedTextSlices(range,doc){let root=range.commonAncestorContainer.nodeType===Node.TEXT_NODE?range.commonAncestorContainer.parentNode:range.commonAncestorContainer,walker=doc.createTreeWalker(root,NodeFilter.SHOW_TEXT),slices=[],node;while(node=walker.nextNode()){if(!node.data.trim())continue;try{if(!range.intersectsNode(node))continue}catch{continue}let start=node===range.startContainer?range.startOffset:0,end=node===range.endContainer?range.endOffset:node.length;if(start<end)slices.push({node,start,end})}return slices}
+function applySemanticHighlight(kind){let style=SUMMARY_HIGHLIGHTS[kind];try{if(!style||!savedSummaryRange||savedSummaryRange.collapsed)throw new Error('empty');let doc=$('#summaryFrame').contentDocument,slices=selectedTextSlices(savedSummaryRange,doc);if(!slices.length)throw new Error('empty');slices.reverse().forEach(({node,start,end})=>{if(end<node.length)node.splitText(end);let selected=start?node.splitText(start):node,mark=doc.createElement('mark');mark.dataset.journalHighlight=kind;mark.dataset.highlightLabel=style.label;mark.style.cssText=`background:${style.bg};color:${style.text};font-weight:700;border-radius:.18em;padding:0 .08em;box-decoration-break:clone;-webkit-box-decoration-break:clone`;selected.parentNode.replaceChild(mark,selected);mark.appendChild(selected)});savedSummaryRange=null;persistSummaryIframe();toast(`${style.label} destacado`)}catch(e){toast('Selecione um trecho do resumo primeiro')}}
 function clearHighlight(){try{if(!savedSummaryRange||savedSummaryRange.collapsed)throw new Error('empty');let doc=$('#summaryFrame').contentDocument,marks=[...doc.querySelectorAll('mark[data-journal-highlight]')].filter(mark=>{try{return savedSummaryRange.intersectsNode(mark)}catch{return false}});if(!marks.length){let node=savedSummaryRange.commonAncestorContainer;let mark=(node.nodeType===1?node:node.parentElement)?.closest?.('mark[data-journal-highlight]');if(mark)marks=[mark]}if(!marks.length)throw new Error('none');marks.forEach(mark=>{let parent=mark.parentNode;while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);mark.remove();parent.normalize()});savedSummaryRange=null;persistSummaryIframe();toast('Grifo removido')}catch(e){toast('Selecione o trecho grifado primeiro')}}
 
-function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
+let html2PdfLoader;
+function loadHtml2Pdf(){if(window.html2pdf)return Promise.resolve(window.html2pdf);if(html2PdfLoader)return html2PdfLoader;html2PdfLoader=new Promise((resolve,reject)=>{let script=document.createElement('script');script.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';script.crossOrigin='anonymous';script.onload=()=>resolve(window.html2pdf);script.onerror=reject;document.head.appendChild(script)});return html2PdfLoader}
+function summaryFilename(){let s=subj(currentSubject),stage=currentStage==='1'?'primeira-etapa':'segunda-etapa';return `resumo-${normalizeId(s.short)}-${stage}.pdf`}
+function openSummaryPrintDialog(){let html=localStorage.getItem(sumKey());if(!html)return toast('Ainda não existe resumo para baixar');let preview=window.open('','_blank');if(!preview)return toast('Permita pop-ups para salvar o PDF');preview.document.open();preview.document.write(html);preview.document.close();preview.addEventListener('load',()=>setTimeout(()=>preview.print(),300))}
+async function downloadSummaryPdf(){let frame=$('#summaryFrame'),doc=frame?.contentDocument,button=$('#downloadSummaryBtn');if(!localStorage.getItem(sumKey())||!doc?.body)return toast('Ainda não existe resumo para baixar');let original=button?.textContent||'Baixar PDF';if(button){button.disabled=true;button.textContent='Preparando PDF…'}toast('Montando o PDF em A4…');try{let html2pdf=await loadHtml2Pdf();await doc.fonts?.ready;await html2pdf().set({margin:0,filename:summaryFilename(),image:{type:'jpeg',quality:.98},html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait',compress:true},pagebreak:{mode:['css','legacy'],avoid:['table','tr','.callout','.summary-card']}}).from(doc.body).save();toast('Resumo baixado em PDF')}catch(error){console.error(error);toast('Abrindo a opção de salvar como PDF…');openSummaryPrintDialog()}finally{if(button){button.disabled=false;button.textContent=original}}}
+
+function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],theme=SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
 $('#summaryMeta').textContent=`${s.name} · ${currentStage==='1'?'primeira':'segunda'} etapa`;
 $('#materialResponse').value='';
 $('#summaryPrompt').value=`Leia integralmente minhas anotações neste Google Docs do Drive:
@@ -78,35 +108,45 @@ MATÉRIA: ${s.name}
 ETAPA: ${currentStage==='1'?'Primeira':'Segunda'} etapa do semestre
 
 MEU OBJETIVO:
-Sou estudante de Direito e quero dominar, memorizar e saber aplicar o conteúdo em prova. Este Google Docs é atualizado semanalmente conforme tenho novas aulas. Não quero um resumo superficial. Quero linguagem enxuta para memorizar, mas sem perder conhecimento importante.
+Sou estudante de Direito e quero dominar, memorizar e aplicar o conteúdo em prova. Este Google Docs cresce semanalmente. Quero um material cumulativo, claro e completo — não um resumo superficial.
 
 REGRA CENTRAL:
 COMPACTE A LINGUAGEM, NÃO O CONHECIMENTO.
 
-PARTE 1 — RESUMO CUMULATIVO
+PARTE 1 — RESUMO CUMULATIVO PREMIUM
 - Leia o documento inteiro.
 - Atualize o resumo anterior em vez de criar um resumo novo desconectado.
 - Preserve tudo que continua correto, útil e relevante.
 - Incorpore as aulas novas nos lugares logicamente corretos.
 - NÃO omita requisitos, elementos, classificações, exceções, hipóteses, prazos, artigos, competências, efeitos, diferenças entre institutos ou observações que possam ser cobradas.
-- Conceitos devem ser curtos, precisos e fáceis de decorar.
-- Use exemplos pequenos e concretos sempre que eles ajudarem a entender ou diferenciar um instituto.
-- Quando houver institutos parecidos, use quadros comparativos.
-- Destaque pegadinhas, exceções, palavras-chave, artigos e pontos de decoreba.
-- Evite parágrafos enormes quando uma estrutura visual mais clara preservar o mesmo conteúdo.
-- Comece com “EM 1 MINUTO”, mas esse bloco é apenas visão geral e NÃO substitui o conteúdo completo.
-- Termine com “ANTES DA PROVA, LEMBRE”.
-- O visual deve ser tão caprichado quanto um study journal editorial: papel quente, rosa sofisticado, hierarquia bonita, cards pontuais, tabelas elegantes, ótima leitura no celular.
-- Use HTML completo com CSS interno. Sem JavaScript, fontes externas, imagens externas ou links externos.
+- Escreva conceitos curtos e precisos; use exemplos apenas quando eles realmente esclarecem ou diferenciam institutos.
+- Use quadros comparativos para institutos parecidos e tabelas somente quando houver comparação real.
+- Destaque artigos, prazos, exceções, jurisprudência e pegadinhas com callouts pontuais. Não transforme tudo em card.
+- Comece o conteúdo com “EM 1 MINUTO” (visão geral, sem substituir o desenvolvimento) e termine com “ANTES DA PROVA, LEMBRE”.
 
-PARTE 2 — FLASHCARDS ATÔMICOS
-Gere flashcards de TODO ponto que mereça recuperação ativa, mas cada flashcard deve testar UMA única informação.
-Exemplo ruim: “Explique competência territorial, exceções e empregado viajante.”
-Exemplo bom: um cartão para a regra geral; outro para o artigo; outro para cada exceção relevante.
-- Faça cartões de conceitos, artigos, prazos, requisitos, exceções, diferenças, pegadinhas e exemplos jurídicos importantes.
-- Perguntas devem ser objetivas e respostas curtas o suficiente para correção imediata, sem empobrecer a informação.
-- Se um assunto exige várias informações independentes, DIVIDA em vários cartões.
-- Não gere duplicatas semânticas.
+DIREÇÃO VISUAL — siga como especificação, não como sugestão:
+- Entregue HTML5 completo, responsivo, com todo o CSS dentro de <style>. Sem JavaScript, imagens, links ou fontes externas.
+- O modelo é um caderno editorial premium para impressão A4, inspirado nos materiais P2: capa inteira, bastante respiro, hierarquia forte, faixas de seção, tabelas elegantes e caixas de atenção discretas.
+- Não faça uma parede de cards. Prefira página branca, margens generosas, títulos, subtítulos e linhas divisórias.
+- Paleta exclusiva desta matéria: ${theme.name}. Use --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink}; --ink:#211C19; --paper:#FFFFFF; --canvas:#ECE8E3.
+- Use a cor principal em capa, faixas de seção e cabeçalhos de tabela; o tom claro em fundos de callout e células alternadas.
+- Crie uma capa A4 com nome da matéria, etapa e “Mackenzie · 8º semestre”. A capa deve ocupar uma página inteira e terminar com page-break-after: always.
+- Nas páginas internas, use largura A4, fundo branco e margens equivalentes a 18–20 mm. Evite quebra de página dentro de tabelas, linhas, callouts e blocos importantes.
+- Inclua @page { size: A4; margin: 0; } e regras @media print para imprimir sem sombra, sem margens do navegador e com cores exatas (print-color-adjust: exact).
+- Use estas fontes locais com @font-face:
+  * Muthiara: url('fonts/Muthiara%20demo%20version.otf') format('opentype') — somente em título da capa e títulos especiais.
+  * Kathen: url('fonts/Kathen%20Font%20by%20Situjuh%20(7NTypes).otf') format('opentype') — somente como detalhe manuscrito.
+  * Corpo: Inter, Arial, sans-serif; textos longos com 10.5–11.5pt e line-height entre 1.55 e 1.7.
+- Garanta contraste, leitura boa no celular e impressão bonita. Não use emoji como decoração.
+
+PARTE 2 — FLASHCARDS SELETIVOS
+Não converta cada bullet do resumo em cartão. Flashcard é para recuperação ativa de alto valor, não para duplicar o texto inteiro.
+- Gere de 12 a 20 flashcards para esta etapa inteira quando houver conteúdo suficiente; se não houver, gere menos sem preencher com cartões fracos. Limite absoluto: 24. Ordene do mais importante para o menos importante.
+- Priorize: regra central, conceito que confunde, artigo indispensável, prazo, requisito, exceção, comparação e pegadinha de prova.
+- Ignore contexto introdutório, exemplos redundantes, listas óbvias e detalhes que podem ser consultados sem necessidade de memorização.
+- Cada cartão deve testar UM alvo de memória. Uma lista fechada de requisitos do mesmo instituto pode ficar em um único cartão; não crie um cartão por item dessa mesma lista.
+- Pergunta direta, sem pistas. Resposta corrigível em até quatro linhas. Nada de “explique tudo sobre”.
+- Não gere duplicatas semânticas nem versões quase iguais da mesma pergunta.
 - IDs devem ser ESTÁVEIS entre atualizações semanais. Para um mesmo fato jurídico, preserve exatamente o mesmo ID já existente abaixo.
 - Só crie ID novo para informação realmente nova.
 - Formato do ID: ${s.short.toLowerCase()}-${currentStage}-topico-fato-curto, sem acentos e sem espaços.
@@ -131,7 +171,7 @@ FLASHCARDS JÁ EXISTENTES — preserve os IDs quando a informação continuar se
 ${existing.length?JSON.stringify(existing):'[Nenhum flashcard existente.]'}`;
 setReader('prompt')}
 async function copyPrompt(){try{await navigator.clipboard.writeText($('#summaryPrompt').value);toast('Prompt copiado')}catch{toast('Selecione e copie o prompt')}}
-function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do ChatGPT');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sm[1].trim(),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};setLocalItem(sumKey(),html);let stats=syncFlashcards(Array.isArray(data)?data:(data.flashcards||[]),currentSubject,currentStage);renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos`) }
+function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do ChatGPT');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sm[1].trim(),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};let cards=(Array.isArray(data)?data:(data.flashcards||[])).slice(0,24),ignored=Math.max(0,(Array.isArray(data)?data:(data.flashcards||[])).length-cards.length);setLocalItem(sumKey(),html);let stats=syncFlashcards(cards,currentSubject,currentStage);renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos${ignored?` · ${ignored} extras ignorados`:''}`) }
 
 function readArray(key){try{let value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch{return []}}
 function getEvents(){return readArray(evKey)}function setEvents(v){setLocalItem(evKey,JSON.stringify(v))}
@@ -156,8 +196,8 @@ function clearFlashcardFilters(){['fcSubjectFilter','fcStageFilter','fcTypeFilte
 function normalizeId(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function syncFlashcards(incoming,subject,stage){let all=getFlashcards(),scope=all.filter(f=>f.subject===subject&&f.stage===stage),other=all.filter(f=>!(f.subject===subject&&f.stage===stage)),byId=new Map(scope.map(f=>[f.id,f])),seen=new Set(),out=[],nNew=0,nUpdated=0;for(let raw of incoming){let id=raw.id||`${subject}-${stage}-${normalizeId(raw.topic)}-${normalizeId(raw.question).slice(0,40)}`;if(seen.has(id))continue;seen.add(id);let old=byId.get(id),base={id,subject,stage,topic:String(raw.topic||'Geral'),type:String(raw.type||'conceito'),question:String(raw.question||raw.pergunta||''),answer:String(raw.answer||raw.resposta||''),stale:false};if(!base.question||!base.answer)continue;if(old){out.push({...old,...base,review:old.review||{due:todayStr(),interval:0,streak:0,last:null,lastGrade:null}});nUpdated++}else{out.push({...base,createdAt:new Date().toISOString(),review:{due:todayStr(),interval:0,streak:0,last:null,lastGrade:null}});nNew++}}for(let old of scope){if(!seen.has(old.id))out.push({...old,stale:true})}setFlashcards([...other,...out]);return {new:nNew,updated:nUpdated,stale:out.filter(f=>f.stale).length}}
 function cardStatus(f){let r=f.review||{};if(f.stale)return 'stale';if((r.streak||0)>=3)return 'mastered';if(!r.last)return 'new';if((r.due||todayStr())<=todayStr())return 'due';return 'learning'}
-function filteredFlashcards(){let s=$('#fcSubjectFilter')?.value||'',st=$('#fcStageFilter')?.value||'',ty=$('#fcTypeFilter')?.value||'',status=$('#fcStatusFilter')?.value||'',topic=($('#fcTopicFilter')?.value||'').toLowerCase();return getFlashcards().filter(f=>(!s||f.subject===s)&&(!st||f.stage===st)&&(!ty||f.type===ty)&&(!status||cardStatus(f)===status)&&(!topic||f.topic.toLowerCase().includes(topic)))}
-function renderFlashcards(){let all=getFlashcards(),types=[...new Set(all.map(f=>f.type).filter(Boolean))].sort(),sel=$('#fcTypeFilter').value||getFlashcardFilters().type||'';$('#fcTypeFilter').innerHTML='<option value="">Todos os tipos</option>'+types.map(t=>`<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');$('#fcTypeFilter').value=types.includes(sel)?sel:'';let due=all.filter(f=>cardStatus(f)==='due').length,nw=all.filter(f=>cardStatus(f)==='new').length,master=all.filter(f=>cardStatus(f)==='mastered').length;$('#fcTotal').textContent=all.length;$('#fcDue').textContent=due;$('#fcNew').textContent=nw;$('#fcMastered').textContent=master;let arr=filteredFlashcards(),labels=[];if($('#fcSubjectFilter').value)labels.push(subj($('#fcSubjectFilter').value)?.short);if($('#fcStageFilter').value)labels.push($('#fcStageFilter').value==='1'?'1ª etapa':'2ª etapa');if($('#fcTypeFilter').value)labels.push($('#fcTypeFilter').value);if($('#fcStatusFilter').value)labels.push($('#fcStatusFilter').selectedOptions[0].textContent);if($('#fcTopicFilter').value)labels.push(`Tópico: ${$('#fcTopicFilter').value}`);$('#activeFcFilters').innerHTML=`<span>${arr.length} ${arr.length===1?'cartão':'cartões'}</span>${labels.map(x=>`<span class="tag rose">${escapeHtml(x)}</span>`).join('')}${!$('#fcStatusFilter').value?'<span class="filter-note">Sessão: novos + revisões de hoje</span>':''}`;$('#flashList').innerHTML=arr.length?arr.map(f=>{let st=cardStatus(f),r=f.review||{};return `<div class="flash-row"><div><div class="flash-q">${f.question}</div><div class="flash-meta"><span class="tag rose">${subj(f.subject)?.short||f.subject}</span><span class="tag">${f.stage==='1'?'1ª etapa':'2ª etapa'}</span><span class="tag">${f.topic}</span><span class="tag">${f.type}</span><span class="tag ${st==='mastered'?'good':st==='stale'?'warn':''}">${st==='new'?'novo':st==='due'?'revisar hoje':st==='mastered'?'dominado':st==='stale'?'fora da última atualização':'em estudo'}</span></div><div class="agenda-meta" style="margin-top:.35rem">${r.last?'Última revisão: '+new Date(r.last+'T12:00').toLocaleDateString('pt-BR'):''}${r.due?' · Próxima: '+new Date(r.due+'T12:00').toLocaleDateString('pt-BR'):''}</div></div><button class="btn danger" onclick="deleteFlashcard('${f.id.replace(/'/g,"\\'")}')">Excluir</button></div>`}).join(''):'<div class="empty">Nenhum flashcard corresponde aos filtros.</div>';renderHome();}
+function filteredFlashcards(){let s=$('#fcSubjectFilter')?.value||'',st=$('#fcStageFilter')?.value||'',ty=$('#fcTypeFilter')?.value||'',status=$('#fcStatusFilter')?.value||'',topic=($('#fcTopicFilter')?.value||'').toLowerCase();return getFlashcards().filter(f=>(!s||f.subject===s)&&(!st||f.stage===st)&&(!ty||f.type===ty)&&(!status?!f.stale:cardStatus(f)===status)&&(!topic||f.topic.toLowerCase().includes(topic)))}
+function renderFlashcards(){let all=getFlashcards(),active=all.filter(f=>!f.stale),types=[...new Set(active.map(f=>f.type).filter(Boolean))].sort(),sel=$('#fcTypeFilter').value||getFlashcardFilters().type||'';$('#fcTypeFilter').innerHTML='<option value="">Todos os tipos</option>'+types.map(t=>`<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');$('#fcTypeFilter').value=types.includes(sel)?sel:'';let due=active.filter(f=>cardStatus(f)==='due').length,nw=active.filter(f=>cardStatus(f)==='new').length,master=active.filter(f=>cardStatus(f)==='mastered').length;$('#fcTotal').textContent=active.length;$('#fcDue').textContent=due;$('#fcNew').textContent=nw;$('#fcMastered').textContent=master;let arr=filteredFlashcards(),labels=[];if($('#fcSubjectFilter').value)labels.push(subj($('#fcSubjectFilter').value)?.short);if($('#fcStageFilter').value)labels.push($('#fcStageFilter').value==='1'?'1ª etapa':'2ª etapa');if($('#fcTypeFilter').value)labels.push($('#fcTypeFilter').value);if($('#fcStatusFilter').value)labels.push($('#fcStatusFilter').selectedOptions[0].textContent);if($('#fcTopicFilter').value)labels.push(`Tópico: ${$('#fcTopicFilter').value}`);$('#activeFcFilters').innerHTML=`<span>${arr.length} ${arr.length===1?'cartão':'cartões'}</span>${labels.map(x=>`<span class="tag rose">${escapeHtml(x)}</span>`).join('')}${!$('#fcStatusFilter').value?'<span class="filter-note">Ativos · arquivados ficam ocultos</span>':''}`;$('#flashList').innerHTML=arr.length?arr.map(f=>{let st=cardStatus(f),r=f.review||{};return `<div class="flash-row"><div><div class="flash-q">${f.question}</div><div class="flash-meta"><span class="tag rose">${subj(f.subject)?.short||f.subject}</span><span class="tag">${f.stage==='1'?'1ª etapa':'2ª etapa'}</span><span class="tag">${f.topic}</span><span class="tag">${f.type}</span><span class="tag ${st==='mastered'?'good':st==='stale'?'warn':''}">${st==='new'?'novo':st==='due'?'revisar hoje':st==='mastered'?'dominado':st==='stale'?'fora da última atualização':'em estudo'}</span></div><div class="agenda-meta" style="margin-top:.35rem">${r.last?'Última revisão: '+new Date(r.last+'T12:00').toLocaleDateString('pt-BR'):''}${r.due?' · Próxima: '+new Date(r.due+'T12:00').toLocaleDateString('pt-BR'):''}</div></div><button class="btn danger" onclick="deleteFlashcard('${f.id.replace(/'/g,"\\'")}')">Excluir</button></div>`}).join(''):'<div class="empty">Nenhum flashcard corresponde aos filtros.</div>';renderHome();}
 function startStudy(){let arr=filteredFlashcards(),statusFilter=$('#fcStatusFilter').value;if(!statusFilter)arr=arr.filter(f=>['due','new'].includes(cardStatus(f)));arr.sort((a,b)=>{let sa=cardStatus(a),sb=cardStatus(b),rank={due:0,new:1,learning:2,mastered:3,stale:4};return (rank[sa]??9)-(rank[sb]??9)});studyQueue=arr;studyIndex=0;studyRetries=new Set();showStudyCard()}
 function showStudyCard(){let host=$('#studyCard'),total=studyQueue.length,remaining=Math.max(total-studyIndex-1,0);if(!total){host.innerHTML='<div class="empty">Nada para revisar hoje. ✦</div>';return}if(studyIndex>=total){host.innerHTML=`<div class="study-progress">${total} de ${total} · faltam 0</div><div class="empty">Sessão concluída. Você revisou ${total} ${total===1?'cartão':'cartões'}. ✦</div>`;renderFlashcards();return}let f=studyQueue[studyIndex];host.innerHTML=`<div class="study-progress">${studyIndex+1} de ${total} · ${remaining===1?'falta':'faltam'} ${remaining}</div><div class="eyebrow">${subj(f.subject)?.short} · ${f.topic} · ${f.type}</div><div class="fc-prompt">${f.question}</div><button class="btn primary" style="margin:1.2rem auto 0" onclick="revealAnswer()">Mostrar resposta</button><div class="fc-answer" id="fcAnswer">${f.answer}</div><div class="rate-row" id="rateRow"><button class="btn rate-bad" onclick="gradeCard('bad')">Não sabia</button><button class="btn rate-mid" onclick="gradeCard('mid')">Quase</button><button class="btn rate-good" onclick="gradeCard('good')">Sabia</button></div>`}
 function revealAnswer(){$('#fcAnswer').classList.add('show');$('#rateRow').classList.add('show')}
