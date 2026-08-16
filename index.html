@@ -83,13 +83,14 @@
 <section id="flashcards" class="view">
   <div class="kpi-strip"><div class="kpi"><b id="fcTotal">0</b><span>flashcards</span></div><div class="kpi"><b id="fcDue">0</b><span>para hoje</span></div><div class="kpi"><b id="fcNew">0</b><span>novos</span></div><div class="kpi"><b id="fcMastered">0</b><span>dominados</span></div></div>
   <div class="card" style="margin-bottom:1rem"><div class="card-head"><div><div class="eyebrow">Biblioteca</div><div class="card-title">Seus <em>flashcards</em></div></div><div class="grow fc-toolbar">
-    <select class="select-sm" id="fcSubjectFilter" onchange="renderFlashcards()"><option value="">Todas as matérias</option></select>
-    <select class="select-sm" id="fcStageFilter" onchange="renderFlashcards()"><option value="">Todas as etapas</option><option value="1">Primeira etapa</option><option value="2">Segunda etapa</option></select>
-    <select class="select-sm" id="fcTypeFilter" onchange="renderFlashcards()"><option value="">Todos os tipos</option></select>
-    <select class="select-sm" id="fcStatusFilter" onchange="renderFlashcards()"><option value="">Todos os status</option><option value="due">Para revisar</option><option value="new">Novos</option><option value="mastered">Dominados</option><option value="stale">Não veio na última atualização</option></select>
-    <input class="input-sm" id="fcTopicFilter" placeholder="Filtrar tópico..." oninput="renderFlashcards()">
+    <select class="select-sm" id="fcSubjectFilter" onchange="saveFlashcardFilters();renderFlashcards()"><option value="">Todas as matérias</option></select>
+    <select class="select-sm" id="fcStageFilter" onchange="saveFlashcardFilters();renderFlashcards()"><option value="">Todas as etapas</option><option value="1">Primeira etapa</option><option value="2">Segunda etapa</option></select>
+    <select class="select-sm" id="fcTypeFilter" onchange="saveFlashcardFilters();renderFlashcards()"><option value="">Todos os tipos</option></select>
+    <select class="select-sm" id="fcStatusFilter" onchange="saveFlashcardFilters();renderFlashcards()"><option value="">Todos os status</option><option value="due">Para revisar</option><option value="new">Novos</option><option value="learning">Em estudo</option><option value="mastered">Dominados</option><option value="stale">Não veio na última atualização</option></select>
+    <input class="input-sm" id="fcTopicFilter" placeholder="Filtrar tópico..." oninput="saveFlashcardFilters();renderFlashcards()">
+    <button class="btn" onclick="clearFlashcardFilters()">Limpar filtros</button>
     <button class="btn" onclick="exportFlashcards()">Exportar JSON</button>
-  </div></div></div>
+  </div></div><div id="activeFcFilters" class="active-filters"></div></div>
   <div class="flash-layout">
     <div class="card"><div class="card-head"><div class="card-title">Coleção <em>filtrada</em></div></div><div id="flashList" class="flash-list"></div></div>
     <div class="card"><div class="card-head"><div><div class="eyebrow">Sessão de estudo</div><div class="card-title">Um ponto por <em>vez</em></div></div><div class="grow"></div><button class="btn primary" onclick="startStudy()">Começar</button></div><div id="studyCard" class="study-card"><div class="empty">Use os filtros e toque em “Começar”.</div></div></div>
