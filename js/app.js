@@ -1,24 +1,23 @@
-const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}, {"key": "ajt", "name": "Prática Extensionista: Acesso à Justiça do Trabalho", "short": "AJT", "docs": {"1": "14RpF84SEwBWnxvj8Fw6iFh-ZsVAc66AjY69BYIkC1uM", "2": "1pCpHc78qnpJPCYQ1NxcN2f0s7flkH2BrZonV7wdQUq0"}}, {"key": "petss", "name": "Prática Extensionista: Temas de Seguridade", "short": "PETSS", "docs": {"1": "1CIhNd-F_dmT4IICLfPBtvCFvnIW77YXJH7I7btJtDqE", "2": "1WdmLP6wBirGastfD7omY33_H1G9Obvfvky69DSFoIiQ"}}];
+const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}];
 const SUBJECT_THEMES={
-  dpt:{name:'pink bebê',primary:'#C85A8C',accent:'#F3C4DA',soft:'#FCEBF3',ink:'#7A2E4F'},
-  tgot:{name:'lilás rosado',primary:'#A968B8',accent:'#CFABD7',soft:'#F4ECF6',ink:'#593561'},
-  dec:{name:'azul bebê',primary:'#3E80B0',accent:'#B7DAF3',soft:'#EAF4FC',ink:'#2A5580'},
-  dss:{name:'verde turquesa',primary:'#2C9689',accent:'#A9E0D8',soft:'#E6F7F4',ink:'#1F5F58'},
-  rebi:{name:'pink choque',primary:'#D13E7C',accent:'#F3B0CC',soft:'#FCE9F0',ink:'#7A2649'},
-  etica:{name:'amarelo pastel',primary:'#B08228',accent:'#F7DFA0',soft:'#FDF5E2',ink:'#5A4212'},
-  dde:{name:'lavanda',primary:'#8267D0',accent:'#D8CDF5',soft:'#F3EFFC',ink:'#4E3F86'},
-  di:{name:'verde menta',primary:'#33A17E',accent:'#B0E8D4',soft:'#E9FAF3',ink:'#256652'},
-  ajt:{name:'coral pastel',primary:'#D6725F',accent:'#F6C9BE',soft:'#FDEEEA',ink:'#7A3A2E'},
-  petss:{name:'ciano turquesa',primary:'#2896A8',accent:'#A6E1EA',soft:'#E6F8FA',ink:'#1B5D68'}
+  dpt:{name:'vermelho',primary:'#D60056',accent:'#F5B3D0',soft:'#FDE8F2',ink:'#8A0037'},
+  tgot:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  dec:{name:'orquídea',primary:'#C040E0',accent:'#F1A1FF',soft:'#FDF0FF',ink:'#8800A8'},
+  dss:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  rebi:{name:'verde-azulado',primary:'#45818E',accent:'#A8D0D6',soft:'#E6F5F7',ink:'#2E5860'},
+  etica:{name:'lilás',primary:'#7B6CB0',accent:'#B4A7D6',soft:'#F4F1FA',ink:'#4D3D8A'},
+  dde:{name:'azul',primary:'#1E67A9',accent:'#9FC5E8',soft:'#EDF5FB',ink:'#154D7E'},
+  di:{name:'laranja',primary:'#D97800',accent:'#FFD499',soft:'#FFF4E0',ink:'#8A4C00'}
 };
 const RESUMO_THEMES={
-  dpt:{name:'pink bebê',primary:'#D37A9A',accent:'#F3C8D8',soft:'#FCEDF3',ink:'#AB3C64'},
-  tgot:{name:'lilás rosado',primary:'#8A6EA7',accent:'#D7C7E7',soft:'#F0EAF7',ink:'#57446B'},
-  dec:{name:'azul bebê',primary:'#90BEE0',accent:'#C6E1F5',soft:'#EDF6FD',ink:'#438FC7'},
-  dss:{name:'verde turquesa',primary:'#2A9D8F',accent:'#76EADC',soft:'#9FF4EA',ink:'#174F49'},
-  rebi:{name:'pink choque',primary:'#FF1493',accent:'#FFADD9',soft:'#FFE0F1',ink:'#AB025D'},
-  di:{name:'verde menta',primary:'#81C784',accent:'#CCF0CE',soft:'#EFFBEF',ink:'#489A4B'},
-  ajt:{name:'coral pastel',primary:'#D97A3E',accent:'#F8D1B8',soft:'#FEEFE5',ink:'#924B1F'}
+  dpt:{name:'vermelho',primary:'#D60056',accent:'#F5B3D0',soft:'#FDE8F2',ink:'#8A0037'},
+  tgot:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  dec:{name:'orquídea',primary:'#C040E0',accent:'#F1A1FF',soft:'#FDF0FF',ink:'#8800A8'},
+  dss:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  rebi:{name:'verde-azulado',primary:'#45818E',accent:'#A8D0D6',soft:'#E6F5F7',ink:'#2E5860'},
+  etica:{name:'lilás',primary:'#7B6CB0',accent:'#B4A7D6',soft:'#F4F1FA',ink:'#4D3D8A'},
+  dde:{name:'azul',primary:'#1E67A9',accent:'#9FC5E8',soft:'#EDF5FB',ink:'#154D7E'},
+  di:{name:'laranja',primary:'#FF9900',accent:'#FFD499',soft:'#FFF4E0',ink:'#B36A00'}
 };
 const SUMMARY_HIGHLIGHTS={
   pink:{label:'Rosa',bg:'#FFD9E1',text:'#7A2E44'},
@@ -111,7 +110,7 @@ function applySemanticHighlight(kind){let style=SUMMARY_HIGHLIGHTS[kind];try{if(
 function clearHighlight(){try{if(!savedSummaryRange||savedSummaryRange.collapsed)throw new Error('empty');let doc=$('#summaryFrame').contentDocument,marks=[...doc.querySelectorAll('mark[data-journal-highlight]')].filter(mark=>{try{return savedSummaryRange.intersectsNode(mark)}catch{return false}});if(!marks.length){let node=savedSummaryRange.commonAncestorContainer;let mark=(node.nodeType===1?node:node.parentElement)?.closest?.('mark[data-journal-highlight]');if(mark)marks=[mark]}if(!marks.length)throw new Error('none');marks.forEach(mark=>{let parent=mark.parentNode;while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);mark.remove();parent.normalize()});savedSummaryRange=null;hideSummaryHighlightPopover();persistSummaryIframe();toast('Grifo removido')}catch(e){toast('Toque em um grifo para removê-lo')}}
 
 function summaryFilename(){let s=subj(currentSubject),stage=currentStage==='1'?'primeira-etapa':'segunda-etapa';return `resumo-${normalizeId(s.short)}-${stage}.pdf`}
-function injectPrintPageRule(doc){if(!doc?.head||doc.querySelector('#journal-print-rule'))return;try{let style=doc.createElement('style');style.id='journal-print-rule';style.textContent='@media print{@page{size:auto;margin:12mm}}';doc.head.appendChild(style)}catch(e){}}
+function injectPrintPageRule(doc){if(!doc?.head||doc.querySelector('#journal-print-rule'))return;try{let style=doc.createElement('style');style.id='journal-print-rule';style.textContent='@media print{@page{size:auto;margin:12mm}body,*{-webkit-print-color-adjust:exact;print-color-adjust:exact}html{font-size:10px!important}.hero{padding:16px 20px!important}.hero h1{font-size:20px!important}.hero .top{font-size:7px!important;margin-bottom:6px!important}.hero .subtitle,.hero .prof{font-size:9px!important}.hero .tags{margin-top:8px!important}.toc-card{max-width:100%!important;margin:10px auto 0!important;padding:10px 16px!important}.content{max-width:100%!important;padding:12px 0 20px!important}.section{break-inside:avoid;margin-bottom:14px!important}.sec-head{padding:7px 14px!important}.section-body{padding:10px 14px!important}h3{font-size:12px!important;margin:0 0 6px!important;break-after:avoid}h4{font-size:11px!important;margin:7px 0 4px!important;break-after:avoid}p{margin-bottom:7px!important;orphans:3;widows:3}ul,ol{margin-bottom:7px!important;padding-left:18px!important}.box{padding:8px 12px!important;margin:8px 0!important;break-inside:avoid}.tw{break-inside:avoid}.minute{padding:8px 14px 12px!important;margin-bottom:14px!important;break-inside:avoid}.remember{padding:8px 14px 12px!important;margin-top:14px!important;break-inside:avoid}.to-top{display:none!important}}';doc.head.appendChild(style)}catch(e){}}
 function openSummaryPrintDialog(){let html=localStorage.getItem(sumKey());if(!html)return toast('Ainda não existe resumo para baixar');let preview=window.open('','_blank');if(!preview)return toast('Permita pop-ups para salvar o PDF');let doc=new DOMParser().parseFromString(sanitizeSummaryHtml(html),'text/html'),base=doc.createElement('base');base.href=new URL('.',location.href).href;doc.head.prepend(base);injectSummaryFonts(doc);injectPrintPageRule(doc);doc.title=summaryFilename().replace(/\.pdf$/,'');preview.document.open();preview.document.write('<!DOCTYPE html>'+doc.documentElement.outerHTML);preview.document.close();setTimeout(async()=>{try{await preview.document.fonts?.ready}catch{}preview.focus();preview.print()},500)}
 function downloadSummaryPdf(){if(!localStorage.getItem(sumKey()))return toast('Ainda não existe resumo para baixar');toast('Na próxima tela, escolha “Salvar como PDF”.');openSummaryPrintDialog()}
 function clearSummary(){if(!localStorage.getItem(sumKey()))return toast('Já não há resumo salvo nesta etapa');if(!confirm('Apagar o resumo salvo desta etapa? Isso não apaga os flashcards, mas na próxima geração o Claude vai começar do zero em vez de atualizar o antigo.'))return;localStorage.removeItem(sumKey());$('#materialResponse').value='';renderSubject({resetReader:false});renderSubjects();renderHome();toast('Resumo apagado')}
@@ -186,12 +185,12 @@ ul,ol{padding-left:22px;margin-bottom:12px}
 li{margin-bottom:5px}
 .box{border-left:5px solid;padding:14px 18px;border-radius:0 8px 8px 0;margin:18px 0}
 .label{display:block;font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.tw{overflow-x:auto;margin:18px 0;border-radius:6px;border:1px solid var(--border-color)}
+.tw{overflow-x:auto;overflow:hidden;margin:18px 0;border-radius:6px;border:1px solid var(--border-color)}
 table{width:100%;border-collapse:collapse;font-size:.875rem}
-thead th{background:var(--primary);color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:.82rem}
+thead th{background:var(--primary);color:#fff;padding:12px 14px;text-align:left;font-weight:700;font-size:.82rem;white-space:nowrap}
 tbody tr:nth-child(even){background:var(--soft)}
 tbody tr:nth-child(odd){background:var(--paper)}
-tbody td{padding:12px 14px;border-bottom:1px solid var(--border-color);vertical-align:top}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--border-color);vertical-align:top;color:var(--ink)}
 tbody tr{transition:filter .12s}
 tbody tr:hover{filter:brightness(.97)}
 .minute{background:var(--soft);border-top:5px solid var(--primary);padding:16px 25px 22px;border-radius:8px;margin-bottom:36px}
@@ -201,14 +200,14 @@ tbody tr:hover{filter:brightness(.97)}
 .to-top{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:1.15rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s}
 .to-top:hover{transform:scale(1.07)}
 @media screen and (max-width:760px){.content{padding:18px 16px 40px}.toc-card{margin:20px 14px 0 14px;padding:18px}.hero{padding:28px 18px}.section-body{padding:18px 16px}}
-@media print{@page{size:auto;margin:12mm}}
+@media print{@page{size:auto;margin:12mm}body,*{-webkit-print-color-adjust:exact;print-color-adjust:exact}html{font-size:10px}.hero{padding:16px 20px}.hero h1{font-size:20px}.hero .top{font-size:7px;margin-bottom:6px}.hero .subtitle,.hero .prof{font-size:9px}.hero .tags{margin-top:8px}.toc-card{max-width:100%;margin:10px auto 0;padding:10px 16px}.content{max-width:100%;padding:12px 0 20px}.section{break-inside:avoid;margin-bottom:14px}.sec-head{padding:7px 14px}.section-body{padding:10px 14px}h3{font-size:12px;margin:0 0 6px;break-after:avoid}h4{font-size:11px;margin:7px 0 4px;break-after:avoid}p{margin-bottom:7px;orphans:3;widows:3}ul,ol{margin-bottom:7px;padding-left:18px}.box{padding:8px 12px;margin:8px 0;break-inside:avoid}.tw{break-inside:avoid}.minute{padding:8px 14px 12px;margin-bottom:14px;break-inside:avoid}.remember{padding:8px 14px 12px;margin-top:14px;break-inside:avoid}.to-top{display:none}}
 
 Sobre o HTML que usa esse CSS:
 - <body> contém direto: <header class="hero" id="topo">...</header>, depois <nav class="toc-card">...</nav> (FORA de qualquer wrapper com max-width — o toc-card já centraliza sozinho), depois <main class="content"> com o .minute, cada .section, e o .remember dentro dele, e por fim <a href="#topo" class="to-top">↑</a> solto no fim do body (fora do .content). É o link de âncora inteiro que faz o "voltar ao topo" funcionar — sem JavaScript nenhum (o iframe onde o resumo aparece bloqueia <script>, então onclick/addEventListener/scrollIntoView simplesmente não rodam; scroll-behavior:smooth + href="#topo" é a única forma que funciona aqui).
 - Círculo de cada seção (.num) tem só o número inteiro (1, 2, 3...) igual ao índice — NUNCA "1.0". h3 e h4 NUNCA levam número na frente (nada de "1.1", "3.1.2" etc.) — só o texto do título.
 - .box leva uma segunda classe com a cor semântica (ex. class="box def"), com border-color e background definidos por essa segunda classe — ver seção 4 abaixo pros 6 tipos fixos.
 - Kathen fica reservado só pra um detalhe pequeno opcional, nunca em título de seção nem em h3/h4.
-- TABELAS — reserve tabela SOMENTE para comparar 2+ itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo. É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize") — isso é lista dentro de um parágrafo, nunca tabela.
+- TABELAS — reserve tabela SOMENTE para comparar 2+ itens reais (institutos, hipóteses, prazos) através das MESMAS 3+ colunas de atributo. É PROIBIDO usar tabela como glossário de 2 colunas (tipo "Elemento / Memorize") — isso é lista dentro de um parágrafo, nunca tabela. NUNCA aplique color, style="color:..." ou classe colorida em <td> — as células herdam var(--ink) do body e devem ficar pretas. Só o <thead th> tem cor (branca no fundo primário).
 - NOTA DE AULA: itálico, com rótulo "Análise de Aula —" ou "Regra de Ouro Didática —", sem caixa colorida, dentro de um <p> normal.
 
 3 — IDENTIDADE VISUAL POR MATÉRIA
@@ -237,7 +236,7 @@ Se por qualquer motivo a fonte de destaque não carregar no dispositivo do usuá
 
 6 — WEB-FIRST: ESTE RESUMO É UMA PÁGINA, NÃO UM PDF
 Este HTML é exibido dentro de um iframe no site e cresce naturalmente com o conteúdo — ele NUNCA é uma simulação de folha A4 impressa. É proibido usar, em qualquer lugar do CSS:
-- @page, page:cover, break-before:page, break-after:page, break-inside:avoid ou orphans/widows;
+- @page, break-before:page, break-after:page, break-inside:avoid, orphans, widows (FORA de @media print — dentro do bloco @media print da seção 7, esses recursos são permitidos e obrigatórios);
 - width:210mm, height:297mm, ou qualquer unidade mm/pt para dimensionar contêineres;
 - height fixo (não min-height) em vh/vw pensado para caber "uma tela" ou "uma página" — height corta conteúdo se ele for maior que a tela, o que é sempre errado aqui;
 - qualquer classe ou wrapper que simule uma folha impressa (.page, .sheet, .paper como página A4 inteira).
@@ -249,7 +248,9 @@ Em @media screen and (max-width:760px): reduza padding para 18–24px, títulos 
 Nunca produza rolagem horizontal na página. Textos longos usam overflow-wrap:anywhere.
 
 7 — IMPRESSÃO (SECUNDÁRIA, NÃO PODE ALTERAR A TELA)
-O site tem seu próprio botão de "Salvar PDF" que abre uma janela separada só para imprimir. Inclua obrigatoriamente este bloco simples no final do seu <style>, sem alterações: @media print{@page{size:auto;margin:12mm}} — isso evita que o navegador force o tamanho de página padrão (A4 com margens grandes) na hora de salvar o PDF, deixando a página se ajustar ao conteúdo. Fora isso, você não precisa e não deve otimizar mais nada do HTML para impressão. Pode opcionalmente esconder elementos de UI do site (não existem no seu HTML) ou ajustar cor de fundo para não gastar tinta, mas nunca mude largura, altura, quebra de página ou remova conteúdo da versão de tela. A versão de tela é a única que importa: não construa o HTML pensando em como ele vai imprimir, além da linha @page acima.
+O site tem seu próprio botão de "Salvar PDF" que abre uma janela separada só para imprimir. Inclua obrigatoriamente este bloco exato no final do seu <style>, sem alterações: @media print{@page{size:auto;margin:12mm}body,*{-webkit-print-color-adjust:exact;print-color-adjust:exact}html{font-size:10px}.hero{padding:16px 20px}.hero h1{font-size:20px}.hero .top{font-size:7px;margin-bottom:6px}.hero .subtitle,.hero .prof{font-size:9px}.hero .tags{margin-top:8px}.toc-card{max-width:100%;margin:10px auto 0;padding:10px 16px}.content{max-width:100%;padding:12px 0 20px}.section{break-inside:avoid;margin-bottom:14px}.sec-head{padding:7px 14px}.section-body{padding:10px 14px}h3{font-size:12px;margin:0 0 6px;break-after:avoid}h4{font-size:11px;margin:7px 0 4px;break-after:avoid}p{margin-bottom:7px;orphans:3;widows:3}ul,ol{margin-bottom:7px;padding-left:18px}.box{padding:8px 12px;margin:8px 0;break-inside:avoid}.tw{break-inside:avoid}.minute{padding:8px 14px 12px;margin-bottom:14px;break-inside:avoid}.remember{padding:8px 14px 12px;margin-top:14px;break-inside:avoid}.to-top{display:none}}
+— Por que cada regra existe: html{font-size:10px} reduz todos os valores em rem, eliminando a necessidade de escalar para 80% na impressão. .content{max-width:100%} faz o conteúdo preencher a largura do papel sem overflow (o motivo principal pelo qual o browser pedia ajuste de escala). .hero h1{font-size:20px} fixa o título (sem isso, o browser calcula clamp() com a largura da janela e gera 56pt+). break-inside:avoid em .section, .box, .minute, .remember evita cortes no meio de elementos. break-after:avoid em h3/h4 impede títulos órfãos no fim de página. orphans/widows:3 evita linhas soltas de parágrafo.
+A versão de tela é a única que importa: não construa o HTML pensando em como ele vai imprimir além deste bloco acima.
 
 8 — FLASHCARDS SELETIVOS
 Não converta cada bullet do resumo em cartão. Flashcard é para recuperação ativa de alto valor, não para duplicar o texto inteiro.
