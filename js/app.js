@@ -201,7 +201,7 @@ tbody tr:hover{filter:brightness(.97)}
 .to-top{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:1.15rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s}
 .to-top:hover{transform:scale(1.07)}
 @media screen and (max-width:760px){.content{padding:18px 16px 40px}.toc-card{margin:20px 14px 0 14px;padding:18px}.hero{padding:28px 18px}.section-body{padding:18px 16px}}
-@media print{@page{size:auto;margin:12mm}}
+@media print{@page{size:auto;margin:12mm}body,*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.to-top{display:none}.section{break-inside:avoid}}
 
 Sobre o HTML que usa esse CSS:
 - <body> contém direto: <header class="hero" id="topo">...</header>, depois <nav class="toc-card">...</nav> (FORA de qualquer wrapper com max-width — o toc-card já centraliza sozinho), depois <main class="content"> com o .minute, cada .section, e o .remember dentro dele, e por fim <a href="#topo" class="to-top">↑</a> solto no fim do body (fora do .content). É o link de âncora inteiro que faz o "voltar ao topo" funcionar — sem JavaScript nenhum (o iframe onde o resumo aparece bloqueia <script>, então onclick/addEventListener/scrollIntoView simplesmente não rodam; scroll-behavior:smooth + href="#topo" é a única forma que funciona aqui).
@@ -237,7 +237,7 @@ Se por qualquer motivo a fonte de destaque não carregar no dispositivo do usuá
 
 6 — WEB-FIRST: ESTE RESUMO É UMA PÁGINA, NÃO UM PDF
 Este HTML é exibido dentro de um iframe no site e cresce naturalmente com o conteúdo — ele NUNCA é uma simulação de folha A4 impressa. É proibido usar, em qualquer lugar do CSS:
-- @page, page:cover, break-before:page, break-after:page, break-inside:avoid ou orphans/widows;
+- @page, break-before:page, break-after:page, break-inside:avoid, orphans, widows (FORA de @media print — dentro do bloco @media print da seção 7, esses recursos são permitidos e obrigatórios);
 - width:210mm, height:297mm, ou qualquer unidade mm/pt para dimensionar contêineres;
 - height fixo (não min-height) em vh/vw pensado para caber "uma tela" ou "uma página" — height corta conteúdo se ele for maior que a tela, o que é sempre errado aqui;
 - qualquer classe ou wrapper que simule uma folha impressa (.page, .sheet, .paper como página A4 inteira).
@@ -249,7 +249,9 @@ Em @media screen and (max-width:760px): reduza padding para 18–24px, títulos 
 Nunca produza rolagem horizontal na página. Textos longos usam overflow-wrap:anywhere.
 
 7 — IMPRESSÃO (SECUNDÁRIA, NÃO PODE ALTERAR A TELA)
-O site tem seu próprio botão de "Salvar PDF" que abre uma janela separada só para imprimir. Inclua obrigatoriamente este bloco simples no final do seu <style>, sem alterações: @media print{@page{size:auto;margin:12mm}} — isso evita que o navegador force o tamanho de página padrão (A4 com margens grandes) na hora de salvar o PDF, deixando a página se ajustar ao conteúdo. Fora isso, você não precisa e não deve otimizar mais nada do HTML para impressão. Pode opcionalmente esconder elementos de UI do site (não existem no seu HTML) ou ajustar cor de fundo para não gastar tinta, mas nunca mude largura, altura, quebra de página ou remova conteúdo da versão de tela. A versão de tela é a única que importa: não construa o HTML pensando em como ele vai imprimir, além da linha @page acima.
+O site tem seu próprio botão de "Salvar PDF" que abre uma janela separada só para imprimir. Inclua obrigatoriamente este bloco exato no final do seu <style>, sem alterações: @media print{@page{size:auto;margin:12mm}body,*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.to-top{display:none}.section{break-inside:avoid}}
+— print-color-adjust:exact força o navegador a preservar todos os fundos coloridos (gradiente do hero, cabeçalhos de seção, caixas semânticas) ao salvar PDF; sem isso o browser descarta as cores de fundo por padrão. .to-top{display:none} esconde o botão flutuante no PDF. .section{break-inside:avoid} evita que um card de seção seja cortado no meio da página.
+A versão de tela é a única que importa: não construa o HTML pensando em como ele vai imprimir além deste bloco acima.
 
 8 — FLASHCARDS SELETIVOS
 Não converta cada bullet do resumo em cartão. Flashcard é para recuperação ativa de alto valor, não para duplicar o texto inteiro.
