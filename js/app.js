@@ -1,24 +1,23 @@
-const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}, {"key": "ajt", "name": "Prática Extensionista: Acesso à Justiça do Trabalho", "short": "AJT", "docs": {"1": "14RpF84SEwBWnxvj8Fw6iFh-ZsVAc66AjY69BYIkC1uM", "2": "1pCpHc78qnpJPCYQ1NxcN2f0s7flkH2BrZonV7wdQUq0"}}, {"key": "petss", "name": "Prática Extensionista: Temas de Seguridade", "short": "PETSS", "docs": {"1": "1CIhNd-F_dmT4IICLfPBtvCFvnIW77YXJH7I7btJtDqE", "2": "1WdmLP6wBirGastfD7omY33_H1G9Obvfvky69DSFoIiQ"}}];
+const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}];
 const SUBJECT_THEMES={
-  dpt:{name:'pink bebê',primary:'#C85A8C',accent:'#F3C4DA',soft:'#FCEBF3',ink:'#7A2E4F'},
-  tgot:{name:'lilás rosado',primary:'#A968B8',accent:'#CFABD7',soft:'#F4ECF6',ink:'#593561'},
-  dec:{name:'azul bebê',primary:'#3E80B0',accent:'#B7DAF3',soft:'#EAF4FC',ink:'#2A5580'},
-  dss:{name:'verde turquesa',primary:'#2C9689',accent:'#A9E0D8',soft:'#E6F7F4',ink:'#1F5F58'},
-  rebi:{name:'pink choque',primary:'#D13E7C',accent:'#F3B0CC',soft:'#FCE9F0',ink:'#7A2649'},
-  etica:{name:'amarelo pastel',primary:'#B08228',accent:'#F7DFA0',soft:'#FDF5E2',ink:'#5A4212'},
-  dde:{name:'lavanda',primary:'#8267D0',accent:'#D8CDF5',soft:'#F3EFFC',ink:'#4E3F86'},
-  di:{name:'verde menta',primary:'#33A17E',accent:'#B0E8D4',soft:'#E9FAF3',ink:'#256652'},
-  ajt:{name:'coral pastel',primary:'#D6725F',accent:'#F6C9BE',soft:'#FDEEEA',ink:'#7A3A2E'},
-  petss:{name:'ciano turquesa',primary:'#2896A8',accent:'#A6E1EA',soft:'#E6F8FA',ink:'#1B5D68'}
+  dpt:{name:'vermelho',primary:'#D60056',accent:'#F5B3D0',soft:'#FDE8F2',ink:'#8A0037'},
+  tgot:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  dec:{name:'orquídea',primary:'#C040E0',accent:'#F1A1FF',soft:'#FDF0FF',ink:'#8800A8'},
+  dss:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  rebi:{name:'verde-azulado',primary:'#45818E',accent:'#A8D0D6',soft:'#E6F5F7',ink:'#2E5860'},
+  etica:{name:'lilás',primary:'#7B6CB0',accent:'#B4A7D6',soft:'#F4F1FA',ink:'#4D3D8A'},
+  dde:{name:'azul',primary:'#1E67A9',accent:'#9FC5E8',soft:'#EDF5FB',ink:'#154D7E'},
+  di:{name:'laranja',primary:'#D97800',accent:'#FFD499',soft:'#FFF4E0',ink:'#8A4C00'}
 };
 const RESUMO_THEMES={
-  dpt:{name:'pink bebê',primary:'#D37A9A',accent:'#F3C8D8',soft:'#FCEDF3',ink:'#AB3C64'},
-  tgot:{name:'lilás rosado',primary:'#8A6EA7',accent:'#D7C7E7',soft:'#F0EAF7',ink:'#57446B'},
-  dec:{name:'azul bebê',primary:'#90BEE0',accent:'#C6E1F5',soft:'#EDF6FD',ink:'#438FC7'},
-  dss:{name:'verde turquesa',primary:'#2A9D8F',accent:'#76EADC',soft:'#9FF4EA',ink:'#174F49'},
-  rebi:{name:'pink choque',primary:'#FF1493',accent:'#FFADD9',soft:'#FFE0F1',ink:'#AB025D'},
-  di:{name:'verde menta',primary:'#81C784',accent:'#CCF0CE',soft:'#EFFBEF',ink:'#489A4B'},
-  ajt:{name:'coral pastel',primary:'#D97A3E',accent:'#F8D1B8',soft:'#FEEFE5',ink:'#924B1F'}
+  dpt:{name:'vermelho',primary:'#D60056',accent:'#F5B3D0',soft:'#FDE8F2',ink:'#8A0037'},
+  tgot:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  dec:{name:'orquídea',primary:'#C040E0',accent:'#F1A1FF',soft:'#FDF0FF',ink:'#8800A8'},
+  dss:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
+  rebi:{name:'verde-azulado',primary:'#45818E',accent:'#A8D0D6',soft:'#E6F5F7',ink:'#2E5860'},
+  etica:{name:'lilás',primary:'#7B6CB0',accent:'#B4A7D6',soft:'#F4F1FA',ink:'#4D3D8A'},
+  dde:{name:'azul',primary:'#1E67A9',accent:'#9FC5E8',soft:'#EDF5FB',ink:'#154D7E'},
+  di:{name:'laranja',primary:'#FF9900',accent:'#FFD499',soft:'#FFF4E0',ink:'#B36A00'}
 };
 const SUMMARY_HIGHLIGHTS={
   pink:{label:'Rosa',bg:'#FFD9E1',text:'#7A2E44'},
