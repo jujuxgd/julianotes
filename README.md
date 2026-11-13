@@ -40,11 +40,15 @@ editados nem excluídos pelo Study Journal.
 - Classificação pelo nome do arquivo: `Enxuto` → enxuto; `Cola`/`Micro` → outros;
   demais `Resumo…` → completo; etapa por `P1`/`P2`. Exceções ficam em
   `RESUMO_OVERRIDES`. Versões antigas aparecem como "Outros".
-- **Atualizar do Drive** lista as pastas com o escopo
-  `https://www.googleapis.com/auth/drive.metadata.readonly` (só nomes e datas).
-  Para funcionar: ative a **Google Drive API** no projeto e inclua esse escopo na
-  tela de consentimento OAuth. Também encontra as anotações `1BIM - …`/`2BIM - …`
-  das matérias novas. Até a primeira atualização vale o retrato em `DRIVE_SNAPSHOT`.
+- **Atualizar do Drive** e o leitor com grifos usam o escopo
+  `https://www.googleapis.com/auth/drive.readonly` (só leitura). Requer a
+  **Google Drive API** ativa no projeto. Até a primeira atualização vale o retrato
+  em `DRIVE_SNAPSHOT`.
+- `js/pdf-reader.js` abre o PDF com PDF.js e permite grifar em quatro cores. Os
+  grifos ficam em `msj7-grifos::<id do arquivo>` e sincronizam com a conta. Sem
+  acesso ao arquivo, mostra o preview do Drive (sem grifos) e um botão para conectar.
+- O bimestre vem do nome (`P1`/`P2`, `1BIM`/`2BIM`, `1º bimestre`…); sem indicação,
+  é estimado pela data do arquivo.
 
 ## Migração e conflitos
 
