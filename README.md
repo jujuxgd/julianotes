@@ -34,8 +34,8 @@ editados nem excluídos pelo Study Journal.
 
 - `js/semesters.js` lista os semestres (8º, 9º, 10º), as matérias e o ID da pasta
   de cada uma no Google Drive. O seletor de semestre fica na barra lateral.
-- A aba **Resumos** mostra, por matéria e etapa (P1/P2), o resumo **Completo** e o
-  **Enxuto** salvos nas pastas. Na matéria, a aba **Resumo** abre o PDF do Drive
+- A aba **Matérias** mostra, por matéria e etapa (P1/P2), as anotações e os resumos
+  **Completo** e **Enxuto** salvos nas pastas. Na matéria, a aba **Resumo** abre o PDF do Drive
   (alternando Completo/Enxuto), com botões para abrir no Drive e baixar.
 - Classificação pelo nome do arquivo: `Enxuto` → enxuto; `Cola`/`Micro` → outros;
   demais `Resumo…` → completo; etapa por `P1`/`P2`. Exceções ficam em
@@ -59,7 +59,8 @@ editados nem excluídos pelo Study Journal.
 ## Estrutura
 
 - `index.html`: marcação e conteúdo.
-- `styles.css`: visual original e pequenos estados de sincronização.
+- `styles.css`: estilos de base.
+- `theme-v2.css`: tema atual (barra superior, Fraunces + Inter, mesma identidade do Preparatório OAB).
 - `js/semesters.js`: semestres, matérias, pastas do Drive e retrato dos resumos.
 - `js/app.js`: comportamento existente do Study Journal.
 - `js/cloud-sync.js`: Firebase, migração, sincronização e Google Agenda.

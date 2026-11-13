@@ -1,17 +1,16 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAF8F5"><title>Study Journal · Mackenzie</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAF8F5"><title>Julia Notes · Mackenzie</title>
 <script>try{const savedTheme=localStorage.getItem('msj7-theme');document.documentElement.dataset.theme=savedTheme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=17"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=17"><link rel="stylesheet" href="theme-v2.css?v=1"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 </head><body>
 <a class="skip-link" href="#home">Ir para o conteúdo</a><button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">☰</button><div class="backdrop" id="backdrop" aria-hidden="true"></div>
-<div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>study <em>journal</em></h1><div class="subtitle" id="logoSubtitle">Mackenzie · Direito · 2026</div></div>
+<div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>Julia Notes</h1><div class="subtitle" id="logoSubtitle">Mackenzie · Direito · 2026</div></div>
 <div class="nav-label">Semestre</div><div class="semester-switch" id="semesterSwitch" role="radiogroup" aria-label="Escolher semestre"></div>
 <div class="nav-label">Organização</div>
 <button class="nav-link active" data-view="home" type="button"><span class="ico">⌂</span><span>Início</span></button>
 <button class="nav-link" data-view="calendar" type="button"><span class="ico">□</span><span>Planner</span></button>
 <div class="nav-label">Estudo</div>
 <button class="nav-link" data-view="subjects" type="button"><span class="ico">▤</span><span>Matérias</span></button>
-<button class="nav-link" data-view="resumos" type="button"><span class="ico">❡</span><span>Resumos</span></button>
 <button class="nav-link" data-view="flashcards" type="button"><span class="ico">◫</span><span>Flashcards</span></button>
 <button class="nav-link" data-view="errors" type="button"><span class="ico">✎</span><span>Erros</span></button>
 <button class="nav-link theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="ico theme-icon" aria-hidden="true">☾</span><span class="theme-label">Modo escuro</span></button>
@@ -29,16 +28,10 @@
 
 <section id="home" class="view active">
   <div class="time-greeting" id="timeGreeting" aria-label="Saudação"></div>
-  <div class="hero"><div class="hero-grid"><div>
-    <h2>Um lugar bonito para <em>lembrar.</em></h2>
-    <p>Seu semestre organizado sem excesso: compromissos, matérias, anotações, resumos cumulativos, flashcards e questões erradas. O material cresce com as aulas e o journal cuida do que precisa voltar à memória.</p>
-    <button class="btn primary cta" onclick="showView('subjects')">Abrir minhas matérias</button>
-  </div><div class="mini-count"><div class="n" id="homeCount">0</div><div class="l">compromissos próximos</div></div></div></div>
-
-  <div class="section-label">Seu semestre agora</div>
-  <div class="bento">
+  <div class="home-stats"><button class="stat" type="button" onclick="showView('calendar')"><b id="homeCount">0</b><span>compromissos próximos</span></button><button class="stat" type="button" onclick="showView('flashcards')"><b id="homeDue">0</b><span>flashcards para revisar</span></button><button class="stat" type="button" onclick="showView('flashcards')"><b id="homeNew">0</b><span>flashcards novos</span></button><button class="stat" type="button" onclick="showView('errors')"><b id="homeErrors">0</b><span>erros ativos</span></button></div>
+    <div class="bento">
     <div class="card span8"><div class="card-head"><div><div class="eyebrow">Agenda</div><div class="card-title">Próximos <em>compromissos</em></div></div><div class="grow"></div><button class="btn primary" onclick="openEventModal()">+ adicionar</button></div><div id="homeAgenda" class="empty">Nenhum compromisso cadastrado ainda.</div></div>
-    <div class="card span4"><div class="card-head"><div><div class="eyebrow">Flashcards</div><div class="card-title">Memória de <em>hoje</em></div></div><div class="grow"></div><button class="btn" onclick="showView('flashcards')">Estudar</button></div><div class="home-memory"><div class="memory-stat"><b id="homeDue">0</b><small>para revisar</small></div><div class="memory-stat"><b id="homeNew">0</b><small>novos</small></div><div class="memory-stat"><b id="homeErrors">0</b><small>erros ativos</small></div></div></div>
+    <div class="card span4"><div class="card-head"><div><div class="eyebrow">Atalhos</div><div class="card-title">Minhas <em>matérias</em></div></div><div class="grow"></div><button class="btn" onclick="showView('subjects')">Ver todas</button></div><div id="homeSubjects" class="home-subjects"></div></div>
   </div>
 </section>
 
@@ -51,12 +44,11 @@
   </div>
 </section>
 
-<section id="subjects" class="view"><div class="section-label">Biblioteca acadêmica</div><div class="mat-grid" id="matGrid"></div></section>
-
-<section id="resumos" class="view">
-  <div class="card resumos-head"><div><div class="eyebrow">Google Drive · <span id="resumosSemLabel"></span></div><div class="card-title">Completo para a véspera, <em>enxuto</em> para imprimir</div><p class="resumos-updated" id="resumosUpdated"></p></div><div class="grow"></div><a class="btn" id="resumosFolder" target="_blank" rel="noopener noreferrer">Pasta do semestre ↗</a><button class="btn primary" id="driveSyncBtn" type="button">Atualizar do Drive</button></div>
-  <div class="resumo-list" id="resumoList"></div>
+<section id="subjects" class="view">
+<div class="lib-bar"><p class="lib-updated" id="resumosUpdated"></p><div class="grow"></div><a class="btn" id="resumosFolder" target="_blank" rel="noopener noreferrer">Pasta do semestre ↗</a><button class="btn primary" id="driveSyncBtn" type="button">Atualizar do Drive</button></div>
+<div class="card lib-card"><div class="lib-table" id="matGrid"></div></div>
 </section>
+
 <section id="subjectDetail" class="view">
   <div class="subject-nav"><button class="btn btn-ghost" onclick="showView('subjects')">← Matérias</button><div class="period-tabs"><button class="period active" data-stage="1">1ª etapa</button><button class="period" data-stage="2">2ª etapa</button></div></div>
   <div class="reader-tabs" role="tablist" aria-label="Conteúdo da matéria"><button class="reader-tab active" id="notesTab" role="tab" aria-selected="true" aria-controls="notesPane" data-reader="notes" onclick="setReader('notes')">Anotações</button><button class="reader-tab" id="summaryTab" role="tab" aria-selected="false" aria-controls="summaryPane" tabindex="-1" data-reader="summary" onclick="setReader('summary')">Resumo</button><button class="reader-tab" id="promptTab" role="tab" aria-selected="false" aria-controls="promptPane" tabindex="-1" data-reader="prompt" onclick="openSummaryModal()">Atualizar resumo</button></div>
