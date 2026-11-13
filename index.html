@@ -1,18 +1,18 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAF8F5"><title>Julia Notes · Mackenzie</title>
 <script>try{const savedTheme=localStorage.getItem('msj7-theme');document.documentElement.dataset.theme=savedTheme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=17"><link rel="stylesheet" href="theme-v2.css?v=1"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=17"><link rel="stylesheet" href="theme-v2.css?v=4"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 </head><body>
 <a class="skip-link" href="#home">Ir para o conteúdo</a><button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">☰</button><div class="backdrop" id="backdrop" aria-hidden="true"></div>
-<div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>Julia Notes</h1><div class="subtitle" id="logoSubtitle">Mackenzie · Direito · 2026</div></div>
-<div class="nav-label">Semestre</div><div class="semester-switch" id="semesterSwitch" role="radiogroup" aria-label="Escolher semestre"></div>
+<div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>julia <em>notes</em></h1><div class="subtitle" id="logoSubtitle">Mackenzie · Direito · 2026</div></div>
+<label class="semester-pick" for="semesterSelect"><span>Semestre</span><select id="semesterSelect" onchange="setSemester(this.value)" aria-label="Escolher semestre"></select></label>
 <div class="nav-label">Organização</div>
-<button class="nav-link active" data-view="home" type="button"><span class="ico">⌂</span><span>Início</span></button>
-<button class="nav-link" data-view="calendar" type="button"><span class="ico">□</span><span>Planner</span></button>
+<button class="nav-link active" data-view="home" type="button"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg></span><span>Início</span></button>
+<button class="nav-link" data-view="calendar" type="button"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg></span><span>Planner</span></button>
 <div class="nav-label">Estudo</div>
-<button class="nav-link" data-view="subjects" type="button"><span class="ico">▤</span><span>Matérias</span></button>
-<button class="nav-link" data-view="flashcards" type="button"><span class="ico">◫</span><span>Flashcards</span></button>
-<button class="nav-link" data-view="errors" type="button"><span class="ico">✎</span><span>Erros</span></button>
+<button class="nav-link" data-view="subjects" type="button"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5c-1.8-1.3-4-1.8-7-1.8v13c3 0 5.2.5 7 1.8 1.8-1.3 4-1.8 7-1.8v-13c-3 0-5.2.5-7 1.8zM12 6.5v13"/></svg></span><span>Matérias</span></button>
+
+<div class="side-subjects" id="sideSubjects"></div>
 <button class="nav-link theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="ico theme-icon" aria-hidden="true">☾</span><span class="theme-label">Modo escuro</span></button>
 <div class="sidebar-footer">
       <div class="profile">
@@ -27,11 +27,11 @@
 <div class="topbar home-topbar"><div class="page-title"><div class="breadcrumb" id="crumb">Study Journal · 8º semestre</div><h1 id="title">Um lugar bonito para <em>lembrar.</em></h1></div></div>
 
 <section id="home" class="view active">
-  <div class="time-greeting" id="timeGreeting" aria-label="Saudação"></div>
-  <div class="home-stats"><button class="stat" type="button" onclick="showView('calendar')"><b id="homeCount">0</b><span>compromissos próximos</span></button><button class="stat" type="button" onclick="showView('flashcards')"><b id="homeDue">0</b><span>flashcards para revisar</span></button><button class="stat" type="button" onclick="showView('flashcards')"><b id="homeNew">0</b><span>flashcards novos</span></button><button class="stat" type="button" onclick="showView('errors')"><b id="homeErrors">0</b><span>erros ativos</span></button></div>
-    <div class="bento">
+  <div class="hero"><div class="hero-grid"><div><h2 id="timeGreeting"></h2><p id="heroLine"></p><button class="btn primary cta" onclick="showView('subjects')">Abrir minhas matérias</button></div><div class="mini-count"><div class="n" id="homeCount">0</div><div class="l">compromissos próximos</div></div></div></div>
+  <div class="section-label">Seu semestre agora</div>
+  <div class="bento">
     <div class="card span8"><div class="card-head"><div><div class="eyebrow">Agenda</div><div class="card-title">Próximos <em>compromissos</em></div></div><div class="grow"></div><button class="btn primary" onclick="openEventModal()">+ adicionar</button></div><div id="homeAgenda" class="empty">Nenhum compromisso cadastrado ainda.</div></div>
-    <div class="card span4"><div class="card-head"><div><div class="eyebrow">Atalhos</div><div class="card-title">Minhas <em>matérias</em></div></div><div class="grow"></div><button class="btn" onclick="showView('subjects')">Ver todas</button></div><div id="homeSubjects" class="home-subjects"></div></div>
+    <div class="card span4"><div class="card-head"><div><div class="eyebrow">Google Drive</div><div class="card-title">Resumos <em>recentes</em></div></div></div><div id="homeResumos" class="home-resumos"></div></div>
   </div>
 </section>
 
@@ -45,8 +45,9 @@
 </section>
 
 <section id="subjects" class="view">
+<div class="section-label">Biblioteca acadêmica</div>
 <div class="lib-bar"><p class="lib-updated" id="resumosUpdated"></p><div class="grow"></div><a class="btn" id="resumosFolder" target="_blank" rel="noopener noreferrer">Pasta do semestre ↗</a><button class="btn primary" id="driveSyncBtn" type="button">Atualizar do Drive</button></div>
-<div class="card lib-card"><div class="lib-table" id="matGrid"></div></div>
+<div class="mat-grid" id="matGrid"></div>
 </section>
 
 <section id="subjectDetail" class="view">
@@ -119,5 +120,5 @@ Revisar erros"></textarea><div class="row"><button class="btn primary" onclick="
 </div></div>
 <div class="summary-highlight-popover" id="summaryHighlightPopover" role="toolbar" aria-label="Cores do marca-texto"><span>Grifar</span><button class="highlight-dot pink" type="button" aria-label="Grifar de rosa" title="Rosa" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('pink')"></button><button class="highlight-dot purple" type="button" aria-label="Grifar de lilás" title="Lilás" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('purple')"></button><button class="highlight-dot blue" type="button" aria-label="Grifar de azul" title="Azul" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('blue')"></button><button class="highlight-dot mint" type="button" aria-label="Grifar de verde menta" title="Verde Menta" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('mint')"></button><button class="highlight-dot yellow" type="button" aria-label="Grifar de amarelo" title="Amarelo" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('yellow')"></button><button class="highlight-dot peach" type="button" aria-label="Grifar de pêssego" title="Pêssego" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('peach')"></button><i aria-hidden="true"></i><button class="highlight-erase" type="button" aria-label="Remover grifo" title="Remover grifo" onmousedown="event.preventDefault()" onclick="clearHighlight()">⌫</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-<script type="module" src="js/cloud-sync.js"></script><script src="js/fonts-data.js?v=2"></script><script src="js/semesters.js?v=1"></script><script src="js/app.js?v=29"></script></body></html>
+<script type="module" src="js/cloud-sync.js"></script><script src="js/fonts-data.js?v=2"></script><script src="js/semesters.js?v=1"></script><script src="js/app.js?v=32"></script></body></html>
 
