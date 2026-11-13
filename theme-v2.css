@@ -2,9 +2,24 @@
    Só estiliza as peças novas (semestre, matérias com resumos, leitor de PDF)
    e traz as animações de entrada do Preparatório OAB. */
 
+/* ---------- paleta: neutros suaves + rosa delicado ---------- */
+:root{--bg:#FBFAF9;--bg-soft:#F5F1F2;--paper:#FFFFFF;--ink:#2A2326;--ink-soft:#655A5F;--faded:#9A8F94;--ghost:#D9D1D5;--line:#ECE6E8;--rose:#CB8CA5;--rose-deep:#B04E78;--rose-soft:#F8ECF1;--blush:#FBF4F6;--nude:#F3E6EB;--shadow-sm:0 1px 2px rgba(42,35,38,.04);--shadow:0 4px 18px rgba(42,35,38,.06);--shadow-lg:0 14px 44px rgba(42,35,38,.14)}
+html[data-theme="dark"]{--bg:#161314;--bg-soft:#211B1E;--paper:#1B1718;--ink:#EEE7EA;--ink-soft:#BDB0B6;--faded:#8A7E84;--ghost:#463D41;--line:#2E2729;--rose:#D58FAA;--rose-deep:#E59ABA;--rose-soft:#2E1F26;--blush:#221A1E;--nude:#2A1F24}
+body{background-image:none!important}
+.sidebar{background:var(--paper)!important}
+.hero:before{display:none}
+.btn.primary{color:#fff}
+html[data-theme="dark"] .btn.primary{color:#1B1718}
+
 /* ---------- marca e semestre ---------- */
-.logo h1{font-size:1.9rem}
-.semester-pick{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:-.45rem .5rem .35rem;padding:0;text-transform:uppercase;letter-spacing:.18em;font-size:.58rem;font-weight:600;color:var(--ghost)}
+.logo{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:1.1rem!important}
+.logo .seal{width:24px;height:24px;margin:0;font-size:.72rem;border-color:var(--rose)}
+.logo h1{font-size:1.5rem!important;letter-spacing:-.02em}
+.logo .subtitle{display:none}
+.ico svg{width:17px;height:17px;display:block}
+.nav-link .ico{color:var(--faded)}
+.nav-link.active .ico,.nav-link:hover .ico{color:currentColor}
+.semester-pick{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:0 .5rem .35rem;padding:0;text-transform:uppercase;letter-spacing:.18em;font-size:.58rem;font-weight:600;color:var(--ghost)}
 .semester-pick span{color:var(--faded)}
 .semester-pick select{width:auto;border:0;background:transparent;padding:.2rem 1.1rem .2rem .3rem;font:600 .78rem 'Plus Jakarta Sans',sans-serif;letter-spacing:0;color:var(--rose-deep);cursor:pointer;border-radius:var(--r8);appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 9px) 55%,calc(100% - 5px) 55%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
 .semester-pick select:hover{background-color:var(--bg-soft)}
@@ -50,13 +65,16 @@
 .mat-link{border:0;background:transparent;padding:.3rem .1rem;margin-right:.35rem;font:600 .7rem 'Plus Jakarta Sans',sans-serif;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--ghost);text-underline-offset:3px}
 .mat-link:hover{color:var(--rose-deep);text-decoration-color:currentColor}
 .resumo-chip{border-radius:999px;padding:.3rem .72rem;font:600 .66rem 'Plus Jakarta Sans',sans-serif}
-.resumo-chip.completo{background:var(--mat-primary,var(--rose-deep));border-color:var(--mat-primary,var(--rose-deep));color:#fff}
-.resumo-chip.enxuto{background:var(--mat-soft,var(--rose-soft));border-color:transparent;color:var(--mat-ink,var(--rose-deep))}
+.resumo-chip.completo{background:var(--mat-soft,var(--rose-soft));border-color:color-mix(in srgb,var(--mat-primary,var(--rose-deep)) 30%,transparent);color:var(--mat-ink,var(--rose-deep))}
+.resumo-chip.enxuto{background:var(--paper);border-color:var(--line);color:var(--ink-soft)}
+.resumo-chip:not(.missing):hover{border-color:var(--mat-primary,var(--rose-deep));color:var(--mat-ink,var(--rose-deep))}
+.mat-card{border-top-width:2px}
 .resumo-chip.missing{border:1px dashed var(--ghost);color:var(--ghost);background:transparent;font-weight:500}
 .resumo-chip.extra{background:var(--bg-soft);color:var(--ink-soft);border-color:transparent}
 .resumo-chip.extra.active{outline:0;background:var(--rose-deep);color:#fff}
 html[data-theme="dark"] .mat-badge{background:color-mix(in srgb,var(--mat-primary,var(--rose)) 20%,transparent);color:var(--ink)}
-html[data-theme="dark"] .resumo-chip.enxuto{background:color-mix(in srgb,var(--mat-primary,var(--rose)) 20%,transparent);color:var(--ink)}
+html[data-theme="dark"] .resumo-chip.completo{background:color-mix(in srgb,var(--mat-primary,var(--rose)) 20%,transparent);color:var(--ink)}
+html[data-theme="dark"] .resumo-chip.enxuto{color:var(--ink-soft)}
 html[data-theme="dark"] .resumo-pdf-frame{background:#1C1615!important}
 
 /* ---------- leitor ---------- */
