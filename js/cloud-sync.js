@@ -2,7 +2,8 @@ import { firebaseConfig, hasFirebaseConfig } from "./firebase-config.js";
 
 const FIREBASE_VERSION = "12.16.0";
 const CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar.readonly";
-const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.metadata.readonly";
+const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
+const DRIVE_TOKEN_KEY = "julianotes-drive-token";
 const DATA_PREFIX = "msj7-";
 const PENDING_KEY = "msj7-sync-pending";
 const BACKUP_PREFIX = "msj7-migration-backup::";
@@ -103,6 +104,7 @@ function renderSignedOut() {
   currentUser = null;
   calendarAccessToken = null;
   driveAccessToken = null;
+  try { sessionStorage.removeItem(DRIVE_TOKEN_KEY); } catch {}
   if (authButton) {
     authButton.hidden = false;
     setButtonBusy(authButton, false, "Entrando…");
@@ -460,15 +462,45 @@ async function syncGoogleCalendar(interactive = true) {
   }
 }
 
+function storedDriveToken() {
+  if (driveAccessToken) return driveAccessToken;
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(DRIVE_TOKEN_KEY) || "null");
+    if (saved?.token && saved.expires > Date.now()) driveAccessToken = saved.token;
+  } catch {}
+  return driveAccessToken;
+}
+
 async function requestDriveToken() {
   const provider = basicProvider();
   provider.addScope(DRIVE_SCOPE);
+  if (currentUser?.email) provider.setCustomParameters({ login_hint: currentUser.email });
   const result = await firebase.authModule.signInWithPopup(auth, provider);
   const credential = firebase.authModule.GoogleAuthProvider.credentialFromResult(result);
   driveAccessToken = credential?.accessToken || null;
   if (!driveAccessToken) throw new Error("O Google não retornou um token para o Drive.");
+  try {
+    sessionStorage.setItem(DRIVE_TOKEN_KEY, JSON.stringify({ token: driveAccessToken, expires: Date.now() + 50 * 60 * 1000 }));
+  } catch {}
   return driveAccessToken;
 }
+
+window.journalApiKey = firebaseConfig.apiKey;
+window.journalDriveToken = async (interactive = false) => {
+  const saved = storedDriveToken();
+  if (saved || !interactive) return saved;
+  if (!auth) {
+    notify("O login do Google ainda não carregou. Tente de novo em instantes.");
+    return null;
+  }
+  try {
+    return await requestDriveToken();
+  } catch (error) {
+    console.error(error);
+    notify(error.code === "auth/unauthorized-domain" ? `Autorize ${location.hostname} no Firebase (Authentication → Configurações → Domínios autorizados).` : "Não foi possível conectar o Drive");
+    return null;
+  }
+};
 
 async function listFolder(folderId, token) {
   const files = [];
@@ -506,7 +538,7 @@ async function syncDriveFolders() {
   if (!auth) return notify("Configure o Firebase antes de conectar o Drive");
   setButtonBusy(driveButton, true, "Buscando no Drive…");
   try {
-    let token = driveAccessToken || await requestDriveToken();
+    let token = storedDriveToken() || await requestDriveToken();
     const folders = window.journalDriveFolders?.() || [];
     const run = async currentToken => Object.fromEntries(await Promise.all(
       folders.map(async id => [id, await listFolder(id, currentToken)])

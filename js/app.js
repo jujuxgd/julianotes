@@ -81,25 +81,25 @@ function setSemester(id,{silent=false}={}){if(!SEMESTERS.some(x=>x.id===id))retu
 function driveCatalog(){try{return JSON.parse(localStorage.getItem(driveCatalogKey)||'{}')}catch{return {}}}
 function folderFiles(folder){let live=driveCatalog().folders?.[folder];if(Array.isArray(live))return live;return (DRIVE_SNAPSHOT[folder]||[]).map(([id,name,modified])=>({id,name,modified,mime:'application/pdf'}))}
 const plain=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
-function classifyResumo(f){if(f.mime!=='application/pdf')return null;let o=RESUMO_OVERRIDES[f.id]||{},n=plain(f.name);if(!o.kind&&!/resumo|cola|micro|enxuto|completo/.test(n))return null;let kind=o.kind||(/enxuto/.test(n)?'enxuto':/cola|micro/.test(n)?'extra':'completo'),m=n.match(/(?:^|[^a-z0-9])p\.?\s?([12])(?![0-9])/)||n.match(/(?:^|[^0-9])([12])\s*o?\s*bim/);return {...f,kind,stage:o.stage||(m?m[1]:null),dark:/escuro/.test(n)}}
-function subjectResumos(s,stage){let all=folderFiles(s.folder).map(classifyResumo).filter(Boolean).filter(f=>!stage||!f.stage||f.stage===stage).sort((a,b)=>String(b.modified).localeCompare(String(a.modified)));let pick=k=>{let list=all.filter(f=>f.kind===k&&f.stage);return list.find(f=>!f.dark)||list[0]||null};let completo=pick('completo'),enxuto=pick('enxuto');return {completo,enxuto,others:all.filter(f=>f!==completo&&f!==enxuto)}}
+function classifyResumo(f){if(f.mime!=='application/pdf')return null;let o=RESUMO_OVERRIDES[f.id]||{},n=plain(f.name);if(!o.kind&&!/resumo|cola|micro|enxuto|completo/.test(n))return null;let kind=o.kind||(/enxuto/.test(n)?'enxuto':/cola|micro/.test(n)?'extra':'completo'),m=n.match(/(?:^|[^a-z0-9])p\.?\s?([12])(?![0-9])/)||n.match(/(?:^|[^0-9])([12])\s*[oº°a]?\.?\s*(?:bim|etapa|prova)/)||n.match(/(?:bim(?:estre)?|etapa|prova|av)\s*[._-]?\s*([12])(?![0-9])/)||n.match(/(?:^|[^a-z0-9])[bn]([12])(?![0-9])/),guess=()=>{let d=new Date(f.modified);if(isNaN(d))return null;let mo=d.getMonth();return (mo>=2&&mo<=3)||(mo>=7&&mo<=9&&!(mo===9&&d.getDate()>12))?'1':'2'};return {...f,kind,stage:o.stage||(m?m[1]:guess()),guessed:!o.stage&&!m,dark:/escuro/.test(n)}}
+function subjectResumos(s,stage){let all=folderFiles(s.folder).map(classifyResumo).filter(Boolean).filter(f=>!stage||f.stage===stage).sort((a,b)=>String(b.modified).localeCompare(String(a.modified)));let pick=k=>{let list=all.filter(f=>f.kind===k);return list.find(f=>!f.dark)||list[0]||null};let completo=pick('completo'),enxuto=pick('enxuto');return {completo,enxuto,others:all.filter(f=>f!==completo&&f!==enxuto)}}
 function subjectHasResumos(s){let r=subjectResumos(s);return !!(r.completo||r.enxuto||r.others.length)}
 function subjectDocs(s){let docs={...(s.docs||{})};folderFiles(s.folder).forEach(f=>{if(f.mime!=='application/vnd.google-apps.document')return;let m=plain(f.name).match(/^\s*([12])\s*o?\s*bim/);if(m&&!docs[m[1]])docs[m[1]]=f.id});return docs}
 const drivePreview=id=>`https://drive.google.com/file/d/${id}/preview`,driveView=id=>`https://drive.google.com/file/d/${id}/view`,driveDownload=id=>`https://drive.google.com/uc?export=download&id=${id}`,driveFolder=id=>`https://drive.google.com/drive/folders/${id}`;
-function resumoLabel(f){if(!f)return '';let n=f.name.replace(/\.pdf$/i,'').replace(/[_]+/g,' ');return f.kind==='extra'?(/cola/i.test(n)?'Cola':/micro/i.test(n)?'Micro':'Extra')+(f.stage?` P${f.stage}`:''):(f.kind==='enxuto'?'Enxuto':'Completo')+(f.dark?' escuro':'')+' · versão anterior'}
+function resumoLabel(f){if(!f)return '';let n=f.name.replace(/\.pdf$/i,'').replace(/[_]+/g,' ');return f.kind==='extra'?(/cola/i.test(n)?'Cola':/micro/i.test(n)?'Micro':'Extra'):(f.kind==='enxuto'?'Enxuto':'Completo')+(f.dark?' escuro':'')+' · versão anterior'}
 function themeVars(k){let t=SUBJECT_THEMES[k]||{};return t.primary?`--mat-primary:${t.primary};--mat-soft:${t.soft};--mat-ink:${t.ink}`:''}
 function stageCell(s,st){let r=subjectResumos(s,st);return `<div class="lib-cell"><span class="lib-cell-label">P${st}</span>${resumoChip(s,st,'completo',r.completo)}${resumoChip(s,st,'enxuto',r.enxuto)}</div>`}
-function resumoChip(s,stage,kind,f){let label=kind==='completo'?'Completo':'Enxuto';return f?`<button type="button" class="resumo-chip ${kind}" onclick="event.stopPropagation();openResumo('${s.key}','${stage}','${kind}')" title="${escapeHtml(f.name)}">${label}</button>`:`<span class="resumo-chip missing" title="Ainda não tem ${label.toLowerCase()} da P${stage}">${label}</span>`}
+function resumoChip(s,stage,kind,f){let label=kind==='completo'?'Completo':'Enxuto';return f?`<button type="button" class="resumo-chip ${kind}" onclick="event.stopPropagation();openResumo('${s.key}','${stage}','${kind}')" title="${escapeHtml(f.name)}">${label}</button>`:`<span class="resumo-chip missing" title="Ainda não tem ${label.toLowerCase()} do ${stage}º bimestre">${label}</span>`}
 function renderSubjects(){
   let sem=currentSemesterObj(),cat=driveCatalog();
   $('#resumosFolder').href=driveFolder(sem.folder);
   $('#resumosUpdated').textContent=cat.updated?`Resumos atualizados do Drive em ${new Date(cat.updated).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}.`:'Resumos listados em 13/11/2026. Use “Atualizar do Drive” para puxar os novos.';
-  $('#matGrid').innerHTML=SUBJECTS.length?SUBJECTS.map(s=>`<article class="mat-card" style="${themeVars(s.key)}"><div class="mat-header" role="button" tabindex="0" aria-label="Abrir ${escapeHtml(s.name)}" onclick="openSubject('${s.key}','1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSubject('${s.key}','1')}"><span class="mat-badge">${escapeHtml(s.short)}</span><span class="mat-info"><span class="mat-name">${escapeHtml(s.name)}</span><span class="mat-sub">Anotações e resumos</span></span><span class="chev" aria-hidden="true">›</span></div><div class="mat-stages">${['1','2'].map(st=>{let r=subjectResumos(s,st);return `<div class="mat-stage"><span class="mat-stage-label">${st}ª etapa</span><button type="button" class="mat-link" onclick="openSubject('${s.key}','${st}')">Anotações</button>${resumoChip(s,st,'completo',r.completo)}${resumoChip(s,st,'enxuto',r.enxuto)}</div>`}).join('')}</div></article>`).join(''):'<div class="empty">Nenhuma matéria neste semestre.</div>';
+  $('#matGrid').innerHTML=SUBJECTS.length?SUBJECTS.map(s=>{let n=['1','2'].flatMap(st=>{let r=subjectResumos(s,st);return [r.completo,r.enxuto]}).filter(Boolean).length;return `<article class="mat-card" style="${themeVars(s.key)}"><div class="mat-header" role="button" tabindex="0" aria-label="Abrir ${escapeHtml(s.name)}" onclick="openSubject('${s.key}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSubject('${s.key}')}"><span class="mat-badge">${escapeHtml(s.short)}</span><span class="mat-info"><span class="mat-name">${escapeHtml(s.name)}</span><span class="mat-sub">${n?`${n} resumo${n>1?'s':''}`:'sem resumo ainda'}</span></span><span class="chev" aria-hidden="true">›</span></div><div class="mat-stages">${['1','2'].map(st=>{let r=subjectResumos(s,st);return `<div class="mat-stage"><span class="mat-stage-label">${st}º bimestre</span>${resumoChip(s,st,'completo',r.completo)}${resumoChip(s,st,'enxuto',r.enxuto)}</div>`}).join('')}</div></article>`}).join(''):'<div class="empty">Nenhuma matéria neste semestre.</div>';
 }
 function openSubjectFlashcards(k){showView('flashcards');let el=$('#fcSubjectFilter');if(el){el.value=k;el.dispatchEvent(new Event('change',{bubbles:true}))}}
 function renderResumos(){renderSubjects()}
-function renderHomeResumos(){let box=$('#homeResumos');if(!box)return;let list=SUBJECTS.flatMap(s=>['1','2'].flatMap(st=>{let r=subjectResumos(s,st);return [r.completo,r.enxuto].filter(Boolean).map(f=>({s,st,f}))})).sort((a,b)=>String(b.f.modified).localeCompare(String(a.f.modified))).slice(0,6);box.innerHTML=list.length?list.map(({s,st,f})=>`<button type="button" class="home-resumo" style="${themeVars(s.key)}" onclick="openResumo('${s.key}','${st}','${f.kind}')"><i class="dot" aria-hidden="true"></i><span class="hr-body"><b>${escapeHtml(s.name)}</b><span>${f.kind==='enxuto'?'Enxuto':'Completo'} da P${st}</span></span><span class="hr-date">${new Date(f.modified).toLocaleDateString('pt-BR',{day:'numeric',month:'short'}).replace('.','')}</span></button>`).join(''):'<div class="empty">Nenhum resumo neste semestre ainda.</div>'}
-function renderSideSubjects(){let box=$('#sideSubjects');if(!box)return;let active=$('.view.active')?.id==='subjectDetail'?currentSubject:null;box.innerHTML=SUBJECTS.map(s=>`<button type="button" class="side-subject${s.key===active?' active':''}" style="${themeVars(s.key)}" onclick="openSubject('${s.key}',currentSubject==='${s.key}'?currentStage:'1')" title="${escapeHtml(s.name)}"><i class="dot" aria-hidden="true"></i><span>${escapeHtml(s.name)}</span></button>`).join('')}
+function renderHomeResumos(){let box=$('#homeResumos');if(!box)return;let list=SUBJECTS.flatMap(s=>['1','2'].flatMap(st=>{let r=subjectResumos(s,st);return [r.completo,r.enxuto].filter(Boolean).map(f=>({s,st,f}))})).sort((a,b)=>String(b.f.modified).localeCompare(String(a.f.modified))).slice(0,6);box.innerHTML=list.length?list.map(({s,st,f})=>`<button type="button" class="home-resumo" style="${themeVars(s.key)}" onclick="openResumo('${s.key}','${st}','${f.kind}')"><i class="dot" aria-hidden="true"></i><span class="hr-body"><b>${escapeHtml(s.name)}</b><span>${f.kind==='enxuto'?'Enxuto':'Completo'} · ${st}º bimestre</span></span><span class="hr-date">${new Date(f.modified).toLocaleDateString('pt-BR',{day:'numeric',month:'short'}).replace('.','')}</span></button>`).join(''):'<div class="empty">Nenhum resumo neste semestre ainda.</div>'}
+function renderSideSubjects(){let box=$('#sideSubjects');if(!box)return;let active=$('.view.active')?.id==='subjectDetail'?currentSubject:null;box.innerHTML=SUBJECTS.map(s=>`<button type="button" class="side-subject${s.key===active?' active':''}" style="${themeVars(s.key)}" onclick="openSubject('${s.key}',currentSubject==='${s.key}'?currentStage:null)" title="${escapeHtml(s.name)}"><i class="dot" aria-hidden="true"></i><span>${escapeHtml(s.name)}</span></button>`).join('')}
 function openResumo(k,st,kind){let s=subj(k);if(!s)return;if(s.semester!==currentSemester)setSemester(s.semester,{silent:true});currentResumoKind=kind;openSubject(k,st,{reader:'summary'})}
 function setResumoKind(kind){currentResumoKind=kind;if(['completo','enxuto','web'].includes(kind)){try{localStorage.setItem(resumoKindKey,kind)}catch(e){}}renderResumoViewer()}
 function renderResumoViewer(){
@@ -114,13 +114,14 @@ function renderResumoViewer(){
   $('#resumoOthers').innerHTML=r.others.length?`<span>Outros:</span>`+r.others.map(f=>`<button type="button" class="resumo-chip extra${f===extra?' active':''}" onclick="setResumoKind('${f.id}')" title="${escapeHtml(f.name)}">${escapeHtml(resumoLabel(f))}</button>`).join(''):'';
   $('#resumoOthers').hidden=!r.others.length;
   $('#resumoKindLabel').textContent=web?'web':extra?resumoLabel(extra).toLowerCase():kind;
+  $('#resumoStageLabel').textContent=`${currentStage}º bimestre`;
   $('#resumoFileName').textContent=file?file.name:web?'Resumo cumulativo salvo neste journal':'';
-  let pdf=$('#resumoPdfFrame'),wantSrc=file?drivePreview(file.id):'';
-  if(pdf.dataset.src!==wantSrc){pdf.dataset.src=wantSrc;if(wantSrc)pdf.src=wantSrc;else pdf.removeAttribute('src')}
-  pdf.style.display=file?'block':'none';
+  let pdf=$('#resumoReader');
+  pdf.style.display=file?'flex':'none';
+  if(file)window.JournalPdf?.open(pdf,file);else window.JournalPdf?.close(pdf);
   $('#summaryFrame').style.display=web?'block':'none';
   $('#summaryEmpty').style.display=!file&&!web?'grid':'none';
-  $('#summaryEmptyTitle').textContent=`Ainda não tem resumo da P${currentStage} no Drive.`;
+  $('#summaryEmptyTitle').textContent=`Ainda não tem resumo do ${currentStage}º bimestre no Drive.`;
   $('#summaryEmptyFolder').href=driveFolder(s.folder);
   $('#resumoOpen').href=file?driveView(file.id):driveFolder(s.folder);
   $('#resumoOpen').textContent=file?'Abrir no Drive ↗':'Pasta no Drive ↗';
@@ -129,22 +130,22 @@ function renderResumoViewer(){
 }
 window.importDriveCatalog=function(folders){let cat={updated:new Date().toISOString(),folders};setLocalItem(driveCatalogKey,JSON.stringify(cat));initSubjects();if($('#subjectDetail').classList.contains('active'))renderSubject({resetReader:false});renderHome()};
 window.journalDriveFolders=()=>[...new Set(ALL_SUBJECTS.map(s=>s.folder).filter(Boolean))];
-function openSubject(k,st,{reader=null}={}){currentSubject=k;currentStage=st;$$('.period').forEach(x=>x.classList.toggle('active',x.dataset.stage===st));showView('subjectDetail');renderSubject({resetReader:!reader});if(reader)setReader(reader)}
+function bestStage(s){let has=st=>{let r=subjectResumos(s,st);return !!(r.completo||r.enxuto)};return has('2')?'2':has('1')?'1':'1'}
+function openSubject(k,st,{reader=null}={}){currentSubject=k;currentStage=st||bestStage(subj(k));st=currentStage;$$('.period').forEach(x=>x.classList.toggle('active',x.dataset.stage===st));showView('subjectDetail');renderSubject({resetReader:!reader});if(reader)setReader(reader)}
 $$('.period').forEach(b=>b.onclick=()=>{currentStage=b.dataset.stage;$$('.period').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#materialResponse').value='';renderSubject({resetReader:false})});
 function notesUrl(s,stage){let id=subjectDocs(s)[stage];return id?`https://docs.google.com/document/d/${id}/edit`:driveFolder(s.folder)}
 function renderSubject({resetReader=true}={}){
   let s=subj(currentSubject),id=subjectDocs(s)[currentStage];
-  $('#detailShort').textContent=s.short+' · '+(currentStage==='1'?'primeira etapa':'segunda etapa');
+  $('#detailShort').textContent=s.short+' · '+currentStage+'º bimestre';
   $('#openDrive').href=notesUrl(s,currentStage);
   $('#openDrive').textContent=id?'Editar no Docs ↗':'Abrir pasta ↗';
-  updateDriveFrame();
   let h=localStorage.getItem(sumKey()),safeHtml=h?sanitizeSummaryHtml(h):'';
   $('#summaryFrame').onload=bindSummarySelection;
   $('#summaryFrame').srcdoc=safeHtml;
   renderResumoViewer();
   $('#title').innerHTML=escapeHtml(s.name);
   if(h)setTimeout(bindSummarySelection,0);
-  if(resetReader)setReader('notes');
+  setReader('summary');
 }
 function updateDriveFrame(){
   let s=subj(currentSubject),id=subjectDocs(s)[currentStage];

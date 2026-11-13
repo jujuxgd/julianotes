@@ -61,20 +61,16 @@ const RESUMO_OVERRIDES={
   '15AQuJkcCohOaHfCaROsa7AcIvEPGiCrI':{kind:'extra',stage:'1'}  // Cola_Direito_da_Inovacao
 };
 
-/* Retrato das pastas em 13/11/2026 — usado até o primeiro "Atualizar do Drive" */
+/* Retrato das pastas em 13/11/2026 (tarde) — usado até o primeiro "Atualizar do Drive" */
 const DRIVE_SNAPSHOT={
   '1rx4DXhU5zcjuufcq_QLb3B6Hh4B2Q5oi':[
-    ['14yqal3eIAGgFDO3Wf7dOU6q9d1PCr_YG','Resumo_ProcTrabalho_P2.pdf','2026-11-08T20:04:36Z'],
-    ['1Wg6l1u_VcTxMWwLv6noq9lBJw1UzOLt1','Resumo_Enxuto_ProcTrabalho_P2.pdf','2026-11-08T20:04:46Z'],
-    ['1JkqlgIngYJG3l3J_D1NrY8aq4E71_Zji','Micro_ProcTrabalho_P2_Contestacao.pdf','2026-11-06T00:55:44Z'],
-    ['1foJvwEE8HXQpxmF_AQffpYoyigFSzkAT','Resumo_Processual_Trabalho_P1 (7).pdf','2026-10-05T08:41:22Z'],
-    ['1GYIGzrjPdDfvov5fnsbDHsLkVxX5fuao','Resumo_Processual_Trabalho_P1 (8).pdf','2026-09-20T17:03:06Z']
+    ['1X-0ausemdmyLdQdX99lU_K9FFoAr1oFF','Resumo_ProcTrabalho_P2_v2.pdf','2026-11-13T17:17:13Z'],
+    ['1APYHh7k7CUF_TwurgEhUYpDwamYH8Xg1','Resumo_Enxuto_ProcTrabalho_P2_v2.pdf','2026-11-13T17:17:11Z'],
+    ['1JkqlgIngYJG3l3J_D1NrY8aq4E71_Zji','Micro_ProcTrabalho_P2_Contestacao.pdf','2026-11-06T00:55:44Z']
   ],
   '1zDM-ApE82nsPITT_wpbfDD55gqy4aX5l':[
-    ['1CrR7xQEPFITmeXc188BLzTPLg4iUifET','Resumo_TGOT_P2.pdf','2026-11-08T20:05:30Z'],
-    ['1A11EiFl-ub7SPWY6Lxpe0ULRrI57Mg8G','Resumo_Enxuto_TGOT_P2.pdf','2026-11-08T20:05:30Z'],
-    ['1S03TjTUHsRDfoIO-jGPG2dWdtjdfXaXn','Resumo_TGOT_P1.pdf','2026-10-05T08:41:44Z'],
-    ['1XEAPBzs4rgvZJrfV0RXD1IFN9lVXwMu0','Resumo_Tributario_TGOT_P1.pdf','2026-10-05T08:40:07Z']
+    ['1BqqVZDlUGfx4NRdT2_yVDwyveuQR77jJ','Resumo_TGOT_P2_v2.pdf','2026-11-13T17:18:31Z'],
+    ['1SnPPM_Lkj6d1UmkCH42dNo10MP47vwj4','Resumo_Enxuto_TGOT_P2_v2.pdf','2026-11-13T17:18:30Z']
   ],
   '1w6RlijYI6bMF84-4doOaSMFAMjUjhDb2':[
     ['10LbNSVa2-eN3cstDVP9cZb0uqvWh158c','Resumo_Direito_Economico_Concorrencial_P2.pdf','2026-11-13T04:09:40Z'],
@@ -82,10 +78,8 @@ const DRIVE_SNAPSHOT={
     ['10_mRk9qtBEm4AJSn8iX8sU-Q6zSWrn1z','Cola_Direito_Economico.pdf','2026-10-05T08:38:10Z']
   ],
   '16G8fvCyqErev64oxAA7Y5egoaa4F0ptA':[
-    ['1r4LERn0HT9aTt96Nurbc08EQF9N3Fj0n','Resumo_Seguridade_Social_P2.pdf','2026-11-08T20:13:27Z'],
-    ['1BvBVHY7hJZEjoxr3e8MVLA3oW9LSreeq','Resumo_Enxuto_Seguridade_Social_P2.pdf','2026-11-08T20:13:32Z'],
-    ['1AMANwBjKaLR-RNYHbR49OSY4D8n6Y9mB','Resumo_Completo_Seguridade_Social_P1.pdf','2026-09-28T23:55:32Z'],
-    ['1nWFnr51qVkcg17wHOJjmi6xVbZ0C0oUJ','Resumo_Enxuto_Seguridade_Social_P1.pdf','2026-09-27T19:40:23Z']
+    ['1DjFplkeSXQ2J2K5JKIc0GYQwZqDk5PYH','Resumo_Seguridade_Social_P2.pdf','2026-11-13T17:18:11Z'],
+    ['1VCvNGDJxLURrskkk-2KhrwF_IrK7wSqy','Resumo_Enxuto_Seguridade_Social_P2.pdf','2026-11-13T17:18:10Z']
   ],
   '1swxIMaQ2myN3CdcBURTPPsKNHBVr75Ks':[
     ['1Gs4f79EUMxPa8tdFKlXR9JjehDTtoelX','Resumo_REBI_P1_v2.pdf','2026-10-05T08:39:02Z'],
@@ -93,10 +87,8 @@ const DRIVE_SNAPSHOT={
     ['1jrE0BpbhMdjuSMCqYIqvTZ1xkov3TtWf','REBI_P1_Resumo_v6.pdf','2026-09-20T17:51:19Z']
   ],
   '1qukrcQxjttlzn-qQX_R2BX_u7sE9LbLh':[
-    ['1xYVr6OaEXsHg7S9CAwNmkMQZtRpnt1bc','Resumo_Etica_Profissional_P2.pdf','2026-11-08T20:05:30Z'],
-    ['1o3i7vegcyeELYbWzUq3bRl8R7xCbVTyA','Resumo_Enxuto_Etica_Profissional_P2.pdf','2026-11-08T20:05:30Z'],
-    ['19TlfFQmGpcKph2dY3ymQcaEa8uKWo7bB','Resumo Enxuto_Etica_Profissional_P1.pdf','2026-11-05T23:36:04Z'],
-    ['18hd-_XA_PGWEUaF55BAPS4FMUExv1GRm','Resumo_Etica_Profissional_P1.pdf','2026-09-20T20:09:46Z']
+    ['1lH3SvTbJ5hz0SK6Awb2PgorRATpdEDss','Resumo_Etica_Profissional_P2_v4.pdf','2026-11-13T17:17:50Z'],
+    ['19IQ3-MAQtHmCN_7hkHHBMKGMYxyvdDFw','Resumo_Enxuto_Etica_Profissional_P2_v4.pdf','2026-11-13T17:17:49Z']
   ],
   '1rW1etDmOjx69Mdh24L7SUcoy6zKJmVfQ':[
     ['1I7HVfk6L8gx-iRc_Egc3Ukpv2Ct2LRsO','Resumo_DDE_P1 (6).pdf','2026-09-20T17:14:38Z']
