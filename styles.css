@@ -352,3 +352,39 @@ button:disabled,.btn:disabled{opacity:.6;cursor:wait;transform:none!important}.m
 @media(hover:none){.card:hover,.mat-card:hover,.day:not(.outside):hover,.semantic-highlight:hover{transform:none;box-shadow:var(--shadow-sm)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
+
+/* ---------- Semestre + Resumos em PDF (nov/2026) ---------- */
+.semester-switch{display:flex;gap:4px;padding:4px;margin:0 .35rem .4rem;background:var(--bg-soft);border:1px solid var(--line);border-radius:12px}
+.sem-btn{flex:1;border:0;background:transparent;color:var(--ink-soft);border-radius:9px;padding:.42rem .3rem;font-size:.72rem;font-weight:650;transition:var(--tr)}
+.sem-btn:hover{color:var(--ink)}
+.sem-btn.active{background:var(--paper);color:var(--rose-deep);box-shadow:var(--shadow-sm)}
+.resumos-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;padding:1rem 1.15rem;margin-bottom:1rem}
+.resumos-updated{margin:.3rem 0 0;font-size:.68rem;color:var(--faded)}
+.resumo-list{display:grid;gap:.7rem}
+.resumo-row{display:grid;grid-template-columns:minmax(200px,1fr) 2fr auto;gap:.9rem;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--mat-primary,var(--rose));border-radius:var(--r14);padding:.75rem 1rem;box-shadow:var(--shadow-sm)}
+.resumo-subj{display:flex;align-items:center;gap:.7rem;border:0;background:transparent;padding:0;text-align:left;color:var(--ink);min-width:0}
+.resumo-subj .mat-name{font:500 .95rem 'Playfair Display';line-height:1.25}
+.resumo-subj:hover .mat-name{color:var(--mat-ink,var(--rose-deep))}
+.resumo-stages{display:grid;gap:.4rem}
+.resumo-stage{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem}
+.stage-label{font-size:.62rem;font-weight:800;letter-spacing:.1em;color:var(--faded);width:1.9rem}
+.resumo-chip{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);border-radius:999px;padding:.32rem .75rem;font-size:.68rem;font-weight:650;transition:var(--tr);white-space:nowrap}
+.resumo-chip.completo{background:var(--mat-primary,var(--rose-deep));border-color:var(--mat-primary,var(--rose-deep));color:#fff}
+.resumo-chip.enxuto{background:var(--paper);border-color:var(--ink-soft);color:var(--ink)}
+.resumo-chip.extra{background:var(--mat-soft,var(--bg-soft));border-color:transparent;color:var(--mat-ink,var(--ink-soft))}
+.resumo-chip.extra.active{outline:2px solid var(--mat-primary,var(--rose-deep))}
+.resumo-chip:not(.missing):hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.resumo-chip.missing{border-style:dashed;color:var(--ghost);cursor:default;background:transparent}
+.resumo-folder{font-size:.66rem;color:var(--faded);text-decoration:none;font-weight:600}
+.resumo-folder:hover{color:var(--ink)}
+.resumo-head{flex-wrap:wrap}
+.resumo-switch{display:flex;gap:3px;padding:3px;background:var(--bg-soft);border:1px solid var(--line);border-radius:10px}
+.resumo-tab{border:0;background:transparent;color:var(--ink-soft);border-radius:8px;padding:.38rem .8rem;font-size:.7rem;font-weight:650}
+.resumo-tab.active{background:var(--paper);color:var(--rose-deep);box-shadow:var(--shadow-sm)}
+.resumo-tab[data-missing]{opacity:.45}
+.resumo-others{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;padding:.55rem 1.15rem;border-bottom:1px solid var(--line);font-size:.64rem;color:var(--faded)}
+.resumo-others[hidden]{display:none}
+.resumo-pdf-frame{background:#525659!important}
+#resumoFileName{max-width:42ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:.02em}
+[hidden]{display:none!important}
+@media(max-width:800px){.resumo-row{grid-template-columns:1fr}.resumo-folder{justify-self:start}.resumo-head .resumo-switch{order:3;width:100%}.resumo-tab{flex:1}#resumoFileName{max-width:60vw}}

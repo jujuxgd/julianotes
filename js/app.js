@@ -1,4 +1,7 @@
-const SUBJECTS=[{"key": "dpt", "name": "Direito Processual do Trabalho", "short": "DPT", "docs": {"1": "18LI2DrdzGho_3DEFZ_ROZHV51qGGaS9UXh43Yfa4tiY", "2": "1D4nLg9cglxKzhnLt1A3xfSH39ihqT11Rz17GqvcFWxI"}}, {"key": "tgot", "name": "Teoria Geral da Obrigação Tributária", "short": "TGOT", "docs": {"1": "1ukUJjwfcPssjPeN5L44iO6ZuUwFHiKESL_ja1FLD-68", "2": "1KoWl8eQ9aBPfXE0gLVFWF6d0V82mFfOKFnGHlc76ueM"}}, {"key": "dec", "name": "Direito Econômico e Concorrencial", "short": "DEC", "docs": {"1": "1BUHEFHI7efE8UEd6Kv3XDgUjTiCBnrDvS_Jx2-virTQ", "2": "1dJ45VFE89xjKi6tXP_-X2JxOzmQHeV9AKdlHoq7RFk0"}}, {"key": "dss", "name": "Direito da Seguridade Social", "short": "DSS", "docs": {"1": "1Nm554dsvS-ZuTIRmulmV5SR8QbfmQNV0JNCPyQmIeIc", "2": "1jRPyNJX6mTGCDZbj_VadROItccVrnmxYjfHzjvvUwKY"}}, {"key": "rebi", "name": "Relações Estatais, Bens e Intervenções", "short": "REBI", "docs": {"1": "1uUUigWIRWbwuJ_MFj5__A9yt97o1NksCJ7u2DY8nPUE", "2": "1GXLY0G2BKnNZ8-_zmTYvQA8w2tWaGDRleQYMiQluCbk"}}, {"key": "etica", "name": "Ética Profissional", "short": "Ética", "docs": {"1": "1HlsXmCxtTFXeh_n9QziKWTeduF4ezXxWHR1SoS1_FHc", "2": "1wiOqh_AS5l7XtWQwZotPAZpGlmXYUgwDEW8unlLmk2o"}}, {"key": "dde", "name": "Direito Digital Eletrônico", "short": "DDE", "docs": {"1": "1sAI1jxgv3QJhE2lwpsJcKj9UeBE9eXzWmu0Wj9qZ9Fo", "2": "12QjQI8qllSNvf-QLrP7XMLjrhWuxrHkQ4gk8YjscbY0"}}, {"key": "di", "name": "Direito da Inovação", "short": "DI", "docs": {"1": "1Y89CJwUbgcmGMMn2s95D-eK2iJsOBGJGTdTDzDz2n2Y", "2": "1GVhAxS_RZq7KDtQfG-Huk3p5Et3wDid069UXf-GvgWU"}}];
+const semesterKey='msj7-semester',driveCatalogKey='msj7-drive-catalog',resumoKindKey='msj7-resumo-kind';
+const ALL_SUBJECTS=SEMESTERS.flatMap(sem=>sem.subjects.map(s=>({...s,semester:sem.id})));
+let currentSemester=(()=>{try{let v=localStorage.getItem(semesterKey);return SEMESTERS.some(x=>x.id===v)?v:SEMESTERS[0].id}catch{return SEMESTERS[0].id}})();
+let SUBJECTS=[];
 const SUBJECT_THEMES={
   dpt:{name:'vermelho',primary:'#D60056',accent:'#F5B3D0',soft:'#FDE8F2',ink:'#8A0037'},
   tgot:{name:'pink',primary:'#EF63BA',accent:'#F7BDE1',soft:'#FEF0F9',ink:'#A33080'},
@@ -19,6 +22,7 @@ const RESUMO_THEMES={
   dde:{name:'azul',primary:'#1E67A9',accent:'#9FC5E8',soft:'#EDF5FB',ink:'#154D7E'},
   di:{name:'laranja',primary:'#FF9900',accent:'#FFD499',soft:'#FFF4E0',ink:'#B36A00'}
 };
+Object.entries(EXTRA_SUBJECT_THEMES).forEach(([k,v])=>{SUBJECT_THEMES[k]??=v;RESUMO_THEMES[k]??=v});
 const SUMMARY_HIGHLIGHTS={
   pink:{label:'Rosa',bg:'#FFD9E1',text:'#7A2E44'},
   purple:{label:'Lilás',bg:'#E6D6FF',text:'#4E3480'},
@@ -27,10 +31,10 @@ const SUMMARY_HIGHLIGHTS={
   yellow:{label:'Amarelo',bg:'#FFF6B0',text:'#5F5213'},
   peach:{label:'Pêssego',bg:'#FFDEC2',text:'#7A4416'}
 };
-let currentSubject=SUBJECTS[0].key,currentStage='1',calDate=new Date(),savedSummaryRange=null,studyQueue=[],studyIndex=0,studyRetries=new Set(),toastTimer=null,activeModal=null,modalReturnFocus=null;
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],subj=k=>SUBJECTS.find(x=>x.key===k);
+let currentSubject=ALL_SUBJECTS[0].key,currentResumoKind=(()=>{try{return localStorage.getItem(resumoKindKey)||'completo'}catch{return 'completo'}})(),currentStage='1',calDate=new Date(),savedSummaryRange=null,studyQueue=[],studyIndex=0,studyRetries=new Set(),toastTimer=null,activeModal=null,modalReturnFocus=null;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],subj=k=>ALL_SUBJECTS.find(x=>x.key===k);
 const sumKey=()=>`msj7-summary::${currentSubject}::${currentStage}`,evKey='msj7-events',fcKey='msj7-flashcards',fcFilterKey='msj7-flashcard-filters',errKey='msj7-errors';
-const titles={home:['Study Journal · 8º semestre','Um lugar bonito para <em>lembrar.</em>'],calendar:['Planner acadêmico','Calendário do <em>semestre</em>'],subjects:['Estudo · Biblioteca','Suas <em>matérias</em>'],flashcards:['Memória ativa','Seus <em>flashcards</em>'],errors:['Questões · Caderno de erros','Seus <em>erros</em>'],subjectDetail:['Estudo · Matéria','']};
+const titles={home:['Julia Notes','Seu <em>semestre</em>'],calendar:['Planner acadêmico','Calendário do <em>semestre</em>'],subjects:['Estudo · Biblioteca','Suas <em>matérias</em>'],flashcards:['Memória ativa','Seus <em>flashcards</em>'],errors:['Questões · Caderno de erros','Seus <em>erros</em>'],subjectDetail:['Estudo · Matéria','']};
 
 const themeKey='msj7-theme';
 function applyTheme(theme,{persist=false}={}){const dark=theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#1A1714':'#FAF8F5');const toggle=$('#themeToggle');if(toggle){toggle.setAttribute('aria-pressed',String(dark));toggle.setAttribute('title',dark?'Ativar modo claro':'Ativar modo escuro');toggle.querySelector('.theme-icon').textContent=dark?'☀':'☾';toggle.querySelector('.theme-label').textContent=dark?'Modo claro':'Modo escuro'}if(persist)localStorage.setItem(themeKey,dark?'dark':'light')}
@@ -41,10 +45,10 @@ const themePreference=window.matchMedia('(prefers-color-scheme: dark)');
 themePreference.addEventListener?.('change',event=>{if(!localStorage.getItem(themeKey))applyTheme(event.matches?'dark':'light')});
 Array.from({length:localStorage.length},(_,i)=>localStorage.key(i)).filter(key=>key?.startsWith('msj7-prompt::')).forEach(key=>localStorage.removeItem(key));
 
-function showView(v){hideSummaryHighlightPopover();$$('.view').forEach(x=>{let active=x.id===v;x.classList.toggle('active',active);x.setAttribute('aria-hidden',String(!active))});$$('.nav-link[data-view]').forEach(x=>{let active=x.dataset.view===v;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});$('.topbar').classList.toggle('home-topbar',v==='home');$('#crumb').textContent=titles[v][0];$('#title').innerHTML=v==='subjectDetail'?subj(currentSubject).name:titles[v][1];if(innerWidth<=768)closeSidebar();if(v==='subjects')renderSubjects();if(v==='calendar')renderCalendar();if(v==='flashcards')renderFlashcards();if(v==='errors')renderErrors();renderHome();saveLastRoute(v)}
+function showView(v){hideSummaryHighlightPopover();$$('.view').forEach(x=>{let active=x.id===v;x.classList.toggle('active',active);x.setAttribute('aria-hidden',String(!active))});$$('.nav-link[data-view]').forEach(x=>{let active=x.dataset.view===v;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});$('.topbar').classList.toggle('home-topbar',v==='home');$('#crumb').textContent=v==='home'?`${currentSemesterObj().label} · ${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'short'}).replace('.','')}`:v==='subjects'?`Estudo · ${currentSemesterObj().label}`:v==='subjectDetail'?`${currentSemesterObj().label} · ${subj(currentSubject).short}`:titles[v][0];$('#title').innerHTML=v==='subjectDetail'?subj(currentSubject).name:titles[v][1];if(innerWidth<=768)closeSidebar();if(v==='subjects')renderSubjects();if(v==='calendar')renderCalendar();if(v==='flashcards')renderFlashcards();if(v==='errors')renderErrors();renderHome();saveLastRoute(v)}
 const lastRouteKey='msj7-last-route';
 function saveLastRoute(v){try{let route={view:v};if(v==='subjectDetail'){route.subject=currentSubject;route.stage=currentStage}localStorage.setItem(lastRouteKey,JSON.stringify(route))}catch(e){}}
-function restoreLastRoute(){try{let raw=localStorage.getItem(lastRouteKey);if(!raw)return showView('home');let route=JSON.parse(raw);if(route.view==='subjectDetail'&&route.subject&&subj(route.subject)){openSubject(route.subject,route.stage==='2'?'2':'1');return}if(route.view&&titles[route.view]){showView(route.view);return}showView('home')}catch(e){showView('home')}}
+function restoreLastRoute(){try{let raw=localStorage.getItem(lastRouteKey);if(!raw)return showView('home');let route=JSON.parse(raw);if(route.view==='subjectDetail'&&route.subject&&subj(route.subject)){if(subj(route.subject).semester!==currentSemester)setSemester(subj(route.subject).semester,{silent:true});openSubject(route.subject,route.stage==='2'?'2':'1');return}if(route.view&&titles[route.view]){showView(route.view);return}showView('home')}catch(e){showView('home')}}
 $$('.nav-link[data-view]').forEach(b=>b.onclick=()=>showView(b.dataset.view));
 function toggleSidebar(){if(innerWidth<=768){let open=$('#sidebar').classList.toggle('open');$('#backdrop').classList.toggle('show',open);$('#mobileMenu').setAttribute('aria-expanded',String(open))}else{$('#app').classList.toggle('collapsed');$('#sideToggle').textContent=$('#app').classList.contains('collapsed')?'›':'‹'}}
 function closeSidebar(){$('#sidebar').classList.remove('open');$('#backdrop').classList.remove('show');$('#mobileMenu').setAttribute('aria-expanded','false')}
@@ -57,41 +61,97 @@ const todayStr=()=>localDateKey(new Date());function addDaysISO(n){let d=new Dat
 function renderGreeting(){const hour=new Date().getHours();const greeting=hour<12?'Bom dia':hour<18?'Boa tarde':'Boa noite';$('#timeGreeting').innerHTML=`${greeting}, <em>Julia</em>.`}
 function setLocalItem(key,value){try{localStorage.setItem(key,value);window.dispatchEvent(new CustomEvent('journal:data-change',{detail:{key,value}}));return true}catch(error){console.error(error);toast('O armazenamento deste navegador está cheio. Exporte seus dados antes de continuar.');return false}}
 
+function currentSemesterObj(){return SEMESTERS.find(x=>x.id===currentSemester)||SEMESTERS[0]}
+function subjectOptions(){return SEMESTERS.map(sem=>`<optgroup label="${sem.label}">${sem.subjects.filter(s=>!s.hidden||subjectHasResumos(s)).map(s=>`<option value="${s.key}">${escapeHtml(s.name)}</option>`).join('')}</optgroup>`).join('')}
+function refreshSubjects(){SUBJECTS=currentSemesterObj().subjects.filter(s=>!s.hidden||subjectHasResumos(s)).map(s=>subj(s.key))}
 function initSubjects(){
-  $('#evSubject').innerHTML=SUBJECTS.map(s=>`<option value="${s.key}">${s.name}</option>`).join('');
-  $('#errSubject').innerHTML=SUBJECTS.map(s=>`<option value="${s.key}">${s.name}</option>`).join('');
-  $('#fcSubjectFilter').innerHTML='<option value="">Todas as matérias</option>'+SUBJECTS.map(s=>`<option value="${s.key}">${s.name}</option>`).join('');
-  $('#errSubjectFilter').innerHTML='<option value="">Todas as matérias</option>'+SUBJECTS.map(s=>`<option value="${s.key}">${s.name}</option>`).join('');
+  refreshSubjects();
+  let opts=subjectOptions();
+  ['#evSubject','#errSubject'].forEach(sel=>{let el=$(sel),v=el.value;el.innerHTML=opts;if(v)el.value=v});
+  ['#fcSubjectFilter','#errSubjectFilter'].forEach(sel=>{let el=$(sel),v=el.value;el.innerHTML='<option value="">Todas as matérias</option>'+opts;el.value=v||''});
   restoreFlashcardFilters();
+  renderSemesterSwitch();
   renderSubjects();
 }
+function renderSemesterSwitch(){let box=$('#semesterSwitch');if(box)box.innerHTML=SEMESTERS.map(sem=>`<button type="button" class="sem-btn${sem.id===currentSemester?' active':''}" role="radio" aria-checked="${sem.id===currentSemester}" onclick="setSemester('${sem.id}')">${sem.label.replace(' semestre','')}</button>`).join('');let sub=$('#logoSubtitle');if(sub)sub.textContent='Mackenzie · Direito'}
+function setSemester(id,{silent=false}={}){if(!SEMESTERS.some(x=>x.id===id))return;currentSemester=id;try{localStorage.setItem(semesterKey,id)}catch(e){}initSubjects();if(silent)return;let active=$('.view.active')?.id||'home';showView(active==='subjectDetail'?'subjects':active);toast(`${currentSemesterObj().label} selecionado`)}
 
+/* ---------- Resumos em PDF (Google Drive) ---------- */
+function driveCatalog(){try{return JSON.parse(localStorage.getItem(driveCatalogKey)||'{}')}catch{return {}}}
+function folderFiles(folder){let live=driveCatalog().folders?.[folder];if(Array.isArray(live))return live;return (DRIVE_SNAPSHOT[folder]||[]).map(([id,name,modified])=>({id,name,modified,mime:'application/pdf'}))}
+const plain=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+function classifyResumo(f){if(f.mime!=='application/pdf')return null;let o=RESUMO_OVERRIDES[f.id]||{},n=plain(f.name);if(!o.kind&&!/resumo|cola|micro|enxuto|completo/.test(n))return null;let kind=o.kind||(/enxuto/.test(n)?'enxuto':/cola|micro/.test(n)?'extra':'completo'),m=n.match(/(?:^|[^a-z0-9])p\.?\s?([12])(?![0-9])/)||n.match(/(?:^|[^0-9])([12])\s*o?\s*bim/);return {...f,kind,stage:o.stage||(m?m[1]:null),dark:/escuro/.test(n)}}
+function subjectResumos(s,stage){let all=folderFiles(s.folder).map(classifyResumo).filter(Boolean).filter(f=>!stage||!f.stage||f.stage===stage).sort((a,b)=>String(b.modified).localeCompare(String(a.modified)));let pick=k=>{let list=all.filter(f=>f.kind===k&&f.stage);return list.find(f=>!f.dark)||list[0]||null};let completo=pick('completo'),enxuto=pick('enxuto');return {completo,enxuto,others:all.filter(f=>f!==completo&&f!==enxuto)}}
+function subjectHasResumos(s){let r=subjectResumos(s);return !!(r.completo||r.enxuto||r.others.length)}
+function subjectDocs(s){let docs={...(s.docs||{})};folderFiles(s.folder).forEach(f=>{if(f.mime!=='application/vnd.google-apps.document')return;let m=plain(f.name).match(/^\s*([12])\s*o?\s*bim/);if(m&&!docs[m[1]])docs[m[1]]=f.id});return docs}
+const drivePreview=id=>`https://drive.google.com/file/d/${id}/preview`,driveView=id=>`https://drive.google.com/file/d/${id}/view`,driveDownload=id=>`https://drive.google.com/uc?export=download&id=${id}`,driveFolder=id=>`https://drive.google.com/drive/folders/${id}`;
+function resumoLabel(f){if(!f)return '';let n=f.name.replace(/\.pdf$/i,'').replace(/[_]+/g,' ');return f.kind==='extra'?(/cola/i.test(n)?'Cola':/micro/i.test(n)?'Micro':'Extra')+(f.stage?` P${f.stage}`:''):(f.kind==='enxuto'?'Enxuto':'Completo')+(f.dark?' escuro':'')+' · versão anterior'}
+function themeVars(k){let t=SUBJECT_THEMES[k]||{};return t.primary?`--mat-primary:${t.primary};--mat-soft:${t.soft};--mat-ink:${t.ink}`:''}
+function stageCell(s,st){let r=subjectResumos(s,st);return `<div class="lib-cell"><span class="lib-cell-label">P${st}</span>${resumoChip(s,st,'completo',r.completo)}${resumoChip(s,st,'enxuto',r.enxuto)}</div>`}
+function resumoChip(s,stage,kind,f){let label=kind==='completo'?'Completo':'Enxuto';return f?`<button type="button" class="resumo-chip ${kind}" onclick="event.stopPropagation();openResumo('${s.key}','${stage}','${kind}')" title="${escapeHtml(f.name)}">${label}</button>`:`<span class="resumo-chip missing" title="Ainda não tem ${label.toLowerCase()} da P${stage}">${label}</span>`}
 function renderSubjects(){
-  $('#matGrid').innerHTML=SUBJECTS.map(s=>{let h1=localStorage.getItem(`msj7-summary::${s.key}::1`),h2=localStorage.getItem(`msj7-summary::${s.key}::2`),fc=getFlashcards().filter(f=>f.subject===s.key&&!f.stale).length,done=[h1,h2].filter(Boolean).length;
-    return `<article class="mat-card" role="button" tabindex="0" aria-label="Abrir ${escapeHtml(s.name)}" onclick="openSubject('${s.key}','1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSubject('${s.key}','1')}"><div class="mat-header"><span class="mat-badge">${s.short}</span><span class="mat-info"><span class="mat-name">${s.name}</span><span class="mat-sub">${done}/2 resumos salvos · ${fc} flashcards</span></span><span class="chev" aria-hidden="true">›</span></div></article>`}).join('');
+  let sem=currentSemesterObj(),cat=driveCatalog();
+  $('#resumosFolder').href=driveFolder(sem.folder);
+  $('#resumosUpdated').textContent=cat.updated?`Resumos atualizados do Drive em ${new Date(cat.updated).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}.`:'Resumos listados em 13/11/2026. Use “Atualizar do Drive” para puxar os novos.';
+  let head=`<div class="lib-row lib-head"><span>Matéria</span><span>Anotações</span><span>Resumos da P1</span><span>Resumos da P2</span><span>Flashcards</span></div>`;
+  $('#matGrid').innerHTML=SUBJECTS.length?head+SUBJECTS.map(s=>{let fc=getFlashcards().filter(f=>f.subject===s.key&&!f.stale).length;
+    return `<div class="lib-row" style="${themeVars(s.key)}"><button type="button" class="lib-name" onclick="openSubject('${s.key}','1')"><i class="lib-bar-color" aria-hidden="true"></i><span>${escapeHtml(s.name)}</span></button><div class="lib-cell lib-notes"><button type="button" class="lib-dot" onclick="openSubject('${s.key}','1')" title="Anotações da 1ª etapa">1</button><button type="button" class="lib-dot" onclick="openSubject('${s.key}','2')" title="Anotações da 2ª etapa">2</button></div>${stageCell(s,'1')}${stageCell(s,'2')}<div class="lib-cell lib-fc">${fc?`<button type="button" class="lib-link" onclick="openSubjectFlashcards('${s.key}')">${fc} card${fc>1?'s':''}</button>`:'<span class="lib-none">nenhum</span>'}</div></div>`}).join(''):'<div class="empty">Nenhuma matéria neste semestre.</div>';
 }
-function openSubject(k,st){currentSubject=k;currentStage=st;$$('.period').forEach(x=>x.classList.toggle('active',x.dataset.stage===st));showView('subjectDetail');renderSubject();}
-$$('.period').forEach(b=>b.onclick=()=>{currentStage=b.dataset.stage;$$('.period').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#materialResponse').value='';renderSubject()});
+function openSubjectFlashcards(k){showView('flashcards');let el=$('#fcSubjectFilter');if(el){el.value=k;el.dispatchEvent(new Event('change',{bubbles:true}))}}
+function renderResumos(){renderSubjects()}
+function renderHomeSubjects(){let box=$('#homeSubjects');if(!box)return;box.innerHTML=SUBJECTS.map(s=>`<button type="button" class="home-subject" style="${themeVars(s.key)}" onclick="openSubject('${s.key}','1')"><i class="lib-bar-color" aria-hidden="true"></i><span>${escapeHtml(s.name)}</span><em aria-hidden="true">→</em></button>`).join('')||'<div class="empty">Nenhuma matéria neste semestre.</div>'}
+function openResumo(k,st,kind){let s=subj(k);if(!s)return;if(s.semester!==currentSemester)setSemester(s.semester,{silent:true});currentResumoKind=kind;openSubject(k,st,{reader:'summary'})}
+function setResumoKind(kind){currentResumoKind=kind;if(['completo','enxuto','web'].includes(kind)){try{localStorage.setItem(resumoKindKey,kind)}catch(e){}}renderResumoViewer()}
+function renderResumoViewer(){
+  let s=subj(currentSubject),r=subjectResumos(s,currentStage),hasWeb=!!localStorage.getItem(sumKey()),kind=currentResumoKind;
+  let extra=r.others.find(f=>f.id===kind);
+  if(!extra&&!['completo','enxuto','web'].includes(kind))kind='completo';
+  if(kind==='web'&&!hasWeb)kind='completo';
+  if(kind==='completo'&&!r.completo&&r.enxuto)kind='enxuto';else if(kind==='enxuto'&&!r.enxuto&&r.completo)kind='completo';
+  let file=extra||(kind==='completo'?r.completo:kind==='enxuto'?r.enxuto:null),web=kind==='web';
+  let tabs=[['completo','Completo',r.completo],['enxuto','Enxuto',r.enxuto]];
+  $('#resumoSwitch').innerHTML=tabs.map(([k,label,f])=>`<button type="button" role="tab" class="resumo-tab${kind===k&&!extra?' active':''}" aria-selected="${kind===k&&!extra}" ${f?'':'data-missing="true"'} onclick="setResumoKind('${k}')">${label}</button>`).join('')+(hasWeb?`<button type="button" role="tab" class="resumo-tab${web?' active':''}" aria-selected="${web}" onclick="setResumoKind('web')">Web</button>`:'');
+  $('#resumoOthers').innerHTML=r.others.length?`<span>Outros:</span>`+r.others.map(f=>`<button type="button" class="resumo-chip extra${f===extra?' active':''}" onclick="setResumoKind('${f.id}')" title="${escapeHtml(f.name)}">${escapeHtml(resumoLabel(f))}</button>`).join(''):'';
+  $('#resumoOthers').hidden=!r.others.length;
+  $('#resumoKindLabel').textContent=web?'web':extra?resumoLabel(extra).toLowerCase():kind;
+  $('#resumoFileName').textContent=file?file.name:web?'Resumo cumulativo salvo neste journal':'';
+  let pdf=$('#resumoPdfFrame'),wantSrc=file?drivePreview(file.id):'';
+  if(pdf.dataset.src!==wantSrc){pdf.dataset.src=wantSrc;if(wantSrc)pdf.src=wantSrc;else pdf.removeAttribute('src')}
+  pdf.style.display=file?'block':'none';
+  $('#summaryFrame').style.display=web?'block':'none';
+  $('#summaryEmpty').style.display=!file&&!web?'grid':'none';
+  $('#summaryEmptyTitle').textContent=`Ainda não tem resumo da P${currentStage} no Drive.`;
+  $('#summaryEmptyFolder').href=driveFolder(s.folder);
+  $('#resumoOpen').href=file?driveView(file.id):driveFolder(s.folder);
+  $('#resumoOpen').textContent=file?'Abrir no Drive ↗':'Pasta no Drive ↗';
+  $('#resumoDownload').hidden=!file;if(file)$('#resumoDownload').href=driveDownload(file.id);
+  $$('.web-only').forEach(el=>el.hidden=!web);
+}
+window.importDriveCatalog=function(folders){let cat={updated:new Date().toISOString(),folders};setLocalItem(driveCatalogKey,JSON.stringify(cat));initSubjects();if($('#subjectDetail').classList.contains('active'))renderSubject({resetReader:false});renderHome()};
+window.journalDriveFolders=()=>[...new Set(ALL_SUBJECTS.map(s=>s.folder).filter(Boolean))];
+function openSubject(k,st,{reader=null}={}){currentSubject=k;currentStage=st;$$('.period').forEach(x=>x.classList.toggle('active',x.dataset.stage===st));showView('subjectDetail');renderSubject({resetReader:!reader});if(reader)setReader(reader)}
+$$('.period').forEach(b=>b.onclick=()=>{currentStage=b.dataset.stage;$$('.period').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#materialResponse').value='';renderSubject({resetReader:false})});
+function notesUrl(s,stage){let id=subjectDocs(s)[stage];return id?`https://docs.google.com/document/d/${id}/edit`:driveFolder(s.folder)}
 function renderSubject({resetReader=true}={}){
-  let s=subj(currentSubject),id=s.docs[currentStage];
+  let s=subj(currentSubject),id=subjectDocs(s)[currentStage];
   $('#detailShort').textContent=s.short+' · '+(currentStage==='1'?'primeira etapa':'segunda etapa');
-  $('#openDrive').href=`https://docs.google.com/document/d/${id}/edit`;
+  $('#openDrive').href=notesUrl(s,currentStage);
+  $('#openDrive').textContent=id?'Editar no Docs ↗':'Abrir pasta ↗';
   updateDriveFrame();
   let h=localStorage.getItem(sumKey()),safeHtml=h?sanitizeSummaryHtml(h):'';
   $('#summaryFrame').onload=bindSummarySelection;
-  $('#summaryEmpty').style.display=h?'none':'grid';
-  $('#summaryFrame').style.display=h?'block':'none';
   $('#summaryFrame').srcdoc=safeHtml;
-  $('#title').innerHTML=s.name;
+  renderResumoViewer();
+  $('#title').innerHTML=escapeHtml(s.name);
   if(h)setTimeout(bindSummarySelection,0);
   if(resetReader)setReader('notes');
 }
 function updateDriveFrame(){
-  let id=subj(currentSubject).docs[currentStage];
+  let s=subj(currentSubject),id=subjectDocs(s)[currentStage];
   const frame=$('#driveFrame');
   frame.classList.remove('loaded');frame.parentElement?.classList.remove('is-loaded');
   frame.removeAttribute('style');
-  frame.src=`https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`;
+  frame.src=id?`https://docs.google.com/document/d/${id}/preview?rm=minimal&embedded=true`:`https://drive.google.com/embeddedfolderview?id=${s.folder}#list`;
 }
 function setReader(which){hideSummaryHighlightPopover();let w=$('#studyWorkspace');if(!w)return;w.classList.remove('reader-notes','reader-summary','reader-prompt');w.classList.add('reader-'+which);$$('.reader-tab').forEach(b=>{let active=b.dataset.reader===which;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1});[['notes','#notesPane'],['summary','#summaryPane'],['prompt','#promptPane']].forEach(([name,selector])=>$(selector)?.setAttribute('aria-hidden',String(name!==which)));}
 function toggleNotesFocus(){let w=$('#studyWorkspace');w.classList.toggle('notes-focus');let btn=$('.reader-expand');if(btn)btn.textContent=w.classList.contains('notes-focus')?'Dividir tela':'Expandir';}
@@ -115,12 +175,12 @@ function openSummaryPrintDialog(){let html=localStorage.getItem(sumKey());if(!ht
 function downloadSummaryPdf(){if(!localStorage.getItem(sumKey()))return toast('Ainda não existe resumo para baixar');toast('Na próxima tela, escolha “Salvar como PDF”.');openSummaryPrintDialog()}
 function clearSummary(){if(!localStorage.getItem(sumKey()))return toast('Já não há resumo salvo nesta etapa');if(!confirm('Apagar o resumo salvo desta etapa? Isso não apaga os flashcards, mas na próxima geração o Claude vai começar do zero em vez de atualizar o antigo.'))return;localStorage.removeItem(sumKey());$('#materialResponse').value='';renderSubject({resetReader:false});renderSubjects();renderHome();toast('Resumo apagado')}
 
-function openSummaryModal(){let s=subj(currentSubject),id=s.docs[currentStage],theme=RESUMO_THEMES[currentSubject]||SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
+function openSummaryModal(){let s=subj(currentSubject),theme=RESUMO_THEMES[currentSubject]||SUBJECT_THEMES[currentSubject],old=localStorage.getItem(sumKey()),existing=getFlashcards().filter(f=>f.subject===currentSubject&&f.stage===currentStage&&!f.stale).map(f=>({id:f.id,topic:f.topic,type:f.type,question:f.question,answer:f.answer}));
 $('#summaryMeta').textContent=`${s.name} · ${currentStage==='1'?'primeira':'segunda'} etapa`;
 $('#materialResponse').value='';
 $('#summaryPrompt').value=`FONTE PRINCIPAL DAS ANOTAÇÕES
 Leia integralmente minhas anotações diretamente neste Google Docs:
-${`https://docs.google.com/document/d/${id}/edit`}
+${notesUrl(s,currentStage)}
 Este Google Docs é a fonte original e cumulativa da matéria e será atualizado semanalmente com novas aulas. Sempre consulte o documento inteiro antes de gerar a nova versão.
 
 COMO LER O GOOGLE DOCS: primeiro verifique se você tem um conector/ferramenta do Google Drive ou Google Docs disponível nesta conversa (procure por ferramentas como "Google Drive: read_file_content" ou equivalente) e use-o para ler o arquivo pelo ID do documento (a parte entre /d/ e /edit na URL acima). NÃO tente abrir o link direto no navegador nem usar apenas busca/fetch de página como primeira tentativa — a página do Google Docs exige JavaScript e o fetch comum só traz um preview truncado, não o conteúdo integral. Só se você não tiver nenhum conector do Google Drive/Docs disponível, ou se ele falhar mesmo depois de tentado, é que você deve recorrer a outra forma de leitura.
@@ -128,7 +188,7 @@ Se mesmo assim você não conseguir acessar ou ler integralmente o Google Docs, 
 
 MATÉRIA: ${s.name}
 ETAPA: ${currentStage==='1'?'Primeira':'Segunda'} etapa do semestre
-INSTITUIÇÃO: Mackenzie · Direito · 8º semestre
+INSTITUIÇÃO: Mackenzie · Direito · ${currentSemesterObj().label}
 IDENTIDADE FIXA DESTA MATÉRIA: ${theme.name}
 CORES OBRIGATÓRIAS: --primary:${theme.primary}; --accent:${theme.accent}; --soft:${theme.soft}; --subject-ink:${theme.ink};
 
@@ -284,12 +344,12 @@ FLASHCARDS JÁ EXISTENTES — preserve os IDs quando a informação continuar se
 ${existing.length?JSON.stringify(existing):'[Nenhum flashcard existente.]'}`;
 setReader('prompt')}
 async function copyPrompt(){try{await navigator.clipboard.writeText($('#summaryPrompt').value);toast('Prompt copiado')}catch{toast('Selecione e copie o prompt')}}
-function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do Claude');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sanitizeSummaryHtml(sm[1].trim()),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};if(!/<body[\s>]/i.test(html)||!/<style[\s>]/i.test(html))return toast('O bloco do resumo precisa conter HTML completo e CSS');let source=Array.isArray(data)?data:data.flashcards;if(!Array.isArray(source))return toast('O JSON precisa conter uma lista de flashcards');let cards=source.slice(0,16),ignored=Math.max(0,source.length-cards.length);if(!setLocalItem(sumKey(),html))return;let stats=syncFlashcards(cards,currentSubject,currentStage);renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos${ignored?` · ${ignored} extras ignorados`:''}`) }
+function importMaterialResponse(){let raw=$('#materialResponse').value.trim();if(!raw)return toast('Cole a resposta do Claude');let sm=raw.match(/<SUMMARY_HTML>([\s\S]*?)<\/SUMMARY_HTML>/i),fm=raw.match(/<FLASHCARDS_JSON>([\s\S]*?)<\/FLASHCARDS_JSON>/i);if(!sm||!fm)return toast('Não encontrei os dois blocos esperados');let html=sanitizeSummaryHtml(sm[1].trim()),data;try{data=JSON.parse(fm[1].trim())}catch(e){return toast('O JSON dos flashcards está inválido')};if(!/<body[\s>]/i.test(html)||!/<style[\s>]/i.test(html))return toast('O bloco do resumo precisa conter HTML completo e CSS');let source=Array.isArray(data)?data:data.flashcards;if(!Array.isArray(source))return toast('O JSON precisa conter uma lista de flashcards');let cards=source.slice(0,16),ignored=Math.max(0,source.length-cards.length);if(!setLocalItem(sumKey(),html))return;let stats=syncFlashcards(cards,currentSubject,currentStage);currentResumoKind='web';renderSubject({resetReader:false});renderSubjects();renderFlashcards();renderHome();openSummaryModal();toast(`Resumo atualizado · ${stats.new} novos · ${stats.updated} mantidos${ignored?` · ${ignored} extras ignorados`:''}`) }
 
 function readArray(key){try{let value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch{return []}}
 function getEvents(){return readArray(evKey)}function setEvents(v){setLocalItem(evKey,JSON.stringify(v))}
 function getUpcomingEvents(){let today=todayStr();return getEvents().filter(e=>e.date&&e.date>=today).sort((a,b)=>a.date.localeCompare(b.date))}
-function clearEventForm(){$('#evId').value='';$('#evType').value='Prova';$('#evDate').value='';$('#evTitle').value='';$('#evSubject').value=currentSubject||SUBJECTS[0].key;$('#evChecklist').value='';$('#eventModalTitle').textContent='Novo compromisso';$('#deleteEventBtn').style.display='none';}
+function clearEventForm(){$('#evId').value='';$('#evType').value='Prova';$('#evDate').value='';$('#evTitle').value='';$('#evSubject').value=currentSubject||SUBJECTS[0]?.key||'';$('#evChecklist').value='';$('#eventModalTitle').textContent='Novo compromisso';$('#deleteEventBtn').style.display='none';}
 function openEventModal(date=''){clearEventForm();if(date)$('#evDate').value=date;openModal('eventModal')}
 function editEvent(id){let e=getEvents().find(x=>String(x.id)===String(id));if(!e)return;if(e.readOnly){if(e.htmlLink)window.open(e.htmlLink,'_blank','noopener');else toast('Este compromisso vem do Google Agenda e é somente leitura');return}$('#evId').value=e.id;$('#evType').value=e.type;$('#evDate').value=e.date;$('#evTitle').value=e.title;$('#evSubject').value=e.subject;$('#evChecklist').value=(e.checks||[]).map(c=>c.text).join('\n');$('#eventModalTitle').textContent='Editar compromisso';$('#deleteEventBtn').style.display='inline-flex';openModal('eventModal')}
 function saveEvent(){let title=$('#evTitle').value.trim(),date=$('#evDate').value;if(!title||!date)return toast('Preencha título e data');let arr=getEvents(),id=Number($('#evId').value)||Date.now(),old=arr.find(x=>x.id===id),lines=$('#evChecklist').value.split('\n').map(x=>x.trim()).filter(Boolean),checks=lines.map(t=>({text:t,done:old?.checks?.find(c=>c.text===t)?.done||false})),obj={id,type:$('#evType').value,date,title,subject:$('#evSubject').value,checks};let pos=arr.findIndex(x=>x.id===id);if(pos>=0)arr[pos]=obj;else arr.push(obj);setEvents(arr);closeModal('eventModal');renderCalendar();renderHome();toast(pos>=0?'Compromisso atualizado':'Compromisso salvo')}
@@ -327,14 +387,14 @@ function deleteFlashcard(id){setFlashcards(getFlashcards().filter(f=>f.id!==id))
 function exportFlashcards(){let data={exportedAt:new Date().toISOString(),flashcards:filteredFlashcards()},blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='flashcards-study-journal.json';a.click();URL.revokeObjectURL(a.href)}
 
 function getErrors(){return readArray(errKey)}function setErrors(v){setLocalItem(errKey,JSON.stringify(v))}
-function openErrorModal(id=null){$('#errId').value='';$('#errSubject').value=currentSubject||SUBJECTS[0].key;$('#errTopic').value='';$('#errReason').value='Não sabia o conteúdo';$('#errExplanation').value='';$('#deleteErrorBtn').style.display='none';$('#errorModalTitle').textContent='Nova questão errada';if(id){let e=getErrors().find(x=>x.id===id);if(e){$('#errId').value=e.id;$('#errSubject').value=e.subject;$('#errTopic').value=e.topic;$('#errReason').value=e.reason;$('#errExplanation').value=e.explanation;$('#deleteErrorBtn').style.display='inline-flex';$('#errorModalTitle').textContent='Editar questão errada'}}openModal('errorModal')}
+function openErrorModal(id=null){$('#errId').value='';$('#errSubject').value=currentSubject||SUBJECTS[0]?.key||'';$('#errTopic').value='';$('#errReason').value='Não sabia o conteúdo';$('#errExplanation').value='';$('#deleteErrorBtn').style.display='none';$('#errorModalTitle').textContent='Nova questão errada';if(id){let e=getErrors().find(x=>x.id===id);if(e){$('#errId').value=e.id;$('#errSubject').value=e.subject;$('#errTopic').value=e.topic;$('#errReason').value=e.reason;$('#errExplanation').value=e.explanation;$('#deleteErrorBtn').style.display='inline-flex';$('#errorModalTitle').textContent='Editar questão errada'}}openModal('errorModal')}
 function saveError(){let topic=$('#errTopic').value.trim(),ex=$('#errExplanation').value.trim();if(!topic||!ex)return toast('Preencha tópico e explicação');let arr=getErrors(),id=Number($('#errId').value)||Date.now(),old=arr.find(x=>x.id===id),obj={id,subject:$('#errSubject').value,topic,reason:$('#errReason').value,explanation:ex,mastered:old?.mastered||false,createdAt:old?.createdAt||new Date().toISOString()};let i=arr.findIndex(x=>x.id===id);if(i>=0)arr[i]=obj;else arr.unshift(obj);setErrors(arr);closeModal('errorModal');renderErrors();renderHome();toast(i>=0?'Erro atualizado':'Erro salvo')}
 function deleteError(){let id=Number($('#errId').value);setErrors(getErrors().filter(e=>e.id!==id));closeModal('errorModal');renderErrors();renderHome();toast('Erro excluído')}
 function toggleErrorMastered(id){let arr=getErrors(),e=arr.find(x=>x.id===id);if(e)e.mastered=!e.mastered;setErrors(arr);renderErrors();renderHome()}
 function renderErrors(){let s=$('#errSubjectFilter').value,topic=$('#errTopicFilter').value.toLowerCase(),arr=getErrors().filter(e=>(!s||e.subject===s)&&(!topic||String(e.topic||'').toLowerCase().includes(topic)));$('#errorList').innerHTML=arr.length?arr.map(e=>`<div class="error-row"><div class="error-head"><div><b>${escapeHtml(e.topic)}</b><div class="flash-meta"><span class="tag rose">${escapeHtml(subj(e.subject)?.short||'')}</span><span class="tag">${escapeHtml(e.reason)}</span>${e.mastered?'<span class="tag good">aprendi</span>':''}</div></div></div><div class="error-text">${escapeHtml(e.explanation)}</div><div class="error-actions"><button class="btn" onclick="openErrorModal(${Number(e.id)})">Editar</button><button class="btn" onclick="toggleErrorMastered(${Number(e.id)})">${e.mastered?'Voltar para ativos':'✓ Aprendi'}</button><button class="btn danger" onclick="$('#errId').value='${Number(e.id)}';deleteError()">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhuma questão errada cadastrada.</div>'}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 
-function renderHome(){let events=getUpcomingEvents(),fc=getFlashcards();$('#homeCount').textContent=events.length;$('#homeAgenda').innerHTML=events.length?events.slice(0,5).map(e=>`<div class="agenda-item"><b>${escapeHtml(e.title)}</b><div class="agenda-meta">${new Date(e.date+'T12:00').toLocaleDateString('pt-BR')} · ${escapeHtml(e.type)} · ${subj(e.subject)?.short||''}</div></div>`).join(''):'<div class="empty">Nenhum compromisso próximo.</div>';$('#homeDue').textContent=fc.filter(f=>cardStatus(f)==='due').length;$('#homeNew').textContent=fc.filter(f=>cardStatus(f)==='new').length;$('#homeErrors').textContent=getErrors().filter(e=>!e.mastered).length}
+function renderHome(){renderHomeSubjects();let events=getUpcomingEvents(),fc=getFlashcards();$('#homeCount').textContent=events.length;$('#homeAgenda').innerHTML=events.length?events.slice(0,5).map(e=>`<div class="agenda-item"><b>${escapeHtml(e.title)}</b><div class="agenda-meta">${new Date(e.date+'T12:00').toLocaleDateString('pt-BR')} · ${escapeHtml(e.type)} · ${subj(e.subject)?.short||''}</div></div>`).join(''):'<div class="empty">Nenhum compromisso próximo.</div>';$('#homeDue').textContent=fc.filter(f=>cardStatus(f)==='due').length;$('#homeNew').textContent=fc.filter(f=>cardStatus(f)==='new').length;$('#homeErrors').textContent=getErrors().filter(e=>!e.mastered).length}
 
 
 async function saveAvatar(input){
@@ -419,6 +479,6 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-window.addEventListener('journal:cloud-updated',()=>{loadAvatar();renderSubjects();renderCalendar();renderFlashcards();renderErrors();renderHome()});
+window.addEventListener('journal:cloud-updated',()=>{loadAvatar();initSubjects();renderCalendar();renderFlashcards();renderErrors();renderHome()});
 renderGreeting();initSubjects();loadAvatar();renderCalendar();renderFlashcards();renderErrors();restoreLastRoute();
 
