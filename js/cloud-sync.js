@@ -2,6 +2,7 @@ import { firebaseConfig, hasFirebaseConfig } from "./firebase-config.js";
 
 const FIREBASE_VERSION = "12.16.0";
 const CALENDAR_SCOPE = "https://www.googleapis.com/auth/calendar.readonly";
+const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.metadata.readonly";
 const DATA_PREFIX = "msj7-";
 const PENDING_KEY = "msj7-sync-pending";
 const BACKUP_PREFIX = "msj7-migration-backup::";
@@ -10,6 +11,7 @@ const MAX_VALUE_SIZE = 700_000;
 const authButton = document.querySelector("#authBtn");
 const logoutButton = document.querySelector("#logoutBtn");
 const calendarButton = document.querySelector("#calendarSyncBtn");
+const driveButton = document.querySelector("#driveSyncBtn");
 const syncStatus = document.querySelector("#syncStatus");
 const profileName = document.querySelector("#profileName");
 
@@ -18,6 +20,7 @@ let db;
 let firebase;
 let currentUser = null;
 let calendarAccessToken = null;
+let driveAccessToken = null;
 let stopRemoteListener = null;
 let activeBootstrap = null;
 let applyingRemote = false;
@@ -99,6 +102,7 @@ function documentId(key) {
 function renderSignedOut() {
   currentUser = null;
   calendarAccessToken = null;
+  driveAccessToken = null;
   if (authButton) {
     authButton.hidden = false;
     setButtonBusy(authButton, false, "Entrando…");
@@ -440,7 +444,80 @@ async function syncGoogleCalendar(interactive = true) {
   }
 }
 
+async function requestDriveToken() {
+  const provider = basicProvider();
+  provider.addScope(DRIVE_SCOPE);
+  const result = await firebase.authModule.signInWithPopup(auth, provider);
+  const credential = firebase.authModule.GoogleAuthProvider.credentialFromResult(result);
+  driveAccessToken = credential?.accessToken || null;
+  if (!driveAccessToken) throw new Error("O Google não retornou um token para o Drive.");
+  return driveAccessToken;
+}
+
+async function listFolder(folderId, token) {
+  const files = [];
+  let pageToken = "";
+  do {
+    const params = new URLSearchParams({
+      q: `'${folderId}' in parents and trashed = false`,
+      fields: "nextPageToken,files(id,name,mimeType,modifiedTime)",
+      pageSize: "200",
+      supportsAllDrives: "true",
+      includeItemsFromAllDrives: "true"
+    });
+    if (pageToken) params.set("pageToken", pageToken);
+    const response = await fetch(`https://www.googleapis.com/drive/v3/files?${params}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!response.ok) {
+      const error = new Error(`Google Drive API: ${response.status}`);
+      error.status = response.status;
+      throw error;
+    }
+    const data = await response.json();
+    (data.files || []).forEach(file => files.push({
+      id: file.id,
+      name: file.name,
+      mime: file.mimeType,
+      modified: file.modifiedTime
+    }));
+    pageToken = data.nextPageToken || "";
+  } while (pageToken);
+  return files;
+}
+
+async function syncDriveFolders() {
+  if (!auth) return notify("Configure o Firebase antes de conectar o Drive");
+  setButtonBusy(driveButton, true, "Buscando no Drive…");
+  try {
+    let token = driveAccessToken || await requestDriveToken();
+    const folders = window.journalDriveFolders?.() || [];
+    const run = async currentToken => Object.fromEntries(await Promise.all(
+      folders.map(async id => [id, await listFolder(id, currentToken)])
+    ));
+    let result;
+    try {
+      result = await run(token);
+    } catch (error) {
+      if (error.status !== 401) throw error;
+      token = await requestDriveToken();
+      result = await run(token);
+    }
+    window.importDriveCatalog?.(result);
+    const total = Object.values(result).reduce((sum, list) => sum + list.length, 0);
+    notify(`Drive atualizado · ${total} arquivo(s) em ${folders.length} pasta(s)`);
+  } catch (error) {
+    console.error(error);
+    if (["auth/popup-closed-by-user", "auth/cancelled-popup-request"].includes(error.code)) notify("Conexão com o Drive cancelada");
+    else if (error.status === 403) notify("Ative a Google Drive API no projeto do Firebase/Google Cloud");
+    else notify("Não foi possível ler as pastas do Drive");
+  } finally {
+    setButtonBusy(driveButton, false, "Buscando no Drive…");
+  }
+}
+
 authButton?.addEventListener("click", signIn);
+driveButton?.addEventListener("click", syncDriveFolders);
 logoutButton?.addEventListener("click", signOutUser);
 calendarButton?.addEventListener("click", () => syncGoogleCalendar(true));
 

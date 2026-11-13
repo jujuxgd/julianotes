@@ -30,6 +30,22 @@ A integração apenas chama os endpoints de listagem. Eventos importados são
 marcados como somente leitura: podem ser abertos no Google Agenda, mas não
 editados nem excluídos pelo Study Journal.
 
+## Semestres e resumos em PDF
+
+- `js/semesters.js` lista os semestres (8º, 9º, 10º), as matérias e o ID da pasta
+  de cada uma no Google Drive. O seletor de semestre fica na barra lateral.
+- A aba **Resumos** mostra, por matéria e etapa (P1/P2), o resumo **Completo** e o
+  **Enxuto** salvos nas pastas. Na matéria, a aba **Resumo** abre o PDF do Drive
+  (alternando Completo/Enxuto), com botões para abrir no Drive e baixar.
+- Classificação pelo nome do arquivo: `Enxuto` → enxuto; `Cola`/`Micro` → outros;
+  demais `Resumo…` → completo; etapa por `P1`/`P2`. Exceções ficam em
+  `RESUMO_OVERRIDES`. Versões antigas aparecem como "Outros".
+- **Atualizar do Drive** lista as pastas com o escopo
+  `https://www.googleapis.com/auth/drive.metadata.readonly` (só nomes e datas).
+  Para funcionar: ative a **Google Drive API** no projeto e inclua esse escopo na
+  tela de consentimento OAuth. Também encontra as anotações `1BIM - …`/`2BIM - …`
+  das matérias novas. Até a primeira atualização vale o retrato em `DRIVE_SNAPSHOT`.
+
 ## Migração e conflitos
 
 - O `localStorage` continua sendo o cache imediato e permite uso offline.
@@ -44,6 +60,7 @@ editados nem excluídos pelo Study Journal.
 
 - `index.html`: marcação e conteúdo.
 - `styles.css`: visual original e pequenos estados de sincronização.
+- `js/semesters.js`: semestres, matérias, pastas do Drive e retrato dos resumos.
 - `js/app.js`: comportamento existente do Study Journal.
 - `js/cloud-sync.js`: Firebase, migração, sincronização e Google Agenda.
 - `firestore.rules`: isolamento dos dados por usuário.

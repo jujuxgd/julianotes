@@ -1,15 +1,17 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#FAF8F5"><title>Study Journal · Mackenzie</title>
 <script>try{const savedTheme=localStorage.getItem('msj7-theme');document.documentElement.dataset.theme=savedTheme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=16"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css?v=17"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23A42A5E'/%3E%3Cpath d='M18 18h24a5 5 0 0 1 5 5v24H23a5 5 0 0 1-5-5V18Z' fill='%23FFF8F5'/%3E%3Cpath d='M23 18v29' stroke='%23E9B6C9' stroke-width='3'/%3E%3Cpath d='m39 23 1.8 4.2L45 29l-4.2 1.8L39 35l-1.8-4.2L33 29l4.2-1.8L39 23Z' fill='%23D96B98'/%3E%3Cpath d='M28 39h13' stroke='%23E9B6C9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 </head><body>
 <a class="skip-link" href="#home">Ir para o conteúdo</a><button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false">☰</button><div class="backdrop" id="backdrop" aria-hidden="true"></div>
-<div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>study <em>journal</em></h1><div class="subtitle">Mackenzie · Direito · 2026</div></div>
+<div class="app" id="app"><aside class="sidebar" id="sidebar"><div class="logo"><div class="seal">J</div><h1>study <em>journal</em></h1><div class="subtitle" id="logoSubtitle">Mackenzie · Direito · 2026</div></div>
+<div class="nav-label">Semestre</div><div class="semester-switch" id="semesterSwitch" role="radiogroup" aria-label="Escolher semestre"></div>
 <div class="nav-label">Organização</div>
 <button class="nav-link active" data-view="home" type="button"><span class="ico">⌂</span><span>Início</span></button>
 <button class="nav-link" data-view="calendar" type="button"><span class="ico">□</span><span>Planner</span></button>
 <div class="nav-label">Estudo</div>
 <button class="nav-link" data-view="subjects" type="button"><span class="ico">▤</span><span>Matérias</span></button>
+<button class="nav-link" data-view="resumos" type="button"><span class="ico">❡</span><span>Resumos</span></button>
 <button class="nav-link" data-view="flashcards" type="button"><span class="ico">◫</span><span>Flashcards</span></button>
 <button class="nav-link" data-view="errors" type="button"><span class="ico">✎</span><span>Erros</span></button>
 <button class="nav-link theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="ico theme-icon" aria-hidden="true">☾</span><span class="theme-label">Modo escuro</span></button>
@@ -51,6 +53,10 @@
 
 <section id="subjects" class="view"><div class="section-label">Biblioteca acadêmica</div><div class="mat-grid" id="matGrid"></div></section>
 
+<section id="resumos" class="view">
+  <div class="card resumos-head"><div><div class="eyebrow">Google Drive · <span id="resumosSemLabel"></span></div><div class="card-title">Completo para a véspera, <em>enxuto</em> para imprimir</div><p class="resumos-updated" id="resumosUpdated"></p></div><div class="grow"></div><a class="btn" id="resumosFolder" target="_blank" rel="noopener noreferrer">Pasta do semestre ↗</a><button class="btn primary" id="driveSyncBtn" type="button">Atualizar do Drive</button></div>
+  <div class="resumo-list" id="resumoList"></div>
+</section>
 <section id="subjectDetail" class="view">
   <div class="subject-nav"><button class="btn btn-ghost" onclick="showView('subjects')">← Matérias</button><div class="period-tabs"><button class="period active" data-stage="1">1ª etapa</button><button class="period" data-stage="2">2ª etapa</button></div></div>
   <div class="reader-tabs" role="tablist" aria-label="Conteúdo da matéria"><button class="reader-tab active" id="notesTab" role="tab" aria-selected="true" aria-controls="notesPane" data-reader="notes" onclick="setReader('notes')">Anotações</button><button class="reader-tab" id="summaryTab" role="tab" aria-selected="false" aria-controls="summaryPane" tabindex="-1" data-reader="summary" onclick="setReader('summary')">Resumo</button><button class="reader-tab" id="promptTab" role="tab" aria-selected="false" aria-controls="promptPane" tabindex="-1" data-reader="prompt" onclick="openSummaryModal()">Atualizar resumo</button></div>
@@ -62,8 +68,22 @@
     </div>
     <div class="card frame-card summary-pane" id="summaryPane" role="tabpanel" aria-labelledby="summaryTab">
       <div class="fullscreen-bar"><div><div class="eyebrow">Modo foco</div><div class="focus-title">Resumo</div></div><div class="grow"></div><button class="btn" onclick="toggleViewerFullscreen('summary')">Fechar</button></div>
-      <div class="card-head"><div><div class="eyebrow">Resumo cumulativo · página web</div><div class="card-title">Resumo de <em>revisão</em></div></div><div class="grow"></div><button class="btn danger" id="deleteSummaryBtn" onclick="clearSummary()">Apagar resumo</button><button class="btn download-summary" id="downloadSummaryBtn" onclick="downloadSummaryPdf()">Salvar PDF</button><button class="btn" onclick="toggleViewerFullscreen('summary')">Modo foco</button><button class="btn primary" onclick="openSummaryModal()">Atualizar</button></div>
-      <div class="summary-viewport"><div id="summaryEmpty" class="summary-empty"><div><span class="empty-script">remember</span><strong>Ainda não tem resumo salvo.</strong><span>O resumo desta etapa cresce semanalmente sem apagar conteúdo importante.</span></div></div><iframe id="summaryFrame" class="summary-frame" title="Resumo cumulativo da matéria" sandbox="allow-same-origin allow-top-navigation-by-user-activation" referrerpolicy="no-referrer" style="display:none"></iframe></div>
+      <div class="card-head resumo-head">
+<div><div class="eyebrow" id="resumoFileName">Resumos em PDF</div><div class="card-title">Resumo <em id="resumoKindLabel">completo</em></div></div>
+<div class="resumo-switch" id="resumoSwitch" role="tablist" aria-label="Tipo de resumo"></div>
+<div class="grow"></div>
+<a class="btn" id="resumoOpen" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a>
+<a class="btn" id="resumoDownload" target="_blank" rel="noopener noreferrer">Baixar</a>
+<button class="btn danger web-only" id="deleteSummaryBtn" onclick="clearSummary()" hidden>Apagar</button>
+<button class="btn download-summary web-only" id="downloadSummaryBtn" onclick="downloadSummaryPdf()" hidden>Salvar PDF</button>
+<button class="btn" onclick="toggleViewerFullscreen('summary')">Modo foco</button>
+</div>
+<div class="resumo-others" id="resumoOthers" hidden></div>
+<div class="summary-viewport">
+<iframe id="resumoPdfFrame" class="summary-frame resumo-pdf-frame" title="Resumo em PDF do Google Drive" allow="fullscreen" style="display:none"></iframe>
+<div id="summaryEmpty" class="summary-empty"><div><span class="empty-script">remember</span><strong id="summaryEmptyTitle">Ainda não tem resumo desta etapa.</strong><span>Quando o PDF for salvo na pasta da matéria, clique em “Atualizar do Drive” na aba Resumos.</span><a class="btn" id="summaryEmptyFolder" target="_blank" rel="noopener noreferrer" style="margin-top:.8rem">Abrir pasta da matéria ↗</a></div></div>
+<iframe id="summaryFrame" class="summary-frame" title="Resumo cumulativo da matéria" sandbox="allow-same-origin allow-top-navigation-by-user-activation" referrerpolicy="no-referrer" style="display:none"></iframe>
+</div>
     </div>
     <div class="card prompt-pane" id="promptPane" role="tabpanel" aria-labelledby="promptTab">
       <div class="prompt-head"><div><div class="eyebrow">Atualização cumulativa</div><h2>Prompt sempre <em>disponível.</em></h2><p id="summaryMeta"></p></div><button class="btn primary" onclick="copyPrompt()">Copiar prompt</button></div>
@@ -107,5 +127,5 @@ Revisar erros"></textarea><div class="row"><button class="btn primary" onclick="
 </div></div>
 <div class="summary-highlight-popover" id="summaryHighlightPopover" role="toolbar" aria-label="Cores do marca-texto"><span>Grifar</span><button class="highlight-dot pink" type="button" aria-label="Grifar de rosa" title="Rosa" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('pink')"></button><button class="highlight-dot purple" type="button" aria-label="Grifar de lilás" title="Lilás" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('purple')"></button><button class="highlight-dot blue" type="button" aria-label="Grifar de azul" title="Azul" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('blue')"></button><button class="highlight-dot mint" type="button" aria-label="Grifar de verde menta" title="Verde Menta" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('mint')"></button><button class="highlight-dot yellow" type="button" aria-label="Grifar de amarelo" title="Amarelo" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('yellow')"></button><button class="highlight-dot peach" type="button" aria-label="Grifar de pêssego" title="Pêssego" onmousedown="event.preventDefault()" onclick="applySemanticHighlight('peach')"></button><i aria-hidden="true"></i><button class="highlight-erase" type="button" aria-label="Remover grifo" title="Remover grifo" onmousedown="event.preventDefault()" onclick="clearHighlight()">⌫</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-<script type="module" src="js/cloud-sync.js"></script><script src="js/fonts-data.js?v=2"></script><script src="js/app.js?v=28"></script></body></html>
+<script type="module" src="js/cloud-sync.js"></script><script src="js/fonts-data.js?v=2"></script><script src="js/semesters.js?v=1"></script><script src="js/app.js?v=29"></script></body></html>
 
