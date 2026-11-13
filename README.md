@@ -60,7 +60,7 @@ editados nem excluídos pelo Study Journal.
 
 - `index.html`: marcação e conteúdo.
 - `styles.css`: estilos de base.
-- `theme-v2.css`: tema atual (barra superior, Fraunces + Inter, mesma identidade do Preparatório OAB).
+- `theme-v2.css`: tema atual (menu lateral rosa, títulos em Kathen, marca em Muthiara).
 - `js/semesters.js`: semestres, matérias, pastas do Drive e retrato dos resumos.
 - `js/app.js`: comportamento existente do Study Journal.
 - `js/cloud-sync.js`: Firebase, migração, sincronização e Google Agenda.

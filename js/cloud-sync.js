@@ -189,7 +189,23 @@ async function signIn() {
   } catch (error) {
     console.error(error);
     const cancelled = ["auth/popup-closed-by-user", "auth/cancelled-popup-request"].includes(error.code);
-    notify(cancelled ? "Login cancelado" : error.code === "auth/popup-blocked" ? "O navegador bloqueou a janela de login" : "Não foi possível entrar com o Google");
+    if (error.code === "auth/popup-blocked" || error.code === "auth/operation-not-supported-in-this-environment") {
+      try {
+        await firebase.authModule.signInWithRedirect(auth, basicProvider());
+        return;
+      } catch (redirectError) {
+        console.error(redirectError);
+      }
+    }
+    const reasons = {
+      "auth/unauthorized-domain": `Este endereço (${location.hostname}) não está autorizado no Firebase. Adicione-o em Authentication → Configurações → Domínios autorizados.`,
+      "auth/operation-not-allowed": "O login com Google está desativado no Firebase (Authentication → Método de login).",
+      "auth/network-request-failed": "Sem conexão com o Google. Verifique a internet ou um bloqueador de anúncios.",
+      "auth/popup-blocked": "O navegador bloqueou a janela de login. Permita pop-ups para este site."
+    };
+    const message = cancelled ? "Login cancelado" : reasons[error.code] || `Não foi possível entrar com o Google (${error.code || error.message})`;
+    notify(message);
+    if (!cancelled) setStatus(message, "error");
   } finally {
     if (!currentUser) setButtonBusy(authButton, false, "Entrando…");
   }
